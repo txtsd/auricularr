@@ -86,7 +86,7 @@ build() {
     -modcacherw \
     -ldflags "-compressdwarf=false \
     -linkmode external \
-    -extldflags ${LDFLAGS} \
+    -extldflags '${LDFLAGS}' \
     -X main.version=$pkgver \
     -X main.commit=$_commit \
     -X main.date=$_build_date" \
