@@ -2,7 +2,8 @@
 # Contributor: Pieter Goetschalckx <3.14.e.ter <at> gmail <dot> com>
 
 pkgname=bazarr
-pkgver=1.4.2
+pkgver=1.4.3
+_pkgsubver="beta.26"
 pkgrel=1
 pkgdesc="Subtitle management and download automation for Sonarr and Radarr."
 arch=('any')
@@ -26,28 +27,28 @@ depends=(
   'unrar'
 )
 source=(
-  "bazarr-${pkgver}.zip::https://github.com/morpheus65535/bazarr/releases/download/v${pkgver}/bazarr.zip"
+  "bazarr-${pkgver}-${_pkgsubver}.zip::https://github.com/morpheus65535/bazarr/releases/download/v${pkgver}-${_pkgsubver}/bazarr.zip"
   'bazarr.service'
   'bazarr.sysusers'
   'bazarr.install'
   'bazarr.tmpfiles'
 )
-noextract=("bazarr-${pkgver}.zip")
+noextract=("bazarr-${pkgver}-${_pkgsubver}.zip")
 
-sha256sums=('d4ea9b0b2426037dd9bf2084d75652c95c04832ca6d18d045faab1de0ef59674'
+sha256sums=('d14326307fea974ba1ee6ae2e66d1795608115cd25578c0dfeadffe4e7af4a16'
             'a6f6a045e8a5d3ce6185148ee7b0b9fd323b6480ae284f6ceead4ca71e6fd109'
             '92fd48cbd7e5fe3a0388bbe756a52098fc461ef2dc87d9e886452e4f15acdcdc'
             '573beeac951d427e980332ce4d8645ae2299082e6c9c04f96e2a41a98c3acc60'
             'e7055260d0f3554e8b628d9560d8e12a40f720d76542048df0dfc838db88357b')
 
 prepare() {
-  unzip -qq -o -d bazarr-${pkgver} bazarr-${pkgver}.zip
+  unzip -qq -o -d bazarr-${pkgver}-${_pkgsubver} bazarr-${pkgver}-${_pkgsubver}.zip
 }
 
 package() {
   install -d -m 755 "${pkgdir}/usr/lib/bazarr"
 
-  cp -dpr --no-preserve=ownership "${srcdir}/bazarr-${pkgver}/"* "${pkgdir}/usr/lib/bazarr"
+  cp -dpr --no-preserve=ownership "${srcdir}/bazarr-${pkgver}-${_pkgsubver}/"* "${pkgdir}/usr/lib/bazarr"
 
   install -D -m 644 "${srcdir}/bazarr.service" "${pkgdir}/usr/lib/systemd/system/bazarr.service"
   install -D -m 644 "${srcdir}/bazarr.sysusers" "${pkgdir}/usr/lib/sysusers.d/bazarr.conf"
