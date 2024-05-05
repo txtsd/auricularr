@@ -10,6 +10,7 @@ pkgbase = recyclarr
 	depends = git
 	optdepends = sonarr: Movie download automation for usenet and torrents.
 	optdepends = radarr: TV download automation for usenet and torrents.
+	options = !debug
 	options = !strip
 	options = staticlibs
 	backup = etc/recyclarr/recyclarr.yml

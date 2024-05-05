@@ -7,16 +7,12 @@ pkgdesc="A command-line application that will automatically synchronize recommen
 arch=('x86_64' 'aarch64' 'armv7h')
 url="https://github.com/recyclarr/recyclarr"
 license=('MIT')
-options=('!strip' 'staticlibs')
-depends=(
-  'git'
-)
-
+options=('!debug' '!strip' 'staticlibs')
+depends=('git')
 optdepends=(
   'sonarr: Movie download automation for usenet and torrents.'
   'radarr: TV download automation for usenet and torrents.'
 )
-
 backup=('etc/recyclarr/recyclarr.yml')
 
 source_x86_64=("recyclarr.${pkgver}.linux-x64.tar.gz::https://github.com/recyclarr/recyclarr/releases/download/v${pkgver}/recyclarr-linux-x64.tar.xz")
