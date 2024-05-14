@@ -14,6 +14,7 @@ After=network.target
 User=bazarr
 Group=bazarr
 Type=simple
+KillSignal=SIGINT
 ExecStart=/usr/bin/python /usr/lib/bazarr/bazarr.py --no-update --config /var/lib/bazarr
 Restart=on-failure
 SyslogIdentifier=bazarr
