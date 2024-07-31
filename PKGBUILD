@@ -25,8 +25,8 @@ optdepends=(
   'libgdiplus: provides a gdi+ compatible api'
 )
 
-provides=('radarr' 'radarr-aphrodite')
-conflicts=('radarr' 'radarr-aphrodite')
+provides=('radarr')
+conflicts=('radarr')
 
 source_x86_64=("Radarr.nightly.${pkgver}.linux-core-x64.tar.gz::https://radarr.servarr.com/v1/update/nightly/updatefile?version=${pkgver}&os=linux&runtime=netcore&arch=x64") 
 source_aarch64=("Radarr.nightly.${pkgver}.linux-core-arm64.tar.gz::https://radarr.servarr.com/v1/update/nightly/updatefile?version=${pkgver}&os=linux&runtime=netcore&arch=arm64") 
