@@ -31,10 +31,10 @@ pkgbase = lidarr
 	sha512sums = ffd466960527256d8de1d9887d90d4da87486eff062950c46cbc4fd4af1ef89e7d5c070ef1e649b23a95fbab15651e289fd5bdc6d34649e4a6ecdf2f6da06622
 	sha512sums = cabbd3d6387f4198097573da23032d80c1fec11835c180e55a28ee54c79c821d3c49c039762cc3ddc5126efc37d50d93cdd89a75ff809a3d533533a30353933e
 	source_x86_64 = lidarr-2.5.3.4341-linux-core-x64.tar.gz::https://services.lidarr.audio/v1/update/master/updatefile?version=2.5.3.4341&os=linux&runtime=netcore&arch=x64
-	sha512sums_x86_64 = dfaa568cbdbd40a1aa79bd863accb27b414c8b1e911eb6912e3e0d7d7fba9364c82042cbd96b47a884770f6656245c777112e156248628aed43c73e45193b3f7
+	sha512sums_x86_64 = d372d85ecef1098040984b74551e446e4444460bd57a57e5cdbc59e4d96383a4662b951c9738eff4b096fba1852a921f841366537796af7a70e497ed243bfdb1
 	source_aarch64 = lidarr-2.5.3.4341-linux-core-arm64.tar.gz::https://services.lidarr.audio/v1/update/master/updatefile?version=2.5.3.4341&os=linux&runtime=netcore&arch=arm64
-	sha512sums_aarch64 = dfaa568cbdbd40a1aa79bd863accb27b414c8b1e911eb6912e3e0d7d7fba9364c82042cbd96b47a884770f6656245c777112e156248628aed43c73e45193b3f7
+	sha512sums_aarch64 = 20c401e3aec27487720bbd7a28851773842f24a43cb40bc01b8e1559834fd4093ac9ad9f18aa8bfcd614b4ff6811a30303bb63a7f4ace991de8efbaf70d5e912
 	source_armv7h = lidarr-2.5.3.4341-linux-core-arm.tar.gz::https://services.lidarr.audio/v1/update/master/updatefile?version=2.5.3.4341&os=linux&runtime=netcore&arch=arm
-	sha512sums_armv7h = dfaa568cbdbd40a1aa79bd863accb27b414c8b1e911eb6912e3e0d7d7fba9364c82042cbd96b47a884770f6656245c777112e156248628aed43c73e45193b3f7
+	sha512sums_armv7h = b51f0ffa0544dfe470b2f9111ecf1d3ceac73f864a69375ac0d8633425e319eb926a305833bdaf67f8c55ac343d5507e1aadc08e3fbeb6eb80557de630c04311
 
 pkgname = lidarr
