@@ -1,8 +1,8 @@
 # Maintainer: George Rawlinson <grawlinson@archlinux.org>
 
 pkgname=autobrr
-pkgver=1.46.1
-_commit='2681c2357dc74b5b50be1e61df69c1858849840a'
+pkgver=1.47.0
+_commit='d15b61870eb01d8f8093e87a4b1e4c40ec71977c'
 pkgrel=1
 pkgdesc='The modern download automation tool for torrents'
 arch=('x86_64')
@@ -31,7 +31,7 @@ source=(
   'sysusers.conf'
   'tmpfiles.conf'
 )
-b2sums=('b842138dc2fec2ebb1701eda26617207966d968b55f4d557cd2dfab0a89a23cad3aefb9cb2d2c490112fa37b51daa048d47f48f6970fc67756d8dddb013d701e'
+b2sums=('28c5d4e4c860683768e1c2e8a6003750a7d55ad5c7d72b32ad5ffcf6366bddd1a179aac4bf77ae652517b05d0df7a32f79cca5f73908a0901099717ce583e203'
         '68956fdadf43c4c714b0867dd5840971472e5647d3fef81a9b6a371610e7dbf1665b19945812ea2731da8e66f063db4f7fcefb1a4e70c5a437ecfa164697d8f7'
         'bd63a8a0f66561c10c81c85f8488c4e89e6c65fda6fb21715c24f7d9c565f0da502dd6b6ab68df360620dcc5aa5cc3fcf3e9ede6f202b5ddde6d2c2d0765342d'
         '55e4ab4ad7434d8868fb90e764a541aacf0bbe9e5236fa17f0184252c494d9d77d6b16b6f8106e5eb5d8161f0f20dd464ab052a46de949d5e4a5f89c51e2fdab')
