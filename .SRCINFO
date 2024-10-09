@@ -1,6 +1,6 @@
 pkgbase = autobrr
 	pkgdesc = The modern download automation tool for torrents
-	pkgver = 1.47.0
+	pkgver = 1.47.1
 	pkgrel = 1
 	url = https://autobrr.com
 	arch = x86_64
@@ -18,11 +18,11 @@ pkgbase = autobrr
 	optdepends = sonarr
 	optdepends = lidarr
 	options = !lto
-	source = autobrr::git+https://github.com/autobrr/autobrr#commit=d15b61870eb01d8f8093e87a4b1e4c40ec71977c
+	source = autobrr::git+https://github.com/autobrr/autobrr#commit=00326d248613b6e77b3ec396d94394e5926b09b1
 	source = systemd.service
 	source = sysusers.conf
 	source = tmpfiles.conf
-	b2sums = 28c5d4e4c860683768e1c2e8a6003750a7d55ad5c7d72b32ad5ffcf6366bddd1a179aac4bf77ae652517b05d0df7a32f79cca5f73908a0901099717ce583e203
+	b2sums = 28d4b95da0e6b8c86ae23ca2fd6f8b89add2f98ce314fb05e818c7448a2b8df5c86ef4e865c32728d5476a7b8df68b4c1307ea290d53e739188461fec04a8d19
 	b2sums = 68956fdadf43c4c714b0867dd5840971472e5647d3fef81a9b6a371610e7dbf1665b19945812ea2731da8e66f063db4f7fcefb1a4e70c5a437ecfa164697d8f7
 	b2sums = bd63a8a0f66561c10c81c85f8488c4e89e6c65fda6fb21715c24f7d9c565f0da502dd6b6ab68df360620dcc5aa5cc3fcf3e9ede6f202b5ddde6d2c2d0765342d
 	b2sums = 55e4ab4ad7434d8868fb90e764a541aacf0bbe9e5236fa17f0184252c494d9d77d6b16b6f8106e5eb5d8161f0f20dd464ab052a46de949d5e4a5f89c51e2fdab
