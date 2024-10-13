@@ -1,5 +1,4 @@
-*.xz
-*.gz
-*.log
-/src/
-/pkg/
+src/
+pkg/
+
+*.tar.*
