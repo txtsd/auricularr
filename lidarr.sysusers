@@ -1,1 +1,2 @@
-u lidarr - "Lidarr daemon" /var/lib/lidarr
+u lidarr - "Lidarr Daemon" /var/lib/lidarr
+g lidarr
