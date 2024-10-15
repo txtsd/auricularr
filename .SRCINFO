@@ -22,7 +22,6 @@ pkgbase = prowlarr-bin
 	optdepends = transmission-qt: torrent downloader (Qt)
 	optdepends = jackett: torrent indexer proxy
 	optdepends = nzbhydra2: torznab and usenet indexer proxy
-	optdepends = prowlarr: torrent and usenet indexer proxy
 	provides = prowlarr
 	conflicts = prowlarr
 	options = !debug
