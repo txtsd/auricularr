@@ -1,5 +1,5 @@
-# Maintainer: Donald Webster <fryfrog@gmail.com>
-# Contributor: txtsd <aur.archlinux@ihavea.quest>
+# Maintainer: txtsd <aur.archlinux@ihavea.quest>
+# Contributor: Donald Webster <fryfrog@gmail.com>
 
 pkgname=radarr-bin
 pkgver=5.12.2.9335
