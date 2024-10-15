@@ -1,68 +1,70 @@
-# Maintainer: Sven Frenzel <aur@frenzel.dk>
-# Maintainer: Donald Webster <fryfrog@gmail.com>
+# Maintainer: txtsd <aur.archlinux@ihavea.quest>
+# Contributor: Donald Webster <fryfrog@gmail.com>
+# Contributor: Sven Frenzel <aur@frenzel.dk>
 # Helpful url: https://services.lidarr.audio/v1/update/master?version=0.0.0.0&os=linux&runtime=netcore&arch=x64
 
-pkgname='lidarr'
+pkgname=lidarr-bin
 pkgver=2.6.4.4402
 pkgrel=1
-pkgdesc="Music download automation for usenet and torrents."
+pkgdesc="Music collection manager for newsgroup and bittorrent users."
 arch=('x86_64' 'aarch64' 'armv7h')
-url="https://github.com/lidarr/Lidarr"
-license=("GPL3")
-depends=('sqlite' 'chromaprint')
-options=('!strip' 'staticlibs')
+url="https://lidarr.audio"
+license=('GPL-3.0-or-later')
+groups=('servarr')
+depends=(
+  'gcc-libs'
+  'glibc'
+  'zlib'
+  'sqlite'
+)
 optdepends=(
   'sabnzbd: usenet downloader'
   'nzbget: usenet downloader'
+  'qbittorrent: torrent downloader'
+  'deluge: torrent downloader'
+  'rtorrent: torrent downloader'
   'transmission-cli: torrent downloader (CLI and daemon)'
   'transmission-gtk: torrent downloader (GTK+)'
   'transmission-qt: torrent downloader (Qt)'
-  'deluge: torrent downloader'
-  'rtorrent: torrent downloader'
-  'qbittorrent: torrent downloader'
-  'qbittorrent-nox: torrent downloader (no X)'
   'jackett: torrent indexer proxy'
-  'libgdiplus: provides a gdi+ compatible api'
+  'nzbhydra2: torznab and usenet indexer proxy'
+  'prowlarr: torrent and usenet indexer proxy'
 )
-
-source_x86_64=("lidarr-${pkgver}-linux-core-x64.tar.gz::https://services.lidarr.audio/v1/update/master/updatefile?version=${pkgver}&os=linux&runtime=netcore&arch=x64")
-source_aarch64=("lidarr-${pkgver}-linux-core-arm64.tar.gz::https://services.lidarr.audio/v1/update/master/updatefile?version=${pkgver}&os=linux&runtime=netcore&arch=arm64")
-source_armv7h=("lidarr-${pkgver}-linux-core-arm.tar.gz::https://services.lidarr.audio/v1/update/master/updatefile?version=${pkgver}&os=linux&runtime=netcore&arch=arm")
-
+provides=(lidarr)
+conflicts=(lidarr)
+options=('!debug')
 source=(
   'lidarr.service'
   'lidarr.tmpfiles'
   'lidarr.sysusers'
   'package_info'
 )
-
-sha512sums=('fdf34b2105bbdd546bd4e9520e8c69ae594b87ea8c2581b8bdb69b54d7c54b6647187aa4dcb09d48d679a6f5b9ebf405ee90103dd8ef5535c4cf6d40e1178f66'
-            'e40ce79a3e1741e7e06312797e652a85d199bd6d719ef953ea8c3c030756ee44e202956ac9e13cff17fac38312c27398f457f79923a7d0f56bd563a69af6ab63'
-            'ffd466960527256d8de1d9887d90d4da87486eff062950c46cbc4fd4af1ef89e7d5c070ef1e649b23a95fbab15651e289fd5bdc6d34649e4a6ecdf2f6da06622'
-            'cabbd3d6387f4198097573da23032d80c1fec11835c180e55a28ee54c79c821d3c49c039762cc3ddc5126efc37d50d93cdd89a75ff809a3d533533a30353933e')
-sha512sums_x86_64=('585b6ab96b06c4950fe03d9b3bb89c25095d22665a699e3d9b6dd202f89d507589b48f2d9ffa5be240b470bc5cbaae4568e5b58917aea3d95489fee5619add3d')
-sha512sums_aarch64=('c3ac715189a81ad76bf7f6ca9d6902ba04474ba73d4cf87556a5cbccdc78ffc3e236131136470de0fae6d38ff72502fe1b9e414482088d1fa605f38c229270eb')
-sha512sums_armv7h=('2038b0e1c9c2f6711fc7078a3564360fa357dedc8454aa5cd354fd3b146770b50adc3e6b09e0be42753ee61da14a6cd2a8b6981a560926b6cc3ec9db79d39c99')
-
-
+source_x86_64=("https://github.com/Lidarr/Lidarr/releases/download/v${pkgver}/Lidarr.master.${pkgver}.linux-core-x64.tar.gz")
+source_aarch64=("https://github.com/Lidarr/Lidarr/releases/download/v${pkgver}/Lidarr.master.${pkgver}.linux-core-arm64.tar.gz")
+source_armv7h=("https://github.com/Lidarr/Lidarr/releases/download/v${pkgver}/Lidarr.master.${pkgver}.linux-core-arm.tar.gz")
+sha256sums=('dcbe3d2a3d64a78a4b2b84a3486991a8b90fdd6900d7345004827a168f8b5645'
+            'abde8989e7ab9dc62b6a501644da5a9253953b6394b890565e00a69cbfd89068'
+            '19b36aefd2ef93d4a630ceaefe582573ecdaa72ec21bfb48ce3941ead7b967fb'
+            '19435dff2251782714875af95a38d8491cee6c178e8f32e3c3b6e566b3edc931')
+sha256sums_x86_64=('2554f4ee3d782b7ed543d17e4669eb8b3e29f6d68fa30e676b0527aa68b44f1e')
+sha256sums_aarch64=('15ce67026d21c90f1586243651528461b855960f4337c3440bf0cd03cc7cc4a9')
+sha256sums_armv7h=('f90631d93c39dae9bafdac1dc0698299f51eb1974ba893b566f29a0fe251a816')
 
 package() {
-  # Update environment isn't needed.
-  rm -rf "${srcdir}/Lidarr/Lidarr.Update"
+  install -dm755 "${pkgdir}/usr/lib/lidarr/bin"
 
-  # The fpcalc binary comes from chromaprint.
-  rm -rf "${srcdir}/Lidarr/fpcalc"
-
-  install -d -m 755 "${pkgdir}/usr/lib/lidarr/bin"
-  cp -dpr --no-preserve=ownership "${srcdir}/Lidarr/"* "${pkgdir}/usr/lib/lidarr/bin"
-  chmod -R a=,a+rX,u+w "${pkgdir}/usr/lib/lidarr/bin"
-  chmod +x "${pkgdir}/usr/lib/lidarr/bin/Lidarr"
+  # License
+  install -Dm644 "${srcdir}/Lidarr/LICENSE.md" "${pkgdir}/usr/share/licenses/${pkgname}"
+  rm "${srcdir}/Lidarr/LICENSE.md"
 
   # Disable built in updater.
-  install -D -m 644 "${srcdir}/package_info" "${pkgdir}/usr/lib/lidarr"
+  rm -rf "${srcdir}/Lidarr/Lidarr.Update"
+  install -Dm644 "${srcdir}/package_info" "${pkgdir}/usr/lib/lidarr"
   echo "PackageVersion=${pkgver}-${pkgrel}" >> "${pkgdir}/usr/lib/lidarr/package_info"
 
-  install -D -m 644 "${srcdir}/lidarr.service" "${pkgdir}/usr/lib/systemd/system/lidarr.service"
-  install -D -m 644 "${srcdir}/lidarr.sysusers" "${pkgdir}/usr/lib/sysusers.d/lidarr.conf"
-  install -D -m 644 "${srcdir}/lidarr.tmpfiles" "${pkgdir}/usr/lib/tmpfiles.d/lidarr.conf"
+  cp -dpr --no-preserve=ownership "${srcdir}/Lidarr/"* "${pkgdir}/usr/lib/lidarr/bin"
+
+  install -Dm644 "${srcdir}/lidarr.service" "${pkgdir}/usr/lib/systemd/system/lidarr.service"
+  install -Dm644 "${srcdir}/lidarr.sysusers" "${pkgdir}/usr/lib/sysusers.d/lidarr.conf"
+  install -Dm644 "${srcdir}/lidarr.tmpfiles" "${pkgdir}/usr/lib/tmpfiles.d/lidarr.conf"
 }
