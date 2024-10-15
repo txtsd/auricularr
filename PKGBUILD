@@ -61,6 +61,7 @@ package() {
   cp -dpr --no-preserve=ownership "${srcdir}/Sonarr/"* "${pkgdir}/usr/lib/sonarr/bin"
 
   # Disable built in updater.
+  rm -rf "${srcdir}/Sonarr/Sonarr.Update"
   install -Dm644 "${srcdir}/package_info" "${pkgdir}/usr/lib/sonarr"
   echo "PackageVersion=${pkgver}-${pkgrel}" >> "${pkgdir}/usr/lib/sonarr/package_info"
 
