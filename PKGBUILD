@@ -8,6 +8,7 @@ pkgdesc="Movie organizer/manager for usenet and torrent users."
 arch=('x86_64' 'aarch64' 'armv7h')
 url="https://radarr.video"
 license=('GPL-3.0-or-later')
+groups=('servarr')
 depends=(
   'gcc-libs'
   'glibc'
@@ -31,10 +32,12 @@ optdepends=(
 provides=(radarr)
 conflicts=(radarr)
 options=('!debug')
-source=('radarr.service'
-        'radarr.tmpfiles'
-        'radarr.sysusers'
-        'package_info')
+source=(
+  'radarr.service'
+  'radarr.tmpfiles'
+  'radarr.sysusers'
+  'package_info'
+)
 source_x86_64=("https://github.com/Radarr/Radarr/releases/download/v${pkgver}/Radarr.master.${pkgver}.linux-core-x64.tar.gz")
 source_aarch64=("https://github.com/Radarr/Radarr/releases/download/v${pkgver}/Radarr.master.${pkgver}.linux-core-arm64.tar.gz")
 source_armv7h=("https://github.com/Radarr/Radarr/releases/download/v${pkgver}/Radarr.master.${pkgver}.linux-core-arm.tar.gz")

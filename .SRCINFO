@@ -6,6 +6,7 @@ pkgbase = radarr-bin
 	arch = x86_64
 	arch = aarch64
 	arch = armv7h
+	groups = servarr
 	license = GPL-3.0-or-later
 	depends = gcc-libs
 	depends = glibc
