@@ -1,54 +1,132 @@
-# Maintainer: Donald Webster <fryfrog@gmail.com>
-# Helpful url: https://prowlarr.servarr.com/v1/update/master?version=0.0.0.0&os=linux&runtime=netcore&arch=x64
+# Maintainer: txtsd <aur.archlinux@ihavea.quest>
+# Contributor: Donald Webster <fryfrog@gmail.com>
+# Helpful URL: https://prowlarr.servarr.com/v1/update/master?version=0.0.0.0&os=linux&runtime=netcore&arch=x64
 
-pkgname="prowlarr"
+pkgname=prowlarr
+_pkgname=Prowlarr
 pkgver=1.24.3.4754
 pkgrel=1
-pkgdesc="Usenet and torrent aggregator, similar to nzbhydra2 and jackett."
+pkgdesc='Indexer manager/proxy for usenet and torrent users.'
 arch=('x86_64' 'aarch64' 'armv7h')
-url="https://github.com/Prowlarr/Prowlarr"
-license=('GPL3')
-options=('!strip' 'staticlibs')
-depends=('sqlite')
+url='https://prowlarr.tv'
+license=('GPL-3.0-or-later')
+groups=('servarr')
+depends=(
+  'aspnet-runtime-6.0'
+  'gcc-libs'
+  'glibc'
+  'sqlite'
+)
+makedepends=('dotnet-sdk-6.0' 'yarn')
 optdepends=(
-  'sonarr: automatically adds and remove indexers/trackers'
-  'radarr: automatically adds and remove indexers/trackers'
-  'lidarr: automatically adds and remove indexers/trackers'
-  'readarr: automatically adds and remove indexers/trackers'
+  'sabnzbd: usenet downloader'
+  'nzbget: usenet downloader'
+  'qbittorrent: torrent downloader'
+  'deluge: torrent downloader'
+  'rtorrent: torrent downloader'
+  'transmission-cli: torrent downloader (CLI and daemon)'
+  'transmission-gtk: torrent downloader (GTK+)'
+  'transmission-qt: torrent downloader (Qt)'
+  'jackett: torrent indexer proxy'
+  'nzbhydra2: torznab and usenet indexer proxy'
 )
-
-source_x86_64=("prowlarr.master.${pkgver}.linux-core-x64.tar.gz::https://prowlarr.servarr.com/v1/update/master/updatefile?version=${pkgver}&os=linux&runtime=netcore&arch=x64") 
-source_aarch64=("prowlarr.master.${pkgver}.linux-core-arm64.tar.gz::https://prowlarr.servarr.com/v1/update/master/updatefile?version=${pkgver}&os=linux&runtime=netcore&arch=arm64") 
-source_armv7h=("prowlarr.master.${pkgver}.linux-core-arm.tar.gz::https://prowlarr.servarr.com/v1/update/master/updatefile?version=${pkgver}&os=linux&runtime=netcore&arch=arm")
-
+options=(!debug)
 source=(
-  'prowlarr.service'
-  'prowlarr.tmpfiles'
-  'prowlarr.sysusers'
+  "${pkgname}-${pkgver}.tar.gz::https://github.com/Prowlarr/Prowlarr/archive/refs/tags/v${pkgver}.tar.gz"
   'package_info'
+  'prowlarr.service'
+  'prowlarr.sysusers'
+  'prowlarr.tmpfiles'
 )
+sha256sums=('3190781c31987d9d4b12fa3c1a6515ad31b436581aaf058114667612a38445ba'
+            '1f9f8018436bd1e29a36c203639083d614722b65a4db64e22bf0c3295fc03fb8'
+            '21ca63506b3cffcca8dcd95e1bdf3fa8415f1bc134c31a153b51b573dc31d390'
+            '08d51099f09721b173233e58172c486025c16034dd89e73ccb42b647dcc34c4b'
+            '4c3f9b5fa71810697efbe60f20a2cba24fd1b997d5372c3726457b197d61ccb5')
 
-sha512sums=('66a0fa8cdfb6119db300bb00bdead9c472776e8d5175fd313039116de4ed5b761ed13973229393106519e6ed4a45ec9709bd2c6099cd655448c5a1af2baf7b89'
-            '9159ceda0955f2ebc495dd470c9d6234d8534a120ab81fa58fefae94a8ecfdc8fe883fb1287bc10429e7b4f35ac59d36232d716c161a242a4bfcdff768f1b9a2'
-            '6ebd6f268e5aa7446e3c77540f5c95b3237959892e8800f5f380a0f979c71ec0d6f7664c1a58f7d10a255bc21a19bad0fef8609b02b4d5e15f340e66364017d2'
-            '13562cac353f9fbf3545613d49186b5c7b35a3726b003133044212f65ec51eece88fb06017a90d0a67fa5cf694fed142c20704cc174b408016f9e3176296c5b6')
-sha512sums_x86_64=('fec46db51a17f4e6dd9626818cd5f8af58b75eddc95f0bd4d5662dca2f290d330629162e0ad2dc58edf0221dd67ca62b8cee4fbd245635d4d389eb997b306a94')
-sha512sums_aarch64=('b9168460bbf13717f753ff834fcf4e595d70592b0859c26d05bb7bd91b0b297b2c9ce3e7f599d8c62f76d7d6a6da1b5084eb16e1e90ca3d1a45f5c4d58a088c6')
-sha512sums_armv7h=('b8bb1b9503f20a015445cc000c0a1b3edf10aa75a74030613e647807ce190089c1ea70a15b14507c600b0af472e236d0861bc4b55cb30bcc0a95cdd762665353')
+case ${CARCH} in
+  x86_64)  _CARCH='x64';;
+  aarch64) _CARCH='arm64';;
+  armv7h)  _CARCH='arm';;
+esac
 
+_framework='net6.0'
+_runtime="linux-${_CARCH}"
+_output="_output"
+_artifacts="${_output}/${_framework}/${_runtime}/publish"
+
+prepare() {
+  cd "${srcdir}/${_pkgname}-${pkgver}"
+
+  # Fix CVE-2024-43485
+  sed 's/System\.Text\.Json" Version="6\.0\.9"/System\.Text\.Json" Version="6\.0\.10"/' -i src/NzbDrone.Common/Prowlarr.Common.csproj
+  sed 's/System\.Text\.Json" Version="6\.0\.9"/System\.Text\.Json" Version="6\.0\.10"/' -i src/NzbDrone.Core/Prowlarr.Core.csproj
+
+  yarn install --frozen-lockfile --network-timeout 120000
+}
+
+build() {
+  cd "${srcdir}/${_pkgname}-${pkgver}"
+
+  export DOTNET_CLI_TELEMETRY_OPTOUT=1
+  dotnet build src/${_pkgname}.sln \
+    --framework ${_framework} \
+    --runtime ${_runtime} \
+    --no-self-contained \
+    --configuration Release \
+    -p:Platform=Posix \
+    -p:AssemblyVersion=${pkgver} \
+    -p:AssemblyConfiguration=main \
+    -p:RuntimeIdentifiers=${_runtime} \
+    -t:PublishAllRids \
+  && dotnet build-server shutdown   # Build servers do not terminate automatically
+
+  # Remove Service Helpers, Update, and Windows files
+  rm "${_artifacts}/ServiceInstall."*
+  rm "${_artifacts}/ServiceUninstall."*
+  rm "${_artifacts}/Prowlarr.Windows."*
+
+  yarn run build --env production
+}
+
+check() {
+  cd "${srcdir}/${_pkgname}-${pkgver}"
+  local _filters="Category!=ManualTest&Category!=AutomationTest&Category!=WINDOWS"
+
+  # Skip Tests:
+  # These tests fail because /etc/arch-release doesn't contain a ${VERSION_ID}
+  # See: https://github.com/Prowlarr/Prowlarr/issues/7299
+  # Integration tests also completely fail
+  _filters="${_filters}&FullyQualifiedName!~should_get_version_info"
+  _filters="${_filters}&FullyQualifiedName!~should_get_version_info_from_actual_linux"
+  _filters="${_filters}&Category!=IntegrationTest"
+
+  # Link build to tests
+  ln -sf ${srcdir}/${_pkgname}-${pkgver}/${_artifacts} _tests/${_framework}/${_runtime}/bin
+  mkdir -p ~/.config/Prowlarr
+
+  dotnet test src \
+    --runtime "${_runtime}" \
+    --configuration Release \
+    --filter "${_filters}" \
+    --no-build
+}
 
 package() {
-  rm -rf "${srcdir}/Prowlarr/prowlarr.Update"
-  install -d -m 755 "${pkgdir}/usr/lib/prowlarr/bin"
-  cp -dpr --no-preserve=ownership "${srcdir}/Prowlarr/"* "${pkgdir}/usr/lib/prowlarr/bin"
-  chmod -R a=,a+rX,u+w "${pkgdir}/usr/lib/prowlarr/bin"
-  chmod +x "${pkgdir}/usr/lib/prowlarr/bin/Prowlarr"
+  cd "${srcdir}/${_pkgname}-${pkgver}"
+  install -dm755 "${pkgdir}/usr/lib/prowlarr/bin/UI"
+
+  cp -dpr --no-preserve=ownership "${_artifacts}/"* "${pkgdir}/usr/lib/prowlarr/bin"
+  cp -dpr --no-preserve=ownership "${_output}/UI/"* "${pkgdir}/usr/lib/prowlarr/bin/UI"
+
+  # License
+  install -Dm644 "${srcdir}/${_pkgname}-${pkgver}/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}"
 
   # Disable built in updater.
-  install -D -m 644 "${srcdir}/package_info" "${pkgdir}/usr/lib/prowlarr"
+  install -Dm644 "${srcdir}/package_info" "${pkgdir}/usr/lib/prowlarr"
   echo "PackageVersion=${pkgver}-${pkgrel}" >> "${pkgdir}/usr/lib/prowlarr/package_info"
 
-  install -D -m 644 "${srcdir}/prowlarr.service" "${pkgdir}/usr/lib/systemd/system/prowlarr.service"
-  install -D -m 644 "${srcdir}/prowlarr.sysusers" "${pkgdir}/usr/lib/sysusers.d/prowlarr.conf"
-  install -D -m 644 "${srcdir}/prowlarr.tmpfiles" "${pkgdir}/usr/lib/tmpfiles.d/prowlarr.conf"
+  install -Dm644 "${srcdir}/prowlarr.service" "${pkgdir}/usr/lib/systemd/system/prowlarr.service"
+  install -Dm644 "${srcdir}/prowlarr.sysusers" "${pkgdir}/usr/lib/sysusers.d/prowlarr.conf"
+  install -Dm644 "${srcdir}/prowlarr.tmpfiles" "${pkgdir}/usr/lib/tmpfiles.d/prowlarr.conf"
 }
