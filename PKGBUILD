@@ -3,18 +3,22 @@
 # Contributor: Daniel Egeberg <daniel.egeberg@gmail.com>
 # Helpful URL: http://services.sonarr.tv/v1/releases
 
-pkgname='sonarr-develop'
-pkgver=4.0.9.2513
+pkgname=sonarr-develop
+_pkgname=Sonarr
+pkgver=4.0.9.2244
 pkgrel=1
-pkgdesc='TV download automation for usenet and torrents.'
+pkgdesc='Smart PVR for newsgroup and bittorrent users (develop branch)'
 arch=('x86_64' 'aarch64' 'armv7h')
-url='https://sonarr.tv/'
-license=('GPL3')
-
+url='https://sonarr.tv'
+license=('GPL-3.0-or-later')
+groups=('servarr')
 depends=(
+  'aspnet-runtime-6.0'
+  'gcc-libs'
+  'glibc'
   'sqlite'
 )
-
+makedepends=('dotnet-sdk-6.0' 'yarn')
 optdepends=(
   'sabnzbd: usenet downloader'
   'nzbget: usenet downloader'
@@ -28,42 +32,107 @@ optdepends=(
   'nzbhydra2: torznab and usenet indexer proxy'
   'prowlarr: torrent and usenet indexer proxy'
 )
-
-provides=('sonarr')
-
-conflicts=(
-  'sonarr'
-)
-
-source_x86_64=("https://github.com/Sonarr/Sonarr/releases/download/v${pkgver}/Sonarr.develop.${pkgver}.linux-x64.tar.gz")
-source_aarch64=("https://github.com/Sonarr/Sonarr/releases/download/v${pkgver}/Sonarr.develop.${pkgver}.linux-arm64.tar.gz")
-source_armv7h=("https://github.com/Sonarr/Sonarr/releases/download/v${pkgver}/Sonarr.develop.${pkgver}.linux-arm.tar.gz")
-
+options=(!debug)
 source=(
+  "${pkgname}-${pkgver}.tar.gz::https://github.com/Sonarr/Sonarr/archive/refs/tags/v${pkgver}.tar.gz"
+  'package_info'
   'sonarr.service'
   'sonarr.sysusers'
   'sonarr.tmpfiles'
-  'package_info'
 )
+sha256sums=('5eb07dba6b45abbcd3f443fbe6d85539997aa663015156ee1ce4aa1ab52460f2'
+            'a6b37e75143a309b1d8c163c3f90f7f0275fd730015c3f74e3ad27c278b1ae90'
+            'b26aa01e07e5864b588ebe51a2993eaafb03fa0f7ec3806f2996dd2daf46aee7'
+            '047585a1d448ad2c6e2962fb60d4f71e01a2529e464b25d340bb0d31b8e0f08f'
+            '7bf87304383b7d58ecab59b3686d00a8f1b6fbe4af3a86da35a887e4cebee411')
 
-noextract=()
-sha256sums=('ea1190896fb444e74ce16546ddec851575d083906964c63d4794d47186bdd587'
-            'cc3c69f719fa64335f4c5b41b2588f1ec56865fb2202f5919d3668b50b8f398e'
-            '7bf87304383b7d58ecab59b3686d00a8f1b6fbe4af3a86da35a887e4cebee411'
-            'a6b37e75143a309b1d8c163c3f90f7f0275fd730015c3f74e3ad27c278b1ae90')
-sha256sums_x86_64=('3a917d1d54a3d2c5f746c8fd4452b0a30c66c500a379f4fcec2e3757f1b8de74')
-sha256sums_aarch64=('16c211b464107e1ce71e82e6df735ac77afb19e00f9e7e5193b790af0c60ae15')
-sha256sums_armv7h=('41f62bc262481eef6b1a202a0acf73b27a35cb798c06b9d1a9a4d15877d642ac')
+case ${CARCH} in
+  x86_64)  _CARCH='x64';;
+  aarch64) _CARCH='arm64';;
+  armv7h)  _CARCH='arm';;
+esac
+
+_framework='net6.0'
+_runtime="linux-${_CARCH}"
+_output="_output"
+_artifacts="${_output}/${_framework}/${_runtime}/publish"
+
+prepare() {
+  cd "${srcdir}/${_pkgname}-${pkgver}"
+
+  # Remove upstream dotnet version
+  rm global.json
+
+  # Fix CVE-2024-43485
+  sed 's/System\.Text\.Json" Version="6\.0\.9"/System\.Text\.Json" Version="6\.0\.10"/' -i src/NzbDrone.Common/Sonarr.Common.csproj
+  sed 's/System\.Text\.Json" Version="6\.0\.9"/System\.Text\.Json" Version="6\.0\.10"/' -i src/NzbDrone.Core/Sonarr.Core.csproj
+
+  yarn install --frozen-lockfile --network-timeout 120000
+}
+
+build() {
+  cd "${srcdir}/${_pkgname}-${pkgver}"
+
+  export DOTNET_CLI_TELEMETRY_OPTOUT=1
+  dotnet build src/${_pkgname}.sln \
+    --framework ${_framework} \
+    --runtime ${_runtime} \
+    --no-self-contained \
+    --configuration Release \
+    -p:Platform=Posix \
+    -p:AssemblyVersion=${pkgver} \
+    -p:AssemblyConfiguration=main \
+    -p:RuntimeIdentifiers=${_runtime} \
+    -t:PublishAllRids \
+  && dotnet build-server shutdown   # Build servers do not terminate automatically
+
+  # Remove Service Helpers, Update, and Windows files
+  rm "${_artifacts}/ServiceInstall."*
+  rm "${_artifacts}/ServiceUninstall."*
+  rm "${_artifacts}/Sonarr.Windows."*
+
+  # Fix ffprobe permissions
+  chmod +x "${_artifacts}"/ffprobe
+
+  yarn run build --env production
+}
+
+check() {
+  cd "${srcdir}/${_pkgname}-${pkgver}"
+  local _filters="Category!=ManualTest&Category!=AutomationTest&Category!=WINDOWS"
+
+  # Skip Tests:
+  # These tests fail because /etc/arch-release doesn't contain a ${VERSION_ID}
+  # See: https://github.com/Sonarr/Sonarr/issues/7299
+  _filters="${_filters}&FullyQualifiedName!~should_get_version_info"
+  _filters="${_filters}&FullyQualifiedName!~should_get_version_info_from_actual_linux"
+
+  # Link build to tests
+  ln -sf ../../../${_artifacts} _tests/${_framework}/${_runtime}/bin
+  mkdir -p ~/.config/Sonarr
+
+  dotnet test src \
+    --runtime "${_runtime}" \
+    --configuration Release \
+    --filter "${_filters}" \
+    --no-build
+}
+
 package() {
-  rm -rf "${srcdir}/Sonarr/Sonarr.Update"
-  install -d -m 755 "${pkgdir}/usr/lib/sonarr/bin"
-  cp -dpr --no-preserve=ownership "${srcdir}/Sonarr/"* "${pkgdir}/usr/lib/sonarr/bin"
+  cd "${srcdir}/${_pkgname}-${pkgver}"
+  install -dm755 "${pkgdir}/usr/lib/sonarr/bin/UI"
+
+  cp -dpr --no-preserve=ownership "${_artifacts}/"* "${pkgdir}/usr/lib/sonarr/bin"
+  cp -dpr --no-preserve=ownership "${_output}/UI/"* "${pkgdir}/usr/lib/sonarr/bin/UI"
+
+  # License
+  install -Dm644 "${srcdir}/${_pkgname}-${pkgver}/LICENSE.md" "${pkgdir}/usr/share/licenses/${pkgname}"
 
   # Disable built in updater.
-  install -D -m 644 "${srcdir}/package_info" "${pkgdir}/usr/lib/sonarr"
+  install -Dm644 "${srcdir}/package_info" "${pkgdir}/usr/lib/sonarr"
   echo "PackageVersion=${pkgver}-${pkgrel}" >> "${pkgdir}/usr/lib/sonarr/package_info"
 
-  install -D -m 644 "${srcdir}/sonarr.sysusers" "${pkgdir}/usr/lib/sysusers.d/sonarr.conf"
-  install -D -m 644 "${srcdir}/sonarr.service" "${pkgdir}/usr/lib/systemd/system/sonarr.service"
-  install -D -m 644 "${srcdir}/sonarr.tmpfiles" "${pkgdir}/usr/lib/tmpfiles.d/sonarr.conf"
+  install -Dm644 "${srcdir}/sonarr.service" "${pkgdir}/usr/lib/systemd/system/sonarr.service"
+  install -Dm644 "${srcdir}/sonarr.sysusers" "${pkgdir}/usr/lib/sysusers.d/sonarr.conf"
+  install -Dm644 "${srcdir}/sonarr.tmpfiles" "${pkgdir}/usr/lib/tmpfiles.d/sonarr.conf"
 }
