@@ -5,7 +5,7 @@
 # Helpful URL: https://services.sonarr.tv/v1/releases
 
 pkgname=sonarr-develop-bin
-pkgver=4.0.9.2244
+pkgver=4.0.9.2513
 pkgrel=1
 pkgdesc='Smart PVR for newsgroup and bittorrent users (develop branch)'
 arch=('x86_64' 'aarch64' 'armv7h')
@@ -40,16 +40,16 @@ source=(
   'sonarr.sysusers'
   'sonarr.tmpfiles'
 )
-source_x86_64=("https://github.com/Sonarr/Sonarr/releases/download/v${pkgver}/Sonarr.main.${pkgver}.linux-x64.tar.gz")
-source_aarch64=("https://github.com/Sonarr/Sonarr/releases/download/v${pkgver}/Sonarr.main.${pkgver}.linux-arm64.tar.gz")
-source_armv7h=("https://github.com/Sonarr/Sonarr/releases/download/v${pkgver}/Sonarr.main.${pkgver}.linux-arm.tar.gz")
+source_x86_64=("https://github.com/Sonarr/Sonarr/releases/download/v${pkgver}/Sonarr.develop.${pkgver}.linux-x64.tar.gz")
+source_aarch64=("https://github.com/Sonarr/Sonarr/releases/download/v${pkgver}/Sonarr.develop.${pkgver}.linux-arm64.tar.gz")
+source_armv7h=("https://github.com/Sonarr/Sonarr/releases/download/v${pkgver}/Sonarr.develop.${pkgver}.linux-arm.tar.gz")
 sha256sums=('a6b37e75143a309b1d8c163c3f90f7f0275fd730015c3f74e3ad27c278b1ae90'
             'b26aa01e07e5864b588ebe51a2993eaafb03fa0f7ec3806f2996dd2daf46aee7'
             '047585a1d448ad2c6e2962fb60d4f71e01a2529e464b25d340bb0d31b8e0f08f'
             '7bf87304383b7d58ecab59b3686d00a8f1b6fbe4af3a86da35a887e4cebee411')
-sha256sums_x86_64=('0bad4b09e61c90ee3a13f5a6fbae03c964b82c19789a690516663b14b75f15b0')
-sha256sums_aarch64=('04a6b5b24fde70441727ee131ce1db91bbab80be7f70167bfea6444d12f1a265')
-sha256sums_armv7h=('71b6d9d99e2937ebf5d35f6b05731c7bca7ee270014d09d0547a416cf67085b8')
+sha256sums_x86_64=('3a917d1d54a3d2c5f746c8fd4452b0a30c66c500a379f4fcec2e3757f1b8de74')
+sha256sums_aarch64=('16c211b464107e1ce71e82e6df735ac77afb19e00f9e7e5193b790af0c60ae15')
+sha256sums_armv7h=('41f62bc262481eef6b1a202a0acf73b27a35cb798c06b9d1a9a4d15877d642ac')
 
 package() {
   install -dm755 "${pkgdir}/usr/lib/sonarr/bin"
