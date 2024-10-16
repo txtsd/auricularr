@@ -1,0 +1,7 @@
+[radarr-develop]
+source = "github"
+github = "Radarr/Radarr"
+prefix = "v"
+include_regex = "v(\\d+\\.\\d+\\.\\d+\\.\\d+)"
+include_prereleases = true
+use_latest_release = true
