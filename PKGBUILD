@@ -1,15 +1,22 @@
+# Maintainer: txtsd <aur.archlinux@ihavea.quest>
+# Contributor: Donald Webster <fryfrog@gmail.com>
 
-# Maintainer: Donald Webster <fryfrog@gmail.com>
-
-pkgname="radarr-develop"
+pkgname=radarr-develop
+_pkgname=Radarr
 pkgver=5.12.2.9335
 pkgrel=1
-pkgdesc="Movie download automation for usenet and torrents."
+pkgdesc='Movie organizer/manager for usenet and torrent users (develop branch)'
 arch=('x86_64' 'aarch64' 'armv7h')
-url="https://github.com/Radarr/Radarr"
-license=('GPL3')
-options=('!strip' 'staticlibs')
-depends=('sqlite')
+url='https://radarr.tv'
+license=('GPL-3.0-or-later')
+groups=('servarr')
+depends=(
+  'aspnet-runtime-6.0'
+  'gcc-libs'
+  'glibc'
+  'sqlite'
+)
+makedepends=('dotnet-sdk-6.0' 'yarn')
 optdepends=(
   'sabnzbd: usenet downloader'
   'nzbget: usenet downloader'
@@ -22,42 +29,109 @@ optdepends=(
   'jackett: torrent indexer proxy'
   'nzbhydra2: torznab and usenet indexer proxy'
   'prowlarr: torrent and usenet indexer proxy'
-  'libgdiplus: provides a gdi+ compatible api'
 )
+provides=(radarr)
+conflicts=(radarr)
+options=(!debug)
+source=(
+  "${pkgname}-${pkgver}.tar.gz::https://github.com/Radarr/Radarr/archive/refs/tags/v${pkgver}.tar.gz"
+  'package_info'
+  'radarr.service'
+  'radarr.sysusers'
+  'radarr.tmpfiles'
+)
+sha256sums=('98379e63815e34cfd06b74804f64ee2ca4978fe51f2d45e64bcdd12b4760307c'
+            '4a41a56ab30f8b6001a666e867c7012bfe23760ec29eac957bf90e1dcb4ee36e'
+            'e2d5222d78523c31be3b1cf638bb5e07f175acd5d10ce39c839dd26ea2b01f67'
+            '8875537e5bff23cde3e94ddbd7919ee8c4d7b42a63913dd8b80e45691a16ecbd'
+            '2ab8c83b07e81839a1273c12a2b9ddce98e14bd5361e26dee0c21c824fc6c2ea')
 
-provides=('radarr')
-conflicts=('radarr')
+case ${CARCH} in
+  x86_64)  _CARCH='x64';;
+  aarch64) _CARCH='arm64';;
+  armv7h)  _CARCH='arm';;
+esac
 
-source_x86_64=("Radarr.develop.${pkgver}.linux-core-x64.tar.gz::https://radarr.servarr.com/v1/update/develop/updatefile?version=${pkgver}&os=linux&runtime=netcore&arch=x64") 
-source_aarch64=("Radarr.develop.${pkgver}.linux-core-arm64.tar.gz::https://radarr.servarr.com/v1/update/develop/updatefile?version=${pkgver}&os=linux&runtime=netcore&arch=arm64") 
-source_armv7h=("Radarr.develop.${pkgver}.linux-core-arm.tar.gz::https://radarr.servarr.com/v1/update/develop/updatefile?version=${pkgver}&os=linux&runtime=netcore&arch=arm")
+_framework='net6.0'
+_runtime="linux-${_CARCH}"
+_output="_output"
+_artifacts="${_output}/${_framework}/${_runtime}/publish"
 
-source=('radarr.service'
-        'radarr.tmpfiles'
-        'radarr.sysusers'
-        'package_info')
+prepare() {
+  cd "${srcdir}/${_pkgname}-${pkgver}"
 
-sha512sums=('9d5779044eac9d2023946bb83bfd62d95ec4853b1159c7f631324de9e6b8f5c20221efca07afe6387eb76530e6960862efc75307f3c9f597652c5a22778907cf'
-            '2ef38a061f4438349f7dafe209328fe9de5f44712f16435805e2622050be45a3fffd1838d9fccef2d6aa7603cf05b01280df6fed957b66d2d67ceaeeedcd5f6f'
-            'c1ee3925eced182ea7fffa55a6dc2a4e099ccf18636fc237ef0a2fc9517a38cfc2a819ae5a7bc546b63e383506f9f47e89454a71e34106c579d7454d71b2299e'
-            '3ece517c026422dd9f6a8c20e8832021c12be4fa84c85ec0758adf4c955620d2b0e75ee534a09b0f87ab587b374fcd757c818c722d147fd6cc9065735d7d6e0f')
-sha512sums_x86_64=('245d75251ddf9b44f6ac6fde862cc89734edbb2fb7afc3391f5bad12fcde6d4b7c50b7852b43a77cf823864083e0e39e930c7323c2fcb2c9b15551ef71362a17')
-sha512sums_aarch64=('dcb1d0164de4327e6d801bc53d7461525e65ede62f3258c43d1d323b7d3fbca1cd5f75a8ccdd808287c1d054ab69d29314030e453df1c36d88b63c5389a6cc7a')
-sha512sums_armv7h=('a8e7ad043d241466b8476793be74ef5a4fa7aa4aa8e9d794b777922fff145d4fac0c37e6834d029a2cc40b98cff8fe209f7324b8e9fd0c8e5404737bf72a7627')
+  # Fix CVE-2024-43485
+  sed 's/System\.Text\.Json" Version="6\.0\.9"/System\.Text\.Json" Version="6\.0\.10"/' -i src/NzbDrone.Common/Radarr.Common.csproj
+  sed 's/System\.Text\.Json" Version="6\.0\.9"/System\.Text\.Json" Version="6\.0\.10"/' -i src/NzbDrone.Core/Radarr.Core.csproj
 
+  yarn install --frozen-lockfile --network-timeout 120000
+}
+
+build() {
+  cd "${srcdir}/${_pkgname}-${pkgver}"
+
+  export DOTNET_CLI_TELEMETRY_OPTOUT=1
+  dotnet build src/${_pkgname}.sln \
+    --framework ${_framework} \
+    --runtime ${_runtime} \
+    --no-self-contained \
+    --configuration Release \
+    -p:Platform=Posix \
+    -p:AssemblyVersion=${pkgver} \
+    -p:AssemblyConfiguration=main \
+    -p:RuntimeIdentifiers=${_runtime} \
+    -t:PublishAllRids \
+  && dotnet build-server shutdown   # Build servers do not terminate automatically
+
+  # Remove Service Helpers, Update, and Windows files
+  rm "${_artifacts}/ServiceInstall."*
+  rm "${_artifacts}/ServiceUninstall."*
+  rm "${_artifacts}/Radarr.Windows."*
+
+  # Fix ffprobe permissions
+  chmod +x "${_artifacts}"/ffprobe
+
+  yarn run build --env production
+}
+
+check() {
+  cd "${srcdir}/${_pkgname}-${pkgver}"
+  local _filters="Category!=ManualTest&Category!=AutomationTest&Category!=WINDOWS"
+
+  # Skip Tests:
+  # These tests fail because /etc/arch-release doesn't contain a ${VERSION_ID}
+  # See: https://github.com/Radarr/Radarr/issues/7299
+  # Integration tests also completely fail
+  _filters="${_filters}&FullyQualifiedName!~should_get_version_info"
+  _filters="${_filters}&FullyQualifiedName!~should_get_version_info_from_actual_linux"
+  _filters="${_filters}&Category!=IntegrationTest"
+
+  # Link build to tests
+  ln -sf ../../../${_artifacts} _tests/${_framework}/${_runtime}/bin
+  mkdir -p ~/.config/Radarr
+
+  dotnet test src \
+    --runtime "${_runtime}" \
+    --configuration Release \
+    --filter "${_filters}" \
+    --no-build
+}
 
 package() {
-  rm -rf "${srcdir}/Radarr/Radarr.Update"
-  install -d -m 755 "${pkgdir}/usr/lib/radarr/bin"
-  cp -dpr --no-preserve=ownership "${srcdir}/Radarr/"* "${pkgdir}/usr/lib/radarr/bin"
-  chmod -R a=,a+rX,u+w "${pkgdir}/usr/lib/radarr/bin"
-  chmod +x "${pkgdir}/usr/lib/radarr/bin/Radarr" "${pkgdir}/usr/lib/radarr/bin/ffprobe"
+  cd "${srcdir}/${_pkgname}-${pkgver}"
+  install -dm755 "${pkgdir}/usr/lib/radarr/bin/UI"
+
+  cp -dpr --no-preserve=ownership "${_artifacts}/"* "${pkgdir}/usr/lib/radarr/bin"
+  cp -dpr --no-preserve=ownership "${_output}/UI/"* "${pkgdir}/usr/lib/radarr/bin/UI"
+
+  # License
+  install -Dm644 "${srcdir}/${_pkgname}-${pkgver}/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}"
 
   # Disable built in updater.
-  install -D -m 644 "${srcdir}/package_info" "${pkgdir}/usr/lib/radarr"
+  install -Dm644 "${srcdir}/package_info" "${pkgdir}/usr/lib/radarr"
   echo "PackageVersion=${pkgver}-${pkgrel}" >> "${pkgdir}/usr/lib/radarr/package_info"
 
-  install -D -m 644 "${srcdir}/radarr.service" "${pkgdir}/usr/lib/systemd/system/radarr.service"
-  install -D -m 644 "${srcdir}/radarr.sysusers" "${pkgdir}/usr/lib/sysusers.d/radarr.conf"
-  install -D -m 644 "${srcdir}/radarr.tmpfiles" "${pkgdir}/usr/lib/tmpfiles.d/radarr.conf"
+  install -Dm644 "${srcdir}/radarr.service" "${pkgdir}/usr/lib/systemd/system/radarr.service"
+  install -Dm644 "${srcdir}/radarr.sysusers" "${pkgdir}/usr/lib/sysusers.d/radarr.conf"
+  install -Dm644 "${srcdir}/radarr.tmpfiles" "${pkgdir}/usr/lib/tmpfiles.d/radarr.conf"
 }
