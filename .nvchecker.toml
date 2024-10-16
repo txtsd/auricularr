@@ -1,0 +1,7 @@
+[sonarr-develop-bin]
+source = "github"
+github = "Sonarr/Sonarr"
+prefix = "v"
+include_regex = "v(\\d+\\.\\d+\\.\\d+\\.\\d+)"
+include_prereleases = true
+use_latest_release = true
