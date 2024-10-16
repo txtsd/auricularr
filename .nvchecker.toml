@@ -1,0 +1,6 @@
+[prowlarr-develop]
+source = "github"
+github = "Prowlarr/Prowlarr"
+prefix = "v"
+include_regex = "v(\\d+\\.\\d+\\.\\d+\\.\\d+)"
+use_latest_release = true
