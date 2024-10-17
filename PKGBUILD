@@ -30,6 +30,8 @@ optdepends=(
   'jackett: torrent indexer proxy'
   'nzbhydra2: torznab and usenet indexer proxy'
 )
+provides=(prowlarr)
+conflicts=(prowlarr)
 options=(!debug)
 source=(
   "${pkgname}-${pkgver}.tar.gz::https://github.com/Prowlarr/Prowlarr/archive/refs/tags/v${pkgver}.tar.gz"
