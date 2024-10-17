@@ -1,0 +1,7 @@
+[readarr-develop-bin]
+source = "github"
+github = "Readarr/Readarr"
+prefix = "v"
+include_regex = "v(\\d+\\.\\d+\\.\\d+\\.\\d+)"
+include_prereleases = true
+use_latest_release = true
