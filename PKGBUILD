@@ -32,6 +32,8 @@ optdepends=(
   'nzbhydra2: torznab and usenet indexer proxy'
   'prowlarr: torrent and usenet indexer proxy'
 )
+provides=(sonarr)
+conflicts=(sonarr)
 options=(!debug)
 source=(
   "${pkgname}-${pkgver}.tar.gz::https://github.com/Sonarr/Sonarr/archive/refs/tags/v${pkgver}.tar.gz"
