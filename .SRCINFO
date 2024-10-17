@@ -1,8 +1,8 @@
 pkgbase = prowlarr-develop
-	pkgdesc = Indexer manager/proxy for usenet and torrent users.
+	pkgdesc = Indexer manager/proxy for usenet and torrent users (develop branch)
 	pkgver = 1.24.3.4754
 	pkgrel = 1
-	url = https://prowlarr.tv
+	url = https://prowlarr.com
 	arch = x86_64
 	arch = aarch64
 	arch = armv7h
