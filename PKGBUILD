@@ -1,12 +1,12 @@
 # Maintainer: txtsd <aur.archlinux@ihavea.quest>
 # Contributor: Donald Webster <fryfrog@gmail.com>
 # Contributor: Sven Frenzel <aur@frenzel.dk>
-# Helpful url: https://services.lidarr.audio/v1/update/master?version=0.0.0.0&os=linux&runtime=netcore&arch=x64
+# Helpful URL: https://services.lidarr.audio/v1/update/master?version=0.0.0.0&os=linux&runtime=netcore&arch=x64
 
 pkgname=lidarr-bin
 pkgver=2.6.4.4402
 pkgrel=1
-pkgdesc="Music collection manager for newsgroup and bittorrent users."
+pkgdesc="Music collection manager for newsgroup and torrent users."
 arch=('x86_64' 'aarch64' 'armv7h')
 url="https://lidarr.audio"
 license=('GPL-3.0-or-later')

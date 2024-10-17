@@ -1,5 +1,5 @@
 pkgbase = lidarr-bin
-	pkgdesc = Music collection manager for newsgroup and bittorrent users.
+	pkgdesc = Music collection manager for newsgroup and torrent users.
 	pkgver = 2.6.4.4402
 	pkgrel = 1
 	url = https://lidarr.audio
