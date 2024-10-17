@@ -29,11 +29,11 @@ pkgbase = recyclarr-bin
 	sha256sums = e8a2959e079a6a77c3eefaf77defd69e76944c2a1378257dcaf0286abde002a6
 	sha256sums = 458b7c0550f3c2e41f63bac197ce55a5699432ee24080f7917b001c0eec2c7ec
 	sha256sums = 3d2a1b3690d956a8f195c2cd1b28c28beecda354023e8de78471ca35610fb57d
-	source_x86_64 = recyclarr-bin-7.2.4.linux-x64.tar.gz::https://github.com/recyclarr/recyclarr/releases/download/v7.2.4/recyclarr-linux-x64.tar.xz
+	source_x86_64 = recyclarr-7.2.4.linux-x64.tar.xz::https://github.com/recyclarr/recyclarr/releases/download/v7.2.4/recyclarr-linux-x64.tar.xz
 	sha256sums_x86_64 = 07a3749ca5883e6702ea0e8b9f505429d791917ad502f4e60d78ce54d67561a6
-	source_aarch64 = recyclarr-bin-7.2.4.linux-arm64.tar.gz::https://github.com/recyclarr/recyclarr/releases/download/v7.2.4/recyclarr-linux-arm64.tar.xz
+	source_aarch64 = recyclarr-7.2.4.linux-arm64.tar.xz::https://github.com/recyclarr/recyclarr/releases/download/v7.2.4/recyclarr-linux-arm64.tar.xz
 	sha256sums_aarch64 = 618379e5183a459d7904954e93507e606a80671f097d5e2967acd21a93341d6a
-	source_armv7h = recyclarr-bin-7.2.4.linux-arm.tar.gz::https://github.com/recyclarr/recyclarr/releases/download/v5.4.0/recyclarr-linux-arm.tar.xz
+	source_armv7h = recyclarr-7.2.4.linux-arm.tar.xz::https://github.com/recyclarr/recyclarr/releases/download/v5.4.0/recyclarr-linux-arm.tar.xz
 	sha256sums_armv7h = e0dee2586c738520fe83012ebb587dacd5e4a0cdb6d74542ea43b57f6a09c93e
 
 pkgname = recyclarr-bin
