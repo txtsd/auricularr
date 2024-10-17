@@ -1,1 +1,2 @@
-u readarr - "Readarr daemon" /var/lib/readarr
+u readarr - "Readarr Daemon" /var/lib/readarr
+g readarr
