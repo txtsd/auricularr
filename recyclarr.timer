@@ -1,5 +1,5 @@
 [Unit]
-Description=Daily recyclarr sync
+Description=Daily Recyclarr Sync
 
 [Timer]
 OnCalendar=daily

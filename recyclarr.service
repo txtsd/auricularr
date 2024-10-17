@@ -2,15 +2,19 @@
 # direct changes will be overwritten by package updates.
 
 [Unit]
-Description=recyclarr sync
+Description=Recyclarr Daemon
+Wants=network-online.target
+After=network-online.target
 ConditionPathExists=/etc/recyclarr/recyclarr.yml
 
 [Service]
+Type=oneshot
 User=recyclarr
 Group=recyclarr
 SyslogIdentifier=recyclarr
 ExecStart=/usr/bin/recyclarr sync --app-data /var/lib/recyclarr --config /etc/recyclarr/recyclarr.yml
-Type=oneshot
+Restart=on-failure
+RestartSec=5
 
 [Install]
 WantedBy=multi-user.target

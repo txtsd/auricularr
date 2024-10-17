@@ -1,52 +1,52 @@
-# Maintainer: Donald Webster <fryfrog@gmail.com>
+# Maintainer: txtsd <aur.archlinux@ihavea.quest>
+# Contributor: Donald Webster <fryfrog@gmail.com>
 
-pkgname="recyclarr"
+pkgname=recyclarr-bin
 pkgver=7.2.4
 pkgrel=1
 pkgdesc="A command-line application that will automatically synchronize recommended settings from the TRaSH guides to your Sonarr/Radarr instances."
 arch=('x86_64' 'aarch64' 'armv7h')
-url="https://github.com/recyclarr/recyclarr"
+url="https://recyclarr.dev"
 license=('MIT')
-options=('!debug' '!strip' 'staticlibs')
-depends=('git')
-optdepends=(
-  'sonarr: Movie download automation for usenet and torrents.'
-  'radarr: TV download automation for usenet and torrents.'
+depends=(
+  'gcc-libs'
+  'git'
+  'glibc'
+  'sqlite'
+  'zlib'
 )
+optdepends=(
+  'sonarr: Smart PVR for newsgroup and bittorrent users.'
+  'radarr: Movie organizer/manager for usenet and torrent users.'
+)
+provides=(recyclarr)
+conflicts=(recyclarr)
 backup=('etc/recyclarr/recyclarr.yml')
-
-source_x86_64=("recyclarr.${pkgver}.linux-x64.tar.gz::https://github.com/recyclarr/recyclarr/releases/download/v${pkgver}/recyclarr-linux-x64.tar.xz")
-source_aarch64=("recyclarr.${pkgver}.linux-arm64.tar.gz::https://github.com/recyclarr/recyclarr/releases/download/v${pkgver}/recyclarr-linux-arm64.tar.xz")
-source_armv7h=("recyclarr.${pkgver}.linux-arm.tar.gz::https://github.com/recyclarr/recyclarr/releases/download/v5.4.0/recyclarr-linux-arm.tar.xz")
-
+options=('!debug' '!strip')
 source=(
+  'recyclarr.yml'
   'recyclarr.service'
   'recyclarr.timer'
   'recyclarr.tmpfiles'
   'recyclarr.sysusers'
-  'recyclarr.yml'
 )
-sha512sums=('165c6c181ccc671dbf781bc2ffba7267ebe02538d1af435446d3b166a9a739ad865031e9e4befc1ed8685a0d7e7fe8dfd343b913d21830d1cf5dbf12c5f5294f'
-            'e6c6714cf82038b700421b17c96293a1cc045374c2efb3abd5d9f78c16e3e1a1b6f3858b10d07363381d137a09de242a639a084eee24a3f18fe1bd3b97cd5e48'
-            'b26a7ebfe04bb6d15f94a423e844a546df7e3f767ecef0a39a74bc6affdb99a897075b2ef3e05c5514800d6e0f5f5afe02a9003852defc0091328171d9ebc3c1'
-            '3eb0acff87af1553508c5da080a6767f204868dc33a6a5f2253d25164052ab8ba96f89c88ad4bb82227a0f3b7e172f692abfe84d3e9a800448b8f7e194304978'
-            '87a9430a2dd4d14de36af0697342d7482585839b8ab66f8fa8da61f8965e145472554ba966a9d97692cf14332dd6fdb3a36d5daff14c1c868b7e6779c5d65c23')
-sha512sums_x86_64=('2a3f1b69c680af60e25f1960a206d5783e4f24d43656086013271c2e31fe50610e5f9a107b46f3d829360f7453a076c0ae1aee6f2e8e61fbe9ffbb67c91d7dfb')
-sha512sums_aarch64=('fb58a950d0e600c2b03e6fd9db2457922ff2b767c18cbc28d1f74855e723489752cbbb3984ba3fd34c869c89a22780e311fb8ff4c2fd74f7c9085b437f6da375')
-sha512sums_armv7h=('519231a286113d024fdf0d84abaf27af4f53a7a4e2cb36de122a0da2db0aaf1e499559e5524f5d827e118345dfd9ea175535a48d9b09ad62c7e5af1d8341c3db')
-
-
+source_x86_64=("${pkgname}-${pkgver}.linux-x64.tar.gz::https://github.com/recyclarr/recyclarr/releases/download/v${pkgver}/recyclarr-linux-x64.tar.xz")
+source_aarch64=("${pkgname}-${pkgver}.linux-arm64.tar.gz::https://github.com/recyclarr/recyclarr/releases/download/v${pkgver}/recyclarr-linux-arm64.tar.xz")
+source_armv7h=("${pkgname}-${pkgver}.linux-arm.tar.gz::https://github.com/recyclarr/recyclarr/releases/download/v5.4.0/recyclarr-linux-arm.tar.xz")
+sha256sums=('f0b6b437fad6072f55be0eb57c4eaf6a44eecda4588633edd5ad716ea3e41c7d'
+            'c03ea99bdea959b9da8a71556f58980ffd3967ee6cbab4c11945ab1aebd52246'
+            'e8a2959e079a6a77c3eefaf77defd69e76944c2a1378257dcaf0286abde002a6'
+            '458b7c0550f3c2e41f63bac197ce55a5699432ee24080f7917b001c0eec2c7ec'
+            '3d2a1b3690d956a8f195c2cd1b28c28beecda354023e8de78471ca35610fb57d')
+sha256sums_x86_64=('07a3749ca5883e6702ea0e8b9f505429d791917ad502f4e60d78ce54d67561a6')
+sha256sums_aarch64=('618379e5183a459d7904954e93507e606a80671f097d5e2967acd21a93341d6a')
+sha256sums_armv7h=('e0dee2586c738520fe83012ebb587dacd5e4a0cdb6d74542ea43b57f6a09c93e')
 
 package() {
-  install -D -m 755 "${srcdir}/recyclarr" "${pkgdir}/usr/bin/recyclarr"
-
-  mkdir -p "${pkgdir}/etc/recyclarr"
-  install -D -m 600 "${srcdir}/recyclarr.yml" "${pkgdir}/etc/recyclarr/recyclarr.yml"
-
-  mkdir -p "${pkgdir}/var/lib/recyclarr"
-  
-  install -D -m 644 "${srcdir}/recyclarr.service" "${pkgdir}/usr/lib/systemd/system/recyclarr.service"
-  install -D -m 644 "${srcdir}/recyclarr.timer" "${pkgdir}/usr/lib/systemd/system/recyclarr.timer"
-  install -D -m 644 "${srcdir}/recyclarr.sysusers" "${pkgdir}/usr/lib/sysusers.d/recyclarr.conf"
-  install -D -m 644 "${srcdir}/recyclarr.tmpfiles" "${pkgdir}/usr/lib/tmpfiles.d/recyclarr.conf"
+  install -Dm755 "${srcdir}/recyclarr" "${pkgdir}/usr/bin/recyclarr"
+  install -Dm600 "${srcdir}/recyclarr.yml" "${pkgdir}/etc/recyclarr/recyclarr.yml"
+  install -Dm644 "${srcdir}/recyclarr.service" "${pkgdir}/usr/lib/systemd/system/recyclarr.service"
+  install -Dm644 "${srcdir}/recyclarr.timer" "${pkgdir}/usr/lib/systemd/system/recyclarr.timer"
+  install -Dm644 "${srcdir}/recyclarr.sysusers" "${pkgdir}/usr/lib/sysusers.d/recyclarr.conf"
+  install -Dm644 "${srcdir}/recyclarr.tmpfiles" "${pkgdir}/usr/lib/tmpfiles.d/recyclarr.conf"
 }
