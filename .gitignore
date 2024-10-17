@@ -1,5 +1,5 @@
-*.xz
-*.gz
-*.log
-/src/
-/pkg/
+pkg/
+src/
+recyclarr/
+
+*.tar.*

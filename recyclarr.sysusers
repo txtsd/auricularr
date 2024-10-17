@@ -1,1 +1,2 @@
-u recyclarr - "recyclarr daemon" /var/lib/recyclarr
+u recyclarr - "Recyclarr Daemon" /var/lib/recyclarr
+g recyclarr
