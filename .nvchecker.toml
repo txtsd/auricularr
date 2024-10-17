@@ -1,0 +1,7 @@
+[whisparr-nightly-bin]
+source = "github"
+github = "Whisparr/Whisparr"
+prefix = "v"
+include_regex = "v(\\d+\\.\\d+\\.\\d+\\.\\d+)"
+include_prereleases = true
+use_latest_release = true
