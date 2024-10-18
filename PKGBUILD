@@ -1,5 +1,5 @@
 # Maintainer: txtsd <aur.archlinux@ihavea.quest>
-# Contributor: Donald Webster <fryfrog@gmail.com>
+# Maintainer: Donald Webster <fryfrog@gmail.com>
 # Helpful URL: https://prowlarr.servarr.com/v1/update/develop?version=0.0.0.0&os=linux&runtime=netcore&arch=x64
 
 pkgname=prowlarr-develop
@@ -10,7 +10,7 @@ pkgdesc='Indexer manager/proxy for usenet and torrent users (develop branch)'
 arch=('x86_64' 'aarch64' 'armv7h')
 url='https://prowlarr.com'
 license=('GPL-3.0-or-later')
-groups=('servarr')
+groups=('servarr-develop')
 depends=(
   'aspnet-runtime-6.0'
   'gcc-libs'
@@ -19,6 +19,7 @@ depends=(
 )
 makedepends=('dotnet-sdk-6.0' 'yarn')
 optdepends=(
+  'postgresql: postgresql database'
   'sabnzbd: usenet downloader'
   'nzbget: usenet downloader'
   'qbittorrent: torrent downloader'
