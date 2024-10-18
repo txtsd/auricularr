@@ -1,14 +1,14 @@
 # Maintainer: txtsd <aur.archlinux@ihavea.quest>
-# contributor: Donald Webster <fryfrog@gmail.com>
-# Contributor: Justin Dray <justin@dray.be>
+# Maintainer: Donald Webster <fryfrog@gmail.com>
 # Contributor: Daniel Egeberg <daniel.egeberg@gmail.com>
+# Contributor: Justin Dray <justin@dray.be>
 # Helpful URL: https://services.sonarr.tv/v1/releases
 
 pkgname=sonarr
 _pkgname=Sonarr
 pkgver=4.0.9.2244
 pkgrel=1
-pkgdesc='Smart PVR for newsgroup and bittorrent users.'
+pkgdesc='Smart PVR for newsgroup and torrent users.'
 arch=('x86_64' 'aarch64' 'armv7h')
 url='https://sonarr.tv'
 license=('GPL-3.0-or-later')
@@ -21,6 +21,7 @@ depends=(
 )
 makedepends=('dotnet-sdk-6.0' 'yarn')
 optdepends=(
+  'postgresql: postgresql database'
   'sabnzbd: usenet downloader'
   'nzbget: usenet downloader'
   'qbittorrent: torrent downloader'
@@ -32,6 +33,7 @@ optdepends=(
   'jackett: torrent indexer proxy'
   'nzbhydra2: torznab and usenet indexer proxy'
   'prowlarr: torrent and usenet indexer proxy'
+  'autobrr: irc, torrent and usenet indexer proxy'
 )
 options=(!debug)
 source=(
