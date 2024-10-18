@@ -1,15 +1,15 @@
 # Maintainer: txtsd <aur.archlinux@ihavea.quest>
-# Contributor: Donald Webster <fryfrog@gmail.com>
-# Helpful URL: https://readarr.servarr.com/v1/update/readarr/updatefile?os=linux&runtime=netcore&arch=x64
+# Maintainer: Donald Webster <fryfrog@gmail.com>
+# Helpful URL: https://readarr.servarr.com/v1/update/develop?version=0.0.0.0&os=linux&runtime=netcore&arch=x64
 
 pkgname=readarr-develop-bin
 pkgver=0.4.0.2634
 pkgrel=1
-pkgdesc="Ebook and audiobook collection manager for newsgroup and torrent users (develop branch)"
+pkgdesc='Ebook and audiobook collection manager for newsgroup and torrent users (develop branch)'
 arch=('x86_64' 'aarch64' 'armv7h')
-url="https://readarr.com"
+url='https://readarr.com'
 license=('GPL-3.0-or-later')
-groups=('servarr')
+groups=('servarr-develop-bin')
 depends=(
   'gcc-libs'
   'glibc'
@@ -17,6 +17,7 @@ depends=(
   'sqlite'
 )
 optdepends=(
+  'postgresql: postgresql database'
   'sabnzbd: usenet downloader'
   'nzbget: usenet downloader'
   'qbittorrent: torrent downloader'
@@ -27,6 +28,8 @@ optdepends=(
   'transmission-qt: torrent downloader (Qt)'
   'jackett: torrent indexer proxy'
   'nzbhydra2: torznab and usenet indexer proxy'
+  'prowlarr: torrent and usenet indexer proxy'
+  'autobrr: irc, torrent and usenet indexer proxy'
 )
 provides=(readarr)
 conflicts=(readarr)
@@ -40,13 +43,13 @@ source=(
 source_x86_64=("Readarr.develop.${pkgver}.linux-core-x64.tar.gz::https://readarr.servarr.com/v1/update/develop/updatefile?version=${pkgver}&os=linux&runtime=netcore&arch=x64")
 source_aarch64=("Readarr.develop.${pkgver}.linux-core-arm64.tar.gz::https://readarr.servarr.com/v1/update/develop/updatefile?version=${pkgver}&os=linux&runtime=netcore&arch=arm64")
 source_armv7h=("Readarr.develop.${pkgver}.linux-core-arm.tar.gz::https://readarr.servarr.com/v1/update/develop/updatefile?version=${pkgver}&os=linux&runtime=netcore&arch=arm")
-sha512sums=('0c3ba33452bda80bb52cabed7af2bcb592d9af917358ff9bc73338f9587aeeacce0132fb3aa43d00f92465f6d4b8bde844f6883b176765b3891de50ae62ce7b0'
-            'b34389cf2966a7a1a1fe6708303641e144191a95001c5ca6e570e9d50ba334fcbc1603852c3c2bfe008d97aaf54207690c689f00dd63378157af33ceebbbb089'
-            'fac4d5c35defac54a6d6fe442499e6aab7498c4082f313fa1b008c9880751581d78fea0523ae2a3f4bfa0cf4175763b5d1ea5068d2f327f98e791f5e87115455'
-            'e7d23886761a5052d9c9efa24d938bce7ab52b19713a50cc5338f1273bba6615c49ccf1612c412320fd7ff91fff4bff4e95a58db83ae7bd6b6bc83568ffeb90f')
-sha512sums_x86_64=('a4f1c7cc7653f2c54dfdc780ee7035626409344980f4d550bbe7c03b447365d46f8d88a02e88194d9600734df299d30cd5b2060dc7a8c5d23bf4077991bee370')
-sha512sums_aarch64=('daee5c1ba390425f9bfeaea3d1119e564466f67428d00aa6761ecb75f56db74d1eb4656c80a91835f32043d9ebe0fdd7715384ec5cf39fb9873683981ea4b49b')
-sha512sums_armv7h=('7060e09b45422415c39be462e53f5cf8df48934bbc5df366235d5c16d7c953351c7596e5df6d4fb4c29be33cc206a2ce381c5d3db689262b4e6b42e520ad46e9')
+sha256sums=('09386a5a87038f227e4a0995b37ac7ba561712712ad610323ea7ee8a1bf18c32'
+            '3030252218445e3cb27025a1b567deef287ff3d5e2f32abc2d640a771d39ddd5'
+            '1576aa21914edaa336d2b37d41ebf54fbaff6eb5099a3f46407cd79164ccdc67'
+            'c53f8d84eea20eb57f4fa200d18ccfee7ddac57e087f3ef00efb8e22862c9dde')
+sha256sums_x86_64=('2eefadae810ffd8d4bbb83991e1d1789a13cf855572a63b7a03c3aee095d429f')
+sha256sums_aarch64=('838cbca140701bc1514b21d608b769cbb4b1df21dcf102450f153b83075e3e14')
+sha256sums_armv7h=('608d004de8370220425bbba0c9155a7909c3cbabd30784dde0439ea4d4f70be3')
 
 package() {
   install -dm755 "${pkgdir}/usr/lib/readarr/bin"
