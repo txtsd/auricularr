@@ -4,7 +4,7 @@
 
 pkgname=prowlarr-develop
 _pkgname=Prowlarr
-pkgver=1.24.3.4754
+pkgver=1.25.2.4794
 pkgrel=1
 pkgdesc='Indexer manager/proxy for usenet and torrent users (develop branch)'
 arch=('x86_64' 'aarch64' 'armv7h')
@@ -41,7 +41,7 @@ source=(
   'prowlarr.sysusers'
   'prowlarr.tmpfiles'
 )
-sha256sums=('3190781c31987d9d4b12fa3c1a6515ad31b436581aaf058114667612a38445ba'
+sha256sums=('c9d7dfd19b8440cc1cd5b098e6e1660d8431820acbec8b9f5105ecd590861b37'
             '15b6ed4b78eafc6d0059c87d71945782f1600c57047562a0865fd1779f7ee293'
             '21ca63506b3cffcca8dcd95e1bdf3fa8415f1bc134c31a153b51b573dc31d390'
             '08d51099f09721b173233e58172c486025c16034dd89e73ccb42b647dcc34c4b'
