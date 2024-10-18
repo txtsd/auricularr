@@ -5,11 +5,11 @@
 pkgname=lidarr-nightly-bin
 pkgver=2.7.0.4406
 pkgrel=1
-pkgdesc="Music collection manager for newsgroup and torrent users (nightly builds)"
+pkgdesc='Music collection manager for newsgroup and torrent users (nightly builds)'
 arch=('x86_64' 'aarch64' 'armv7h')
-url="https://lidarr.audio"
+url='https://lidarr.audio'
 license=('GPL-3.0-or-later')
-groups=('servarr')
+groups=('servarr-nightly-bin')
 depends=(
   'gcc-libs'
   'glibc'
@@ -17,6 +17,7 @@ depends=(
   'sqlite'
 )
 optdepends=(
+  'postgresql: postgresql database'
   'sabnzbd: usenet downloader'
   'nzbget: usenet downloader'
   'qbittorrent: torrent downloader'
@@ -27,6 +28,8 @@ optdepends=(
   'transmission-qt: torrent downloader (Qt)'
   'jackett: torrent indexer proxy'
   'nzbhydra2: torznab and usenet indexer proxy'
+  'prowlarr: torrent and usenet indexer proxy'
+  'autobrr: irc, torrent and usenet indexer proxy'
 )
 provides=(lidarr)
 conflicts=(lidarr)
@@ -43,7 +46,7 @@ source_armv7h=("Lidarr.nightly.${pkgver}.linux-core-arm.tar.gz::https://lidarr.s
 sha256sums=('dcbe3d2a3d64a78a4b2b84a3486991a8b90fdd6900d7345004827a168f8b5645'
             'abde8989e7ab9dc62b6a501644da5a9253953b6394b890565e00a69cbfd89068'
             '19b36aefd2ef93d4a630ceaefe582573ecdaa72ec21bfb48ce3941ead7b967fb'
-            '069771bb79bcfb01e194ca39a03404f9316a2de4dac5a44c61f143e5830fbfd0')
+            '90a1960fef0d3833cd3635cedd16af3ee9ae6c7b95babc3021f6031d4e44c200')
 sha256sums_x86_64=('8da46d0c79db9e5f351bf2601a1a044d85edf26745a0e9d09d2221e556b8efd6')
 sha256sums_aarch64=('5699692028a0c5cb8e79b93ab61c7d9423648e64bf3c9c53513ba2f5a85e5a96')
 sha256sums_armv7h=('d4bbe529a16772a79432842011596fc746493ecbc24a5d9c2f771b2284d7d427')
