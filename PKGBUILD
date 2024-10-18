@@ -1,5 +1,5 @@
 # Maintainer: txtsd <aur.archlinux@ihavea.quest>
-# Contributor: Donald Webster <fryfrog@gmail.com>
+# Maintainer: Donald Webster <fryfrog@gmail.com>
 # Contributor: Sven Frenzel <aur@frenzel.dk>
 # Helpful URL: https://services.lidarr.audio/v1/update/master?version=0.0.0.0&os=linux&runtime=netcore&arch=x64
 
@@ -21,6 +21,7 @@ depends=(
 )
 makedepends=('dotnet-sdk-6.0' 'yarn')
 optdepends=(
+  'postgresql: postgresql database'
   'sabnzbd: usenet downloader'
   'nzbget: usenet downloader'
   'qbittorrent: torrent downloader'
@@ -32,6 +33,7 @@ optdepends=(
   'jackett: torrent indexer proxy'
   'nzbhydra2: torznab and usenet indexer proxy'
   'prowlarr: torrent and usenet indexer proxy'
+  'autobrr: irc, torrent and usenet indexer proxy'
 )
 options=(!debug)
 source=(
