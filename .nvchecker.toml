@@ -1,6 +1,5 @@
 [prowlarr-develop-bin]
-source = "github"
-github = "Prowlarr/Prowlarr"
-prefix = "v"
-include_regex = "v(\\d+\\.\\d+\\.\\d+\\.\\d+)"
-use_latest_release = true
+source = "jq"
+url = "https://prowlarr.servarr.com/v1/update/develop/changes?os=linux&runtime=netcore&arch=x64"
+filter = '.[0].version'
+include_regex = "(\\d+\\.\\d+\\.\\d+\\.\\d+)"
