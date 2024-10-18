@@ -1,5 +1,5 @@
 pkgbase = recyclarr-bin
-	pkgdesc = A command-line application that will automatically synchronize recommended settings from the TRaSH guides to your Sonarr/Radarr instances.
+	pkgdesc = Automatically synchronize recommended settings from the TRaSH guides to your Sonarr/Radarr instances.
 	pkgver = 7.2.4
 	pkgrel = 1
 	url = https://recyclarr.dev
