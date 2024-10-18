@@ -1,17 +1,17 @@
 # Maintainer: txtsd <aur.archlinux@ihavea.quest>
-# Contributor: Donald Webster <fryfrog@gmail.com>
-# Contributor: Justin Dray <justin@dray.be>
+# Maintainer: Donald Webster <fryfrog@gmail.com>
 # Contributor: Daniel Egeberg <daniel.egeberg@gmail.com>
+# Contributor: Justin Dray <justin@dray.be>
 # Helpful URL: https://services.sonarr.tv/v1/releases
 
 pkgname=sonarr-bin
 pkgver=4.0.9.2244
 pkgrel=1
-pkgdesc='Smart PVR for newsgroup and bittorrent users.'
+pkgdesc='Smart PVR for newsgroup and torrent users.'
 arch=('x86_64' 'aarch64' 'armv7h')
 url='https://sonarr.tv'
 license=('GPL-3.0-or-later')
-groups=('servarr')
+groups=('servarr-bin')
 depends=(
   'gcc-libs'
   'glibc'
@@ -19,6 +19,7 @@ depends=(
   'sqlite'
 )
 optdepends=(
+  'postgresql: postgresql database'
   'sabnzbd: usenet downloader'
   'nzbget: usenet downloader'
   'qbittorrent: torrent downloader'
@@ -30,6 +31,7 @@ optdepends=(
   'jackett: torrent indexer proxy'
   'nzbhydra2: torznab and usenet indexer proxy'
   'prowlarr: torrent and usenet indexer proxy'
+  'autobrr: irc, torrent and usenet indexer proxy'
 )
 provides=(sonarr)
 conflicts=(sonarr)
@@ -40,10 +42,10 @@ source=(
   'sonarr.sysusers'
   'sonarr.tmpfiles'
 )
-source_x86_64=("https://github.com/Sonarr/Sonarr/releases/download/v${pkgver}/Sonarr.main.${pkgver}.linux-x64.tar.gz")
-source_aarch64=("https://github.com/Sonarr/Sonarr/releases/download/v${pkgver}/Sonarr.main.${pkgver}.linux-arm64.tar.gz")
-source_armv7h=("https://github.com/Sonarr/Sonarr/releases/download/v${pkgver}/Sonarr.main.${pkgver}.linux-arm.tar.gz")
-sha256sums=('19112dc0051224b4de66f28077c93b6ee06e163b5194e6aecf62dedf66ff45a9'
+source_x86_64=("Sonarr.main.${pkgver}.linux-x64.tar.gz::https://services.sonarr.tv/v1/update/main/download?version=${pkgver}&os=linux&runtime=netcore&arch=x64")
+source_aarch64=("Sonarr.main.${pkgver}.linux-arm64.tar.gz::https://services.sonarr.tv/v1/update/main/download?version=${pkgver}&os=linux&runtime=netcore&arch=arm64")
+source_armv7h=("Sonarr.main.${pkgver}.linux-arm.tar.gz::https://services.sonarr.tv/v1/update/main/download?version=${pkgver}&os=linux&runtime=netcore&arch=arm")
+sha256sums=('ea2073b568f98dc9d7a91ce11f279d2d8b5a5bb8bad01136a05cb7907e00bd47'
             'b26aa01e07e5864b588ebe51a2993eaafb03fa0f7ec3806f2996dd2daf46aee7'
             '047585a1d448ad2c6e2962fb60d4f71e01a2529e464b25d340bb0d31b8e0f08f'
             '7bf87304383b7d58ecab59b3686d00a8f1b6fbe4af3a86da35a887e4cebee411')

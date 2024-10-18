@@ -1,17 +1,18 @@
 pkgbase = sonarr-bin
-	pkgdesc = Smart PVR for newsgroup and bittorrent users.
+	pkgdesc = Smart PVR for newsgroup and torrent users.
 	pkgver = 4.0.9.2244
 	pkgrel = 1
 	url = https://sonarr.tv
 	arch = x86_64
 	arch = aarch64
 	arch = armv7h
-	groups = servarr
+	groups = servarr-bin
 	license = GPL-3.0-or-later
 	depends = gcc-libs
 	depends = glibc
 	depends = zlib
 	depends = sqlite
+	optdepends = postgresql: postgresql database
 	optdepends = sabnzbd: usenet downloader
 	optdepends = nzbget: usenet downloader
 	optdepends = qbittorrent: torrent downloader
@@ -23,6 +24,7 @@ pkgbase = sonarr-bin
 	optdepends = jackett: torrent indexer proxy
 	optdepends = nzbhydra2: torznab and usenet indexer proxy
 	optdepends = prowlarr: torrent and usenet indexer proxy
+	optdepends = autobrr: irc, torrent and usenet indexer proxy
 	provides = sonarr
 	conflicts = sonarr
 	options = !debug
@@ -30,15 +32,15 @@ pkgbase = sonarr-bin
 	source = sonarr.service
 	source = sonarr.sysusers
 	source = sonarr.tmpfiles
-	sha256sums = 19112dc0051224b4de66f28077c93b6ee06e163b5194e6aecf62dedf66ff45a9
+	sha256sums = ea2073b568f98dc9d7a91ce11f279d2d8b5a5bb8bad01136a05cb7907e00bd47
 	sha256sums = b26aa01e07e5864b588ebe51a2993eaafb03fa0f7ec3806f2996dd2daf46aee7
 	sha256sums = 047585a1d448ad2c6e2962fb60d4f71e01a2529e464b25d340bb0d31b8e0f08f
 	sha256sums = 7bf87304383b7d58ecab59b3686d00a8f1b6fbe4af3a86da35a887e4cebee411
-	source_x86_64 = https://github.com/Sonarr/Sonarr/releases/download/v4.0.9.2244/Sonarr.main.4.0.9.2244.linux-x64.tar.gz
+	source_x86_64 = Sonarr.main.4.0.9.2244.linux-x64.tar.gz::https://services.sonarr.tv/v1/update/main/download?version=4.0.9.2244&os=linux&runtime=netcore&arch=x64
 	sha256sums_x86_64 = 0bad4b09e61c90ee3a13f5a6fbae03c964b82c19789a690516663b14b75f15b0
-	source_aarch64 = https://github.com/Sonarr/Sonarr/releases/download/v4.0.9.2244/Sonarr.main.4.0.9.2244.linux-arm64.tar.gz
+	source_aarch64 = Sonarr.main.4.0.9.2244.linux-arm64.tar.gz::https://services.sonarr.tv/v1/update/main/download?version=4.0.9.2244&os=linux&runtime=netcore&arch=arm64
 	sha256sums_aarch64 = 04a6b5b24fde70441727ee131ce1db91bbab80be7f70167bfea6444d12f1a265
-	source_armv7h = https://github.com/Sonarr/Sonarr/releases/download/v4.0.9.2244/Sonarr.main.4.0.9.2244.linux-arm.tar.gz
+	source_armv7h = Sonarr.main.4.0.9.2244.linux-arm.tar.gz::https://services.sonarr.tv/v1/update/main/download?version=4.0.9.2244&os=linux&runtime=netcore&arch=arm
 	sha256sums_armv7h = 71b6d9d99e2937ebf5d35f6b05731c7bca7ee270014d09d0547a416cf67085b8
 
 pkgname = sonarr-bin
