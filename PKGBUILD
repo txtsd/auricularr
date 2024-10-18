@@ -1,17 +1,18 @@
+# Maintainer: txtsd <aur.archlinux@ihavea.quest>
 # Maintainer: Donald Webster <fryfrog@gmail.com>
-# Contributor: Justin Dray <justin@dray.be>
 # Contributor: Daniel Egeberg <daniel.egeberg@gmail.com>
-# Helpful URL: http://services.sonarr.tv/v1/releases
+# Contributor: Justin Dray <justin@dray.be>
+# Helpful URL: https://services.sonarr.tv/v1/releases
 
 pkgname=sonarr-develop
 _pkgname=Sonarr
 pkgver=4.0.9.2513
 pkgrel=1
-pkgdesc='Smart PVR for newsgroup and bittorrent users (develop branch)'
+pkgdesc='Smart PVR for newsgroup and torrent users (develop branch)'
 arch=('x86_64' 'aarch64' 'armv7h')
 url='https://sonarr.tv'
 license=('GPL-3.0-or-later')
-groups=('servarr')
+groups=('servarr-develop')
 depends=(
   'aspnet-runtime-6.0'
   'gcc-libs'
@@ -20,6 +21,7 @@ depends=(
 )
 makedepends=('dotnet-sdk-6.0' 'yarn')
 optdepends=(
+  'postgresql: postgresql database'
   'sabnzbd: usenet downloader'
   'nzbget: usenet downloader'
   'qbittorrent: torrent downloader'
@@ -31,6 +33,7 @@ optdepends=(
   'jackett: torrent indexer proxy'
   'nzbhydra2: torznab and usenet indexer proxy'
   'prowlarr: torrent and usenet indexer proxy'
+  'autobrr: irc, torrent and usenet indexer proxy'
 )
 provides=(sonarr)
 conflicts=(sonarr)
