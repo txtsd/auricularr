@@ -12,7 +12,7 @@ pkgbase = recyclarr-bin
 	depends = glibc
 	depends = sqlite
 	depends = zlib
-	optdepends = sonarr: Smart PVR for newsgroup and bittorrent users.
+	optdepends = sonarr: Smart PVR for newsgroup and torrent users.
 	optdepends = radarr: Movie organizer/manager for usenet and torrent users.
 	provides = recyclarr
 	conflicts = recyclarr
@@ -33,7 +33,7 @@ pkgbase = recyclarr-bin
 	sha256sums_x86_64 = 07a3749ca5883e6702ea0e8b9f505429d791917ad502f4e60d78ce54d67561a6
 	source_aarch64 = recyclarr-7.2.4.linux-arm64.tar.xz::https://github.com/recyclarr/recyclarr/releases/download/v7.2.4/recyclarr-linux-arm64.tar.xz
 	sha256sums_aarch64 = 618379e5183a459d7904954e93507e606a80671f097d5e2967acd21a93341d6a
-	source_armv7h = recyclarr-7.2.4.linux-arm.tar.xz::https://github.com/recyclarr/recyclarr/releases/download/v5.4.0/recyclarr-linux-arm.tar.xz
+	source_armv7h = recyclarr-7.2.4.linux-arm.tar.xz::https://github.com/recyclarr/recyclarr/releases/download/v7.2.4/recyclarr-linux-arm.tar.xz
 	sha256sums_armv7h = e0dee2586c738520fe83012ebb587dacd5e4a0cdb6d74542ea43b57f6a09c93e
 
 pkgname = recyclarr-bin
