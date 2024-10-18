@@ -1,15 +1,15 @@
 # Maintainer: txtsd <aur.archlinux@ihavea.quest>
 # Contributor: Donald Webster <fryfrog@gmail.com>
-# Helpful URL: https://readarr.servarr.com/v1/update/readarr/updatefile?os=linux&runtime=netcore&arch=x64
+# Helpful URL: https://readarr.servarr.com/v1/update/nightly?version=0.0.0.0&os=linux&runtime=netcore&arch=x64
 
 pkgname=readarr-nightly-bin
 pkgver=0.4.1.2648
 pkgrel=1
-pkgdesc="Ebook and audiobook collection manager for newsgroup and torrent users (nightly builds)"
+pkgdesc='Ebook and audiobook collection manager for newsgroup and torrent users (nightly builds)'
 arch=('x86_64' 'aarch64' 'armv7h')
-url="https://readarr.com"
+url='https://readarr.com'
 license=('GPL-3.0-or-later')
-groups=('servarr')
+groups=('servarr-nightly-bin')
 depends=(
   'gcc-libs'
   'glibc'
@@ -17,6 +17,7 @@ depends=(
   'sqlite'
 )
 optdepends=(
+  'postgresql: postgresql database'
   'sabnzbd: usenet downloader'
   'nzbget: usenet downloader'
   'qbittorrent: torrent downloader'
@@ -27,6 +28,8 @@ optdepends=(
   'transmission-qt: torrent downloader (Qt)'
   'jackett: torrent indexer proxy'
   'nzbhydra2: torznab and usenet indexer proxy'
+  'prowlarr: torrent and usenet indexer proxy'
+  'autobrr: irc, torrent and usenet indexer proxy'
 )
 provides=(readarr)
 conflicts=(readarr)
@@ -43,7 +46,7 @@ source_armv7h=("Readarr.nightly.${pkgver}.linux-core-arm.tar.gz::https://readarr
 sha256sums=('09386a5a87038f227e4a0995b37ac7ba561712712ad610323ea7ee8a1bf18c32'
             '3030252218445e3cb27025a1b567deef287ff3d5e2f32abc2d640a771d39ddd5'
             '1576aa21914edaa336d2b37d41ebf54fbaff6eb5099a3f46407cd79164ccdc67'
-            '959fd6603a75b70b3eb3b77919ce25bdc1cf97eb6074b68834d11340e241620c')
+            '9b505e7e93a71c9d2fdc4689cf4a3cd691e3927b419cf5bb6e1aed43b5a91edc')
 sha256sums_x86_64=('a0474ef55f502cf5e4661f9053256394c636d62153d69f22d83a0f5a94774258')
 sha256sums_aarch64=('4a32c2ca8d8e73c48c965d5cad3c87fd33dfee3c792ee97ace66d5cbb9b72dc3')
 sha256sums_armv7h=('73f9c266a0c3c1865c62384cd82d7b7bc34ef76a3552283adf73cb5b89ca9f09')
