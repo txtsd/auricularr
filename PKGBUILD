@@ -1,15 +1,15 @@
 # Maintainer: txtsd <aur.archlinux@ihavea.quest>
-# Contributor: Donald Webster <fryfrog@gmail.com>
+# Maintainer: Donald Webster <fryfrog@gmail.com>
 # Helpful URL: https://prowlarr.servarr.com/v1/update/master?version=0.0.0.0&os=linux&runtime=netcore&arch=x64
 
 pkgname=prowlarr-bin
 pkgver=1.24.3.4754
 pkgrel=1
-pkgdesc="Indexer manager/proxy for usenet and torrent users."
+pkgdesc='Indexer manager/proxy for usenet and torrent users.'
 arch=('x86_64' 'aarch64' 'armv7h')
-url="https://prowlarr.com"
+url='https://prowlarr.com'
 license=('GPL-3.0-or-later')
-groups=('servarr')
+groups=('servarr-bin')
 depends=(
   'gcc-libs'
   'glibc'
@@ -17,6 +17,7 @@ depends=(
   'sqlite'
 )
 optdepends=(
+  'postgresql: postgresql database'
   'sabnzbd: usenet downloader'
   'nzbget: usenet downloader'
   'qbittorrent: torrent downloader'
@@ -37,16 +38,16 @@ source=(
   'prowlarr.sysusers'
   'package_info'
 )
-source_x86_64=("https://github.com/Prowlarr/Prowlarr/releases/download/v${pkgver}/Prowlarr.master.${pkgver}.linux-core-x64.tar.gz")
-source_aarch64=("https://github.com/Prowlarr/Prowlarr/releases/download/v${pkgver}/Prowlarr.master.${pkgver}.linux-core-arm64.tar.gz")
-source_armv7h=("https://github.com/Prowlarr/Prowlarr/releases/download/v${pkgver}/Prowlarr.master.${pkgver}.linux-core-arm.tar.gz")
-sha512sums=('2808c6ce071477bb8d43fae334c6b934cac2d1f9661dad21a0690c5d7f8df55b3e869c3fdaccf7c00f12729dbaaf9e021a3085959c77a907fa755801844db114'
-            '9159ceda0955f2ebc495dd470c9d6234d8534a120ab81fa58fefae94a8ecfdc8fe883fb1287bc10429e7b4f35ac59d36232d716c161a242a4bfcdff768f1b9a2'
-            '45e72f83acb0c82de199cc42a9e4b9c19bd6c00e5962c9e616d8ac7f3bdd9e949fdf9ddb23ececb5728bb7dc27251c9c9ea0051f19a18d0e0a897b3741f2df66'
-            '13562cac353f9fbf3545613d49186b5c7b35a3726b003133044212f65ec51eece88fb06017a90d0a67fa5cf694fed142c20704cc174b408016f9e3176296c5b6')
-sha512sums_x86_64=('fec46db51a17f4e6dd9626818cd5f8af58b75eddc95f0bd4d5662dca2f290d330629162e0ad2dc58edf0221dd67ca62b8cee4fbd245635d4d389eb997b306a94')
-sha512sums_aarch64=('b9168460bbf13717f753ff834fcf4e595d70592b0859c26d05bb7bd91b0b297b2c9ce3e7f599d8c62f76d7d6a6da1b5084eb16e1e90ca3d1a45f5c4d58a088c6')
-sha512sums_armv7h=('b8bb1b9503f20a015445cc000c0a1b3edf10aa75a74030613e647807ce190089c1ea70a15b14507c600b0af472e236d0861bc4b55cb30bcc0a95cdd762665353')
+source_x86_64=("Prowlarr.master.${pkgver}.linux-core-x64.tar.gz::https://prowlarr.servarr.com/v1/update/master/updatefile?version=${pkgver}&os=linux&runtime=netcore&arch=x64")
+source_aarch64=("Prowlarr.master.${pkgver}.linux-core-arm64.tar.gz::https://prowlarr.servarr.com/v1/update/master/updatefile?version=${pkgver}&os=linux&runtime=netcore&arch=arm64")
+source_armv7h=("Prowlarr.master.${pkgver}.linux-core-arm.tar.gz::https://prowlarr.servarr.com/v1/update/master/updatefile?version=${pkgver}&os=linux&runtime=netcore&arch=arm")
+sha256sums=('21ca63506b3cffcca8dcd95e1bdf3fa8415f1bc134c31a153b51b573dc31d390'
+            '4c3f9b5fa71810697efbe60f20a2cba24fd1b997d5372c3726457b197d61ccb5'
+            '08d51099f09721b173233e58172c486025c16034dd89e73ccb42b647dcc34c4b'
+            '6a674e395e0ab4d8b213e02e7ec72871049ca0dc0d1805fafdad0be32267903a')
+sha256sums_x86_64=('c1fb9c8d6c53a58b2b4512e8403832eba1d91dd4482c22ab1449d9c9aa10e7ad')
+sha256sums_aarch64=('092dd3f5b790668fd6965668da644c50c62f80cd31e87fffb53a81cb1de2910c')
+sha256sums_armv7h=('8b85a1d8f9ee6b8d3abea2ff4aae91db7301976fe37bd13c400a2edabb694bb9')
 
 package() {
   install -dm755 "${pkgdir}/usr/lib/prowlarr/bin"
