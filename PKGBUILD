@@ -1,5 +1,5 @@
 # Maintainer: txtsd <aur.archlinux@ihavea.quest>
-# Contributor: Donald Webster <fryfrog@gmail.com>
+# Maintainer: Donald Webster <fryfrog@gmail.com>
 
 pkgname=recyclarr
 _pkgname=Recyclarr
@@ -8,8 +8,7 @@ pkgrel=1
 pkgdesc='Automatically synchronize recommended settings from the TRaSH guides to your Sonarr/Radarr instances.'
 arch=('x86_64' 'aarch64' 'armv7h')
 url='https://recyclarr.dev'
-license=('GPL-3.0-or-later')
-groups=('servarr')
+license=('MIT')
 depends=(
   'aspnet-runtime-8.0'
   'gcc-libs'
@@ -19,7 +18,7 @@ depends=(
 )
 makedepends=('dotnet-sdk-8.0' 'git')
 optdepends=(
-  'sonarr: Smart PVR for newsgroup and bittorrent users.'
+  'sonarr: Smart PVR for newsgroup and torrent users.'
   'radarr: Movie organizer/manager for usenet and torrent users.'
 )
 options=(!debug)
