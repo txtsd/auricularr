@@ -6,12 +6,13 @@ pkgbase = prowlarr-nightly-bin
 	arch = x86_64
 	arch = aarch64
 	arch = armv7h
-	groups = servarr
+	groups = servarr-nightly-bin
 	license = GPL-3.0-or-later
 	depends = gcc-libs
 	depends = glibc
 	depends = zlib
 	depends = sqlite
+	optdepends = postgresql: postgresql database
 	optdepends = sabnzbd: usenet downloader
 	optdepends = nzbget: usenet downloader
 	optdepends = qbittorrent: torrent downloader
@@ -32,7 +33,7 @@ pkgbase = prowlarr-nightly-bin
 	sha256sums = 21ca63506b3cffcca8dcd95e1bdf3fa8415f1bc134c31a153b51b573dc31d390
 	sha256sums = 4c3f9b5fa71810697efbe60f20a2cba24fd1b997d5372c3726457b197d61ccb5
 	sha256sums = 08d51099f09721b173233e58172c486025c16034dd89e73ccb42b647dcc34c4b
-	sha256sums = ced75b25b228ef5524b07e6b81efb2e6b7afd9a15bb133a8d5a364e9968f0ec0
+	sha256sums = 5cb90253a2c8c42a98ad8b7573d6905ad478b877dffbe50b9f7667f28cdbd806
 	source_x86_64 = Prowlarr.nightly.1.25.3.4804.linux-core-x64.tar.gz::https://prowlarr.servarr.com/v1/update/nightly/updatefile?version=1.25.3.4804&os=linux&runtime=netcore&arch=x64
 	sha256sums_x86_64 = a980028f520420bf99adfac5fefd6bec2e9830fa0a04501102259bcb88da5131
 	source_aarch64 = Prowlarr.nightly.1.25.3.4804.linux-core-arm64.tar.gz::https://prowlarr.servarr.com/v1/update/nightly/updatefile?version=1.25.3.4804&os=linux&runtime=netcore&arch=arm64
