@@ -1,71 +1,68 @@
-# Maintainer: Donald Webster <fryfrog@gmail.com>
-# Helpful url: https://readarr.servarr.com/v1/update/readarr/updatefile?os=linux&runtime=netcore&arch=x64
+# Maintainer: txtsd <aur.archlinux@ihavea.quest>
+# Contributor: Donald Webster <fryfrog@gmail.com>
+# Helpful URL: https://readarr.servarr.com/v1/update/readarr/updatefile?os=linux&runtime=netcore&arch=x64
 
-pkgname="readarr-nightly"
+pkgname=readarr-nightly-bin
 pkgver=0.4.1.2648
 pkgrel=1
-pkgdesc="Audio and eBook download automation for usenet and torrents."
+pkgdesc="Ebook and audiobook collection manager for newsgroup and torrent users (nightly builds)"
 arch=('x86_64' 'aarch64' 'armv7h')
-url="https://github.com/Readarr/Readarr"
-license=("GPL3")
+url="https://readarr.com"
+license=('GPL-3.0-or-later')
+groups=('servarr')
 depends=(
+  'gcc-libs'
+  'glibc'
+  'zlib'
   'sqlite'
-  'chromaprint'
 )
-options=(
-  '!strip'
-  'staticlibs'
+optdepends=(
+  'sabnzbd: usenet downloader'
+  'nzbget: usenet downloader'
+  'qbittorrent: torrent downloader'
+  'deluge: torrent downloader'
+  'rtorrent: torrent downloader'
+  'transmission-cli: torrent downloader (CLI and daemon)'
+  'transmission-gtk: torrent downloader (GTK+)'
+  'transmission-qt: torrent downloader (Qt)'
+  'jackett: torrent indexer proxy'
+  'nzbhydra2: torznab and usenet indexer proxy'
 )
-provides=('readarr')
-conflicts=('readarr')
-optdepends=('calibre: calibre-server as root folder'
-            'sabnzbd: usenet downloader'
-            'nzbget: usenet downloader'
-            'transmission-cli: torrent downloader (CLI and daemon)'
-            'transmission-gtk: torrent downloader (GTK+)'
-            'transmission-qt: torrent downloader (Qt)'
-            'deluge: torrent downloader'
-            'rtorrent: torrent downloader'
-            'qbittorrent: torrent downloader'
-            'qbittorrent-nox: torrent downloader (no X)'
-            'jackett: torrent indexer proxy')
-
-source_x86_64=("readarr.${pkgver}.linux-core-x64.tar.gz::https://readarr.servarr.com/v1/update/nightly/updatefile?version=${pkgver}&os=linux&runtime=netcore&arch=x64")
-source_aarch64=("readarr.${pkgver}.linux-core-arm64.tar.gz::https://readarr.servarr.com/v1/update/nightly/updatefile?version=${pkgver}&os=linux&runtime=netcore&arch=arm64")
-source_armv7h=("readarr.${pkgver}.linux-core-arm.tar.gz::https://readarr.servarr.com/v1/update/nightly/updatefile?version=${pkgver}&os=linux&runtime=netcore&arch=arm")
-
-source=('readarr.service'
-        'readarr.tmpfiles'
-        'readarr.sysusers'
-        'package_info')
-
-sha512sums=('8479a08e504c0e5be48d0e97e849c589f9b49855de5fe8edf8c24b9317263283fd92f8eee9d2bc1fb927b7186eb6721bf0a1c063c68a80811a11efc4105914ec'
-            'b34389cf2966a7a1a1fe6708303641e144191a95001c5ca6e570e9d50ba334fcbc1603852c3c2bfe008d97aaf54207690c689f00dd63378157af33ceebbbb089'
-            '99f8210754ea5ec742ba6b0b9f05c8312237cb0225bc0d28a2a8ee8362b464da0880499b64ea58c84b64c0eb727748c3c15630cedb8785d7d94d856c76cf17eb'
-            'f762a01de8c4448a64da61fc6804587b2679d3c2b874c42cd920d7af0a380ed4c93ff8e89aac72a1cdca90c98596d97f593c98f6528326e4dacfc3f09ab536a5')
-sha512sums_x86_64=('6df3f0936a48159c556317c0427e835b05a97b6d50d08126e68e0d7bd10e45b74490c55c6915c5bb2799017717e9e69ccfeefaefe33e1aca84758ea3a93d5760')
-sha512sums_aarch64=('7fe946ce7682249792818ade26f2f15a43e3bea00360ae31b74b8dd285614fc5271d546b9eae36506123324f35be8106f145f0ce249710001e2172a83f839d62')
-sha512sums_armv7h=('3ea31ae96f495444148b61edac282d18bea8b35752e6e872710af623d5e50a7835682de51657c1ed51387261126a94316cb5dcd3d39debe61b58b62f9cb96a66')
-
-
+provides=(readarr)
+conflicts=(readarr)
+options=('!debug')
+source=(
+  'readarr.service'
+  'readarr.tmpfiles'
+  'readarr.sysusers'
+  'package_info'
+)
+source_x86_64=("Readarr.nightly.${pkgver}.linux-core-x64.tar.gz::https://readarr.servarr.com/v1/update/nightly/updatefile?version=${pkgver}&os=linux&runtime=netcore&arch=x64")
+source_aarch64=("Readarr.nightly.${pkgver}.linux-core-arm64.tar.gz::https://readarr.servarr.com/v1/update/nightly/updatefile?version=${pkgver}&os=linux&runtime=netcore&arch=arm64")
+source_armv7h=("Readarr.nightly.${pkgver}.linux-core-arm.tar.gz::https://readarr.servarr.com/v1/update/nightly/updatefile?version=${pkgver}&os=linux&runtime=netcore&arch=arm")
+sha256sums=('09386a5a87038f227e4a0995b37ac7ba561712712ad610323ea7ee8a1bf18c32'
+            '3030252218445e3cb27025a1b567deef287ff3d5e2f32abc2d640a771d39ddd5'
+            '1576aa21914edaa336d2b37d41ebf54fbaff6eb5099a3f46407cd79164ccdc67'
+            '959fd6603a75b70b3eb3b77919ce25bdc1cf97eb6074b68834d11340e241620c')
+sha256sums_x86_64=('a0474ef55f502cf5e4661f9053256394c636d62153d69f22d83a0f5a94774258')
+sha256sums_aarch64=('4a32c2ca8d8e73c48c965d5cad3c87fd33dfee3c792ee97ace66d5cbb9b72dc3')
+sha256sums_armv7h=('73f9c266a0c3c1865c62384cd82d7b7bc34ef76a3552283adf73cb5b89ca9f09')
 
 package() {
-  # Update environment isn't needed.
-  rm -rf "${srcdir}/Readarr/Readarr.Update"
+  install -dm755 "${pkgdir}/usr/lib/readarr/bin"
 
-  # Remove unneeded fpcalc
-  rm -f "${srcdir}/Readarr/fpcalc"
-
-  install -d -m 755 "${pkgdir}/usr/lib/readarr/bin"
-  cp -dpr --no-preserve=ownership "${srcdir}/Readarr/"* "${pkgdir}/usr/lib/readarr/bin"
-  chmod -R a=,a+rX,u+w "${pkgdir}/usr/lib/readarr/bin"
-  chmod +x "${pkgdir}/usr/lib/readarr/bin/Readarr"
+  # License
+  install -Dm644 "${srcdir}/Readarr/LICENSE.md" "${pkgdir}/usr/share/licenses/${pkgname}"
+  rm "${srcdir}/Readarr/LICENSE.md"
 
   # Disable built in updater.
-  install -D -m 644 "${srcdir}/package_info" "${pkgdir}/usr/lib/readarr"
+  rm -rf "${srcdir}/Readarr/Readarr.Update"
+  install -Dm644 "${srcdir}/package_info" "${pkgdir}/usr/lib/readarr"
   echo "PackageVersion=${pkgver}-${pkgrel}" >> "${pkgdir}/usr/lib/readarr/package_info"
 
-  install -D -m 644 "${srcdir}/readarr.service" "${pkgdir}/usr/lib/systemd/system/readarr.service"
-  install -D -m 644 "${srcdir}/readarr.sysusers" "${pkgdir}/usr/lib/sysusers.d/readarr.conf"
-  install -D -m 644 "${srcdir}/readarr.tmpfiles" "${pkgdir}/usr/lib/tmpfiles.d/readarr.conf"
+  cp -dpr --no-preserve=ownership "${srcdir}/Readarr/"* "${pkgdir}/usr/lib/readarr/bin"
+
+  install -Dm644 "${srcdir}/readarr.service" "${pkgdir}/usr/lib/systemd/system/readarr.service"
+  install -Dm644 "${srcdir}/readarr.sysusers" "${pkgdir}/usr/lib/sysusers.d/readarr.conf"
+  install -Dm644 "${srcdir}/readarr.tmpfiles" "${pkgdir}/usr/lib/tmpfiles.d/readarr.conf"
 }
