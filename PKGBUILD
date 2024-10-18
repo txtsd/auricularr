@@ -1,6 +1,6 @@
 # Maintainer: txtsd <aur.archlinux@ihavea.quest>
-# Contributor: Donald Webster <fryfrog@gmail.com>
-# Helpful URL: https://readarr.servarr.com/v1/update/readarr/updatefile?os=linux&runtime=netcore&arch=x64
+# Maintainer: Donald Webster <fryfrog@gmail.com>
+# Helpful URL: https://readarr.servarr.com/v1/update/develop?version=0.0.0.0&os=linux&runtime=netcore&arch=x64
 
 pkgname=readarr-develop
 _pkgname=Readarr
@@ -10,7 +10,7 @@ pkgdesc='Ebook and audiobook collection manager for newsgroup and torrent users 
 arch=('x86_64' 'aarch64' 'armv7h')
 url='https://readarr.com'
 license=('GPL-3.0-or-later')
-groups=('servarr')
+groups=('servarr-develop')
 depends=(
   'aspnet-runtime-6.0'
   'chromaprint'
@@ -20,6 +20,7 @@ depends=(
 )
 makedepends=('dotnet-sdk-6.0' 'yarn')
 optdepends=(
+  'postgresql: postgresql database'
   'sabnzbd: usenet downloader'
   'nzbget: usenet downloader'
   'qbittorrent: torrent downloader'
@@ -31,6 +32,7 @@ optdepends=(
   'jackett: torrent indexer proxy'
   'nzbhydra2: torznab and usenet indexer proxy'
   'prowlarr: torrent and usenet indexer proxy'
+  'autobrr: irc, torrent and usenet indexer proxy'
 )
 provides=(readarr)
 conflicts=(readarr)
@@ -43,7 +45,7 @@ source=(
   'readarr.tmpfiles'
 )
 sha256sums=('d190ca7efc1935cf1ab12b6db5143d91d3ed0e20207363b43fd364142f69953e'
-            'a1468c5447bde097a611d1ec3f4c730fb078e44c9b3f7a035f7db963ecc8e8d5'
+            '12235af27b47fe1a353bc79fdfdf8c0e03fca5c0eb08f9eb57c0b66532c37648'
             '09386a5a87038f227e4a0995b37ac7ba561712712ad610323ea7ee8a1bf18c32'
             '1576aa21914edaa336d2b37d41ebf54fbaff6eb5099a3f46407cd79164ccdc67'
             '3030252218445e3cb27025a1b567deef287ff3d5e2f32abc2d640a771d39ddd5')

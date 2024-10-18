@@ -1,7 +1,5 @@
 [readarr-develop]
-source = "github"
-github = "Readarr/Readarr"
-prefix = "v"
-include_regex = "v(\\d+\\.\\d+\\.\\d+\\.\\d+)"
-include_prereleases = true
-use_latest_release = true
+source = "jq"
+url = "https://readarr.servarr.com/v1/update/develop/changes?os=linux&runtime=netcore&arch=x64"
+filter = '.[0].version'
+include_regex = "(\\d+\\.\\d+\\.\\d+\\.\\d+)"
