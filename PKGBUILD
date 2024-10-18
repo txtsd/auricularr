@@ -1,6 +1,6 @@
 # Maintainer: txtsd <aur.archlinux@ihavea.quest>
-# Contributor: Donald Webster <fryfrog@gmail.com>
-# Helpful URL: https://services.lidarr.audio/v1/update/nightly?version=0.0.0.0&os=linux&runtime=netcore&arch=x64
+# Maintainer: Donald Webster <fryfrog@gmail.com>
+# Helpful URL: https://services.lidarr.audio/v1/update/develop?version=0.0.0.0&os=linux&runtime=netcore&arch=x64
 
 pkgname=lidarr-develop
 _pkgname=Lidarr
@@ -10,7 +10,7 @@ pkgdesc='Music collection manager for newsgroup and torrent users (develop branc
 arch=('x86_64' 'aarch64' 'armv7h')
 url='https://lidarr.audio'
 license=('GPL-3.0-or-later')
-groups=('servarr')
+groups=('servarr-develop')
 depends=(
   'aspnet-runtime-6.0'
   'chromaprint'
@@ -20,6 +20,7 @@ depends=(
 )
 makedepends=('dotnet-sdk-6.0' 'yarn')
 optdepends=(
+  'postgresql: postgresql database'
   'sabnzbd: usenet downloader'
   'nzbget: usenet downloader'
   'qbittorrent: torrent downloader'
@@ -31,6 +32,7 @@ optdepends=(
   'jackett: torrent indexer proxy'
   'nzbhydra2: torznab and usenet indexer proxy'
   'prowlarr: torrent and usenet indexer proxy'
+  'autobrr: irc, torrent and usenet indexer proxy'
 )
 provides=(lidarr)
 conflicts=(lidarr)
@@ -43,7 +45,7 @@ source=(
   'lidarr.tmpfiles'
 )
 sha256sums=('15929ac7f37a88e6dab523579330200fdbeb6b54bc0b8f9a032650bdafa7dc7f'
-            '069771bb79bcfb01e194ca39a03404f9316a2de4dac5a44c61f143e5830fbfd0'
+            'ea7786c48dce48db0ecfe2feace923d122981f6af86a01985c3662a76153a620'
             'dcbe3d2a3d64a78a4b2b84a3486991a8b90fdd6900d7345004827a168f8b5645'
             '19b36aefd2ef93d4a630ceaefe582573ecdaa72ec21bfb48ce3941ead7b967fb'
             'abde8989e7ab9dc62b6a501644da5a9253953b6394b890565e00a69cbfd89068')
