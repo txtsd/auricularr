@@ -1,56 +1,68 @@
-# Maintainer: Donald Webster <fryfrog@gmail.com>
+# Maintainer: txtsd <aur.archlinux@ihavea.quest>
+# Contributor: Donald Webster <fryfrog@gmail.com>
 # Helpful url: https://prowlarr.servarr.com/v1/update/develop?version=0.0.0.0&os=linux&runtime=netcore&arch=x64
 
-pkgname="prowlarr-nightly"
-pkgver=1.25.3.4801
+pkgname=prowlarr-nightly-bin
+pkgver=1.25.3.4804
 pkgrel=1
-pkgdesc="Usenet and torrent aggregator, similar to nzbhydra2 and jackett."
+pkgdesc="Indexer manager/proxy for usenet and torrent users (nightly builds)"
 arch=('x86_64' 'aarch64' 'armv7h')
-url="https://github.com/Prowlarr/Prowlarr"
-license=('GPL3')
-options=('!strip' 'staticlibs')
-depends=('sqlite')
-optdepends=(
-  'sonarr: automatically adds and remove indexers/trackers'
-  'radarr: automatically adds and remove indexers/trackers'
-  'lidarr: automatically adds and remove indexers/trackers'
-  'readarr: automatically adds and remove indexers/trackers'
+url="https://prowlarr.com"
+license=('GPL-3.0-or-later')
+groups=('servarr')
+depends=(
+  'gcc-libs'
+  'glibc'
+  'zlib'
+  'sqlite'
 )
-provides=('prowlarr')
-conflicts=('prowlarr')
-
-source_x86_64=("prowlarr.develop.${pkgver}.linux-core-x64.tar.gz::https://prowlarr.servarr.com/v1/update/nightly/updatefile?version=${pkgver}&os=linux&runtime=netcore&arch=x64") 
-source_aarch64=("prowlarr.develop.${pkgver}.linux-core-arm64.tar.gz::https://prowlarr.servarr.com/v1/update/nightly/updatefile?version=${pkgver}&os=linux&runtime=netcore&arch=arm64") 
-source_armv7h=("prowlarr.develop.${pkgver}.linux-core-arm.tar.gz::https://prowlarr.servarr.com/v1/update/nightly/updatefile?version=${pkgver}&os=linux&runtime=netcore&arch=arm")
-
+optdepends=(
+  'sabnzbd: usenet downloader'
+  'nzbget: usenet downloader'
+  'qbittorrent: torrent downloader'
+  'deluge: torrent downloader'
+  'rtorrent: torrent downloader'
+  'transmission-cli: torrent downloader (CLI and daemon)'
+  'transmission-gtk: torrent downloader (GTK+)'
+  'transmission-qt: torrent downloader (Qt)'
+  'jackett: torrent indexer proxy'
+  'nzbhydra2: torznab and usenet indexer proxy'
+)
+provides=(prowlarr)
+conflicts=(prowlarr)
+options=('!debug')
 source=(
   'prowlarr.service'
   'prowlarr.tmpfiles'
   'prowlarr.sysusers'
   'package_info'
 )
-
-sha512sums=('66a0fa8cdfb6119db300bb00bdead9c472776e8d5175fd313039116de4ed5b761ed13973229393106519e6ed4a45ec9709bd2c6099cd655448c5a1af2baf7b89'
-            '9159ceda0955f2ebc495dd470c9d6234d8534a120ab81fa58fefae94a8ecfdc8fe883fb1287bc10429e7b4f35ac59d36232d716c161a242a4bfcdff768f1b9a2'
-            '6ebd6f268e5aa7446e3c77540f5c95b3237959892e8800f5f380a0f979c71ec0d6f7664c1a58f7d10a255bc21a19bad0fef8609b02b4d5e15f340e66364017d2'
-            '473f38f922c1c24987bc77bb687739e3de0eed5c567407c690e0e9ac1604479bbe4f606ccb804067dbe97a100a748b4c2e05a11e30835d42e67ec65177a4f42a')
-sha512sums_x86_64=('67c734098d32bf947ebd389809e93e2918664a70ff1c6553e2725ac77718fd598fff40c4929cb6d37106266e25c5650c6adf98f5a3c2ea015410e83d899144cf')
-sha512sums_aarch64=('bfaef138142964d3fbe7a2455d322dcb1e4d29e99ea0e9b54239918882cadc600c954034c7b1e291de51be159acfb9ffc6a1c9f838e639eec9636feb11661ff8')
-sha512sums_armv7h=('722e6c940a1db9810a3bc962388129dfb42f918d9c368d578f9f6700382fb21b8a45f8587f39b06c782581a0bd24afe0c2f55ed3ef92112d51d7650521a62410')
-
+source_x86_64=("Prowlarr.nightly.${pkgver}.linux-core-x64.tar.gz::https://prowlarr.servarr.com/v1/update/nightly/updatefile?version=${pkgver}&os=linux&runtime=netcore&arch=x64")
+source_aarch64=("Prowlarr.nightly.${pkgver}.linux-core-arm64.tar.gz::https://prowlarr.servarr.com/v1/update/nightly/updatefile?version=${pkgver}&os=linux&runtime=netcore&arch=arm64")
+source_armv7h=("Prowlarr.nightly.${pkgver}.linux-core-arm.tar.gz::https://prowlarr.servarr.com/v1/update/nightly/updatefile?version=${pkgver}&os=linux&runtime=netcore&arch=arm")
+sha256sums=('21ca63506b3cffcca8dcd95e1bdf3fa8415f1bc134c31a153b51b573dc31d390'
+            '4c3f9b5fa71810697efbe60f20a2cba24fd1b997d5372c3726457b197d61ccb5'
+            '08d51099f09721b173233e58172c486025c16034dd89e73ccb42b647dcc34c4b'
+            'ced75b25b228ef5524b07e6b81efb2e6b7afd9a15bb133a8d5a364e9968f0ec0')
+sha256sums_x86_64=('a980028f520420bf99adfac5fefd6bec2e9830fa0a04501102259bcb88da5131')
+sha256sums_aarch64=('c67c768c1ac3500f808f86475501dcb1f94953c9079c2c2e51fead55c4729cca')
+sha256sums_armv7h=('f14f59fe76cf854aefbbcdd73aee641e87d5f23143a51ab654dba39cf1616bf6')
 
 package() {
-  rm -rf "${srcdir}/Prowlarr/prowlarr.Update"
-  install -d -m 755 "${pkgdir}/usr/lib/prowlarr/bin"
-  cp -dpr --no-preserve=ownership "${srcdir}/Prowlarr/"* "${pkgdir}/usr/lib/prowlarr/bin"
-  chmod -R a=,a+rX,u+w "${pkgdir}/usr/lib/prowlarr/bin"
-  chmod +x "${pkgdir}/usr/lib/prowlarr/bin/Prowlarr"
+  install -dm755 "${pkgdir}/usr/lib/prowlarr/bin"
+
+  # License
+  install -Dm644 "${srcdir}/Prowlarr/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}"
+  rm "${srcdir}/Prowlarr/LICENSE"
 
   # Disable built in updater.
-  install -D -m 644 "${srcdir}/package_info" "${pkgdir}/usr/lib/prowlarr"
+  rm -rf "${srcdir}/Prowlarr/Prowlarr.Update"
+  install -Dm644 "${srcdir}/package_info" "${pkgdir}/usr/lib/prowlarr"
   echo "PackageVersion=${pkgver}-${pkgrel}" >> "${pkgdir}/usr/lib/prowlarr/package_info"
 
-  install -D -m 644 "${srcdir}/prowlarr.service" "${pkgdir}/usr/lib/systemd/system/prowlarr.service"
-  install -D -m 644 "${srcdir}/prowlarr.sysusers" "${pkgdir}/usr/lib/sysusers.d/prowlarr.conf"
-  install -D -m 644 "${srcdir}/prowlarr.tmpfiles" "${pkgdir}/usr/lib/tmpfiles.d/prowlarr.conf"
+  cp -dpr --no-preserve=ownership "${srcdir}/Prowlarr/"* "${pkgdir}/usr/lib/prowlarr/bin"
+
+  install -Dm644 "${srcdir}/prowlarr.service" "${pkgdir}/usr/lib/systemd/system/prowlarr.service"
+  install -Dm644 "${srcdir}/prowlarr.sysusers" "${pkgdir}/usr/lib/sysusers.d/prowlarr.conf"
+  install -Dm644 "${srcdir}/prowlarr.tmpfiles" "${pkgdir}/usr/lib/tmpfiles.d/prowlarr.conf"
 }
