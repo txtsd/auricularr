@@ -81,8 +81,8 @@ jobs:
       - name: Compare versions
         shell: bash --noprofile --norc -o pipefail {0}
         run: |
-          ls -alh
-          cat .nvchecker.toml
+          runuser -u dev -- ls -alh
+          runuser -u dev -- cat .nvchecker.toml
           runuser -u dev -- pkgctl
           runuser -u dev -- pkgctl version
           runuser -u dev -- pkgctl version check
