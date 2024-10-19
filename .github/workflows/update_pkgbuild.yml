@@ -73,7 +73,8 @@ jobs:
         run: |
           pkgctl version check
           exit_code=$?
-          if [[ $exit_code -eq 2 ]];
+          echo "exit_code = ${exit_code}"
+          if [ $exit_code == 2 ];
           then
             echo "new_version=yes" >> $GITHUB_ENV
           else
