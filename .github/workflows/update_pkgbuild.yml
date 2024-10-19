@@ -81,7 +81,7 @@ jobs:
       - name: Compare versions
         shell: bash --noprofile --norc -o pipefail {0}
         run: |
-          runuser -u dev -- env TERM=xterm pkgctl version check  # devtools bug https://gitlab.archlinux.org/archlinux/devtools/-/issues/245
+          env TERM=xterm pkgctl version check  # devtools bug https://gitlab.archlinux.org/archlinux/devtools/-/issues/245
           exit_code=$?
           if [ $exit_code == 2 ];
           then
@@ -94,7 +94,7 @@ jobs:
         if: env.new_version == 'yes'
         run: |
           source PKGBUILD
-          runuser -u dev -- env TERM=xterm pkgctl version upgrade
+          env TERM=xterm pkgctl version upgrade
           runuser -u dev -- updpkgsums
           runuser -u dev -- makepkg --printsrcinfo > .SRCINFO
           git add .SRCINFO PKGBUILD
@@ -105,7 +105,7 @@ jobs:
         run: |
           # GitHub Actions gets stuck after shutting down the dotnet build-server so we avoid doing it on the CI
           sed -ri "s/dotnet build-server shutdown/true/" PKGBUILD
-          runuser -u dev -- env TERM=xterm pkgctl build
+          env TERM=xterm pkgctl build
           runuser -u dev -- pacman -U ${{ matrix.package }}*.tar.zst --noconfirm
 
       - name: Test -- Run package
