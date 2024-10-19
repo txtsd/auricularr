@@ -74,9 +74,9 @@ jobs:
         run: |
           ls -alh
           cat .nvchecker.toml
-          pkgctl |& tee -a pkgctl.txt
-          pkgctl version |& tee -a version.txt
-          pkgctl version check |& tee -a check.txt
+          runuser -u dev -- pkgctl |& tee -a pkgctl.txt
+          runuser -u dev -- pkgctl version |& tee -a version.txt
+          runuser -u dev -- pkgctl version check |& tee -a check.txt
           exit_code=$?
           echo "exit_code = ${exit_code}"
           echo '-'
