@@ -67,7 +67,7 @@ jobs:
 
       - name: Compare versions
         run: |
-          pkgctl version check ${{ matrix.package }}
+          pkgctl version check
           exit_code=$?
           if [[ $exit_code -eq 2 ]];
           then
