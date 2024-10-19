@@ -94,10 +94,7 @@ jobs:
         if: env.new_version == 'yes'
         run: |
           source PKGBUILD
-          eza -gaal --group-directories-first
-          runuser -u dev -- env TERM=xterm pkgctl version upgrade
-          eza -gaal --group-directories-first
-          runuser -u dev -- updpkgsums
+          runuser -u dev -- env TERM=xterm pkgctl version upgrade  # devtools bug https://gitlab.archlinux.org/archlinux/devtools/-/issues/245
           runuser -u dev -- makepkg --printsrcinfo > .SRCINFO
           git add .SRCINFO PKGBUILD
           git commit -s -S -m "upgpkg: ${pkgname} ${pkgver}-${pkgrel}"
@@ -106,9 +103,13 @@ jobs:
         if: env.new_version == 'yes'
         run: |
           # GitHub Actions gets stuck after shutting down the dotnet build-server so we avoid doing it on the CI
+          echo '1------------------------------------------------------------'
           sed -ri "s/dotnet build-server shutdown/true/" PKGBUILD
+          echo '2------------------------------------------------------------'
           env TERM=xterm pkgctl build
+          echo '3------------------------------------------------------------'
           runuser -u dev -- pacman -U ${{ matrix.package }}*.tar.zst --noconfirm
+          echo '4------------------------------------------------------------'
 
       - name: Test -- Run package
         if: env.new_version == 'yes' && matrix.package != 'bazarr'
