@@ -1,0 +1,138 @@
+name: Schedule
+
+on:
+  schedule:
+    - cron: '30 6 * * *'
+  workflow_dispatch:
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  update_and_upload_pkgbuild:
+    name: Update & Upload PKGBUILD
+    runs-on: ubuntu-latest
+    container: ghcr.io/archlinux/archlinux:base-devel
+    strategy:
+      matrix:
+        package: [bazarr, lidarr, lidarr-bin, lidarr-develop, lidarr-develop-bin, lidarr-nightly-bin, prowlarr, prowlarr-bin, prowlarr-develop, prowlarr-develop-bin, prowlarr-nightly-bin, radarr, radarr-bin, radarr-develop, radarr-develop-bin, radarr-nightly-bin, readarr-develop, readarr-develop-bin, readarr-nightly-bin, recyclarr, recyclarr-bin, sonarr, sonarr-bin, sonarr-develop, sonarr-develop-bin, whisparr-nightly-bin]
+      fail-fast: false
+    timeout-minutes: 30
+
+    steps:
+
+      - name: Install dependencies in Arch container
+        run: |
+          pacman -Syu --noconfirm jq tree git pacman-contrib openssh python-jq nvchecker devtools
+
+      - name: Configure ssh known_hosts
+        run: |
+          mkdir -p /root/.ssh/
+          cat <<EOF > /root/.ssh/known_hosts
+          aur.archlinux.org ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBLMiLrP8pVi5BFX2i3vepSUnpedeiewE5XptnUnau+ZoeUOPkpoCgZZuYfpaIQfhhJJI5qgnjJmr4hyJbe/zxow=
+          aur.archlinux.org ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDKF9vAFWdgm9Bi8uc+tYRBmXASBb5cB5iZsB7LOWWFeBrLp3r14w0/9S2vozjgqY5sJLDPONWoTTaVTbhe3vwO8CBKZTEt1AcWxuXNlRnk9FliR1/eNB9uz/7y1R0+c1Md+P98AJJSJWKN12nqIDIhjl2S1vOUvm7FNY43fU2knIhEbHybhwWeg+0wxpKwcAd/JeL5i92Uv03MYftOToUijd1pqyVFdJvQFhqD4v3M157jxS5FTOBrccAEjT+zYmFyD8WvKUa9vUclRddNllmBJdy4NyLB8SvVZULUPrP3QOlmzemeKracTlVOUG1wsDbxknF1BwSCU7CmU6UFP90kpWIyz66bP0bl67QAvlIc52Yix7pKJPbw85+zykvnfl2mdROsaT8p8R9nwCdFsBc9IiD0NhPEHcyHRwB8fokXTajk2QnGhL+zP5KnkmXnyQYOCUYo3EKMXIlVOVbPDgRYYT/XqvBuzq5S9rrU70KoI/S5lDnFfx/+lPLdtcnnEPk=
+          aur.archlinux.org ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEuBKrPzbawxA/k2g6NcyV5jmqwJ2s+zpgZGZ7tpLIcN
+          EOF
+
+      - name: Configure ssh-agent
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.YEKVIRP }}
+          log-public-key: false
+
+      - name: Configure gpg and git
+        uses: crazy-max/ghaction-import-gpg@v6
+        with:
+          gpg_private_key: ${{ secrets.YEKGPG }}
+          passphrase: ${{ secrets.ESARHPSSAPGPG }}
+          trust_level: 5
+          git_config_global: true
+          git_user_signingkey: true
+          git_commit_gpgsign: true
+          git_committer_name: txtsd
+          # Throws an error because it is not the topmost UID in the key
+          # git_committer_email: code@ihavea.quest
+
+      - name: Configure git -- user.email
+        run: |
+          git config --global user.email "code@ihavea.quest"
+          git config --global protocol.version 2
+          git config --global http.version "HTTP/2"
+
+      - name: Checkout AUR repo
+        run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          git clone ssh://aur@aur.archlinux.org/${{ matrix.package }}.git .
+
+      - name: Compare versions
+        run: |
+          pkgctl version check ${{ matrix.package }}
+          exit_code=$?
+          if [[ $exit_code -eq 2 ]];
+          then
+            echo "new_version=yes" >> $GITHUB_ENV
+          else
+            echo "new_version=no" >> $GITHUB_ENV
+          fi
+
+      - name: Create user to run makepkg and pkgctl
+        if: env.new_version == 'yes'
+        run: |
+          useradd -m dev
+          echo "dev ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/01_dev
+
+      - name: chown for dev
+        if: env.new_version == 'yes'
+        run: |
+          chown -R dev: .
+
+      - name: Update PKGBUILD
+        if: env.new_version == 'yes'
+        run: |
+          source PKGBUILD
+          runuser -u dev -- pkgctl version upgrade
+          runuser -u dev -- updpkgsums
+          runuser -u dev -- makepkg --printsrcinfo > .SRCINFO
+          git add .SRCINFO PKGBUILD
+          git commit -s -S -m "upgpkg: ${pkgname} ${pkgver}-${pkgrel}"
+
+      - name: Test -- Build and install package
+        if: env.new_version == 'yes'
+        run: |
+          # GitHub Actions gets stuck after shutting down the dotnet build-server so we avoid doing it on the CI
+          sed -ri "s/dotnet build-server shutdown/true/" PKGBUILD
+          runuser -u dev -- pkgctl build
+          runuser -u dev -- pacman -U ${{ matrix.package }}*.tar.zst --noconfirm
+
+      - name: Test -- Run package
+        if: env.new_version == 'yes' && matrix.package != 'bazarr'
+        run: |
+          run_command=$(cat *.service | rg -i 'ExecStart=(.*)' --only-matching --replace='${1}')
+          grep -m1 "Application started" <(${run_command}) ; killall dotnet
+          exit_code=$?
+          if [ $exit_code == 0 ];
+          then
+            echo "test_run_success=yes" >> $GITHUB_ENV
+          else
+            echo "test_run_success=no" >> $GITHUB_ENV
+          fi
+
+      - name: Test -- Run package (Mono)
+        if: env.new_version == 'yes' && matrix.package == 'bazarr'
+        run: |
+          run_command=$(cat *.service | rg -i 'ExecStart=(.*)' --only-matching --replace='${1}')
+          grep -m1 "Application started" <(${run_command}) ; killall python
+          exit_code=$?
+          if [ $exit_code == 0 ];
+          then
+            echo "test_run_success=yes" >> $GITHUB_ENV
+          else
+            echo "test_run_success=no" >> $GITHUB_ENV
+          fi
+
+      - name: Upload PKGBUILD
+        if: env.test_run_success == 'yes'
+        run: |
+          # git push -u origin master
+          echo 'SUCCESS!'
