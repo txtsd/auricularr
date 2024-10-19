@@ -95,7 +95,7 @@ jobs:
         run: |
           source PKGBUILD
           eza -gaal --group-directories-first
-          env TERM=xterm pkgctl version upgrade
+          runuser -u dev -- env TERM=xterm pkgctl version upgrade
           eza -gaal --group-directories-first
           runuser -u dev -- updpkgsums
           runuser -u dev -- makepkg --printsrcinfo > .SRCINFO
