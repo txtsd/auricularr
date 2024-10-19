@@ -62,6 +62,7 @@ jobs:
           git config --global user.email "code@ihavea.quest"
           git config --global protocol.version 2
           git config --global http.version "HTTP/2"
+          git config --global init.defaultBranch master
 
       - name: Checkout AUR repo
         run: |
@@ -71,6 +72,8 @@ jobs:
       - name: Compare versions
         shell: bash --noprofile --norc -o pipefail {0}
         run: |
+          ls -alh
+          cat .nvchecker.toml
           pkgctl version check
           exit_code=$?
           echo "exit_code = ${exit_code}"
