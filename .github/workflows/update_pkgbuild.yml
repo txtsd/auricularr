@@ -74,10 +74,18 @@ jobs:
         run: |
           ls -alh
           cat .nvchecker.toml
-          pkgctl version check |& tee -a output.txt
+          pkgctl |& tee -a pkgctl.txt
+          pkgctl version |& tee -a version.txt
+          pkgctl version check |& tee -a check.txt
           exit_code=$?
           echo "exit_code = ${exit_code}"
-          cat output.txt
+          echo '-'
+          cat pkgctl.txt
+          echo '-'
+          cat version.txt
+          echo '-'
+          cat check.txt
+          echo '-'
           if [ $exit_code == 2 ];
           then
             echo "new_version=yes" >> $GITHUB_ENV
