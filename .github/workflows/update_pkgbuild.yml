@@ -70,13 +70,11 @@ jobs:
           git clone ssh://aur@aur.archlinux.org/${{ matrix.package }}.git .
 
       - name: Create user to run makepkg and pkgctl
-        if: env.new_version == 'yes'
         run: |
           useradd -m dev
           echo "dev ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/01_dev
 
       - name: chown for dev
-        if: env.new_version == 'yes'
         run: |
           chown -R dev: .
 
