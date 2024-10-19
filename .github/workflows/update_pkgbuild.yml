@@ -27,7 +27,7 @@ jobs:
 
       - name: Install dependencies in Arch container
         run: |
-          pacman -Syu --noconfirm jq tree git pacman-contrib openssh python-jq nvchecker devtools
+          pacman -Syu --noconfirm jq tree git pacman-contrib openssh python-jq nvchecker devtools eza
 
       - name: Configure ssh known_hosts
         run: |
@@ -95,6 +95,7 @@ jobs:
         run: |
           source PKGBUILD
           env TERM=xterm pkgctl version upgrade
+          eza -gaal --group-directories-first
           runuser -u dev -- updpkgsums
           runuser -u dev -- makepkg --printsrcinfo > .SRCINFO
           git add .SRCINFO PKGBUILD
