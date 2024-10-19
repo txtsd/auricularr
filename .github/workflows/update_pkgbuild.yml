@@ -69,6 +69,7 @@ jobs:
           git clone ssh://aur@aur.archlinux.org/${{ matrix.package }}.git .
 
       - name: Compare versions
+        shell: bash --noprofile --norc -o pipefail
         run: |
           pkgctl version check
           exit_code=$?
