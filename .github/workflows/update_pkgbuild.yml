@@ -83,17 +83,12 @@ jobs:
         run: |
           ls -alh
           cat .nvchecker.toml
-          runuser -u dev -- pkgctl |& tee -a pkgctl.txt
-          runuser -u dev -- pkgctl version |& tee -a version.txt
-          runuser -u dev -- pkgctl version check |& tee -a check.txt
+          runuser -u dev -- pkgctl
+          runuser -u dev -- pkgctl version
+          runuser -u dev -- pkgctl version check
           exit_code=$?
+          echo '-'
           echo "exit_code = ${exit_code}"
-          echo '-'
-          cat pkgctl.txt
-          echo '-'
-          cat version.txt
-          echo '-'
-          cat check.txt
           echo '-'
           if [ $exit_code == 2 ];
           then
