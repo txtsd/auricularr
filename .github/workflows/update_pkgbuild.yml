@@ -29,6 +29,10 @@ jobs:
         run: |
           pacman -Syu --noconfirm jq tree git pacman-contrib openssh python-jq nvchecker devtools eza
 
+      - name: xtraceify devtools
+        run: |
+          sed -i "s/set -e/set -eo xtrace/" /usr/share/devtools/lib/version/upgrade.sh
+
       - name: Configure ssh known_hosts
         run: |
           mkdir -p /root/.ssh/
