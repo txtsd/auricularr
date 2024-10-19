@@ -79,6 +79,7 @@ jobs:
           chown -R dev: .
 
       - name: Compare versions
+        shell: bash --noprofile --norc -o pipefail {0}
         run: |
           runuser -u dev -- env TERM=xterm pkgctl version check  # devtools bug https://gitlab.archlinux.org/archlinux/devtools/-/issues/245
           exit_code=$?
