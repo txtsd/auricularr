@@ -79,17 +79,9 @@ jobs:
           chown -R dev: .
 
       - name: Compare versions
-        shell: bash --noprofile --norc -o pipefail {0}
         run: |
-          runuser -u dev -- ls -alh
-          runuser -u dev -- cat .nvchecker.toml
-          runuser -u dev -- pkgctl
-          runuser -u dev -- pkgctl version
-          runuser -u dev -- env TERM=xterm pkgctl version check
+          runuser -u dev -- env TERM=xterm pkgctl version check  # devtools bug https://gitlab.archlinux.org/archlinux/devtools/-/issues/245
           exit_code=$?
-          echo '-'
-          echo "exit_code = ${exit_code}"
-          echo '-'
           if [ $exit_code == 2 ];
           then
             echo "new_version=yes" >> $GITHUB_ENV
@@ -101,7 +93,7 @@ jobs:
         if: env.new_version == 'yes'
         run: |
           source PKGBUILD
-          runuser -u dev -- pkgctl version upgrade
+          runuser -u dev -- env TERM=xterm pkgctl version upgrade
           runuser -u dev -- updpkgsums
           runuser -u dev -- makepkg --printsrcinfo > .SRCINFO
           git add .SRCINFO PKGBUILD
@@ -112,7 +104,7 @@ jobs:
         run: |
           # GitHub Actions gets stuck after shutting down the dotnet build-server so we avoid doing it on the CI
           sed -ri "s/dotnet build-server shutdown/true/" PKGBUILD
-          runuser -u dev -- pkgctl build
+          runuser -u dev -- env TERM=xterm pkgctl build
           runuser -u dev -- pacman -U ${{ matrix.package }}*.tar.zst --noconfirm
 
       - name: Test -- Run package
