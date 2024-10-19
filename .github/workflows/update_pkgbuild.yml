@@ -94,6 +94,7 @@ jobs:
         if: env.new_version == 'yes'
         run: |
           source PKGBUILD
+          eza -gaal --group-directories-first
           env TERM=xterm pkgctl version upgrade
           eza -gaal --group-directories-first
           runuser -u dev -- updpkgsums
