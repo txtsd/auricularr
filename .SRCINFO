@@ -1,6 +1,6 @@
 pkgbase = lidarr-develop-bin
 	pkgdesc = Music collection manager for newsgroup and torrent users (develop branch)
-	pkgver = 2.6.4.4402
+	pkgver = 2.7.0.4413
 	pkgrel = 1
 	url = https://lidarr.audio
 	arch = x86_64
@@ -36,11 +36,11 @@ pkgbase = lidarr-develop-bin
 	sha256sums = abde8989e7ab9dc62b6a501644da5a9253953b6394b890565e00a69cbfd89068
 	sha256sums = 19b36aefd2ef93d4a630ceaefe582573ecdaa72ec21bfb48ce3941ead7b967fb
 	sha256sums = 1d246459491c9e2c9b21f61ec039f0ed4268ef467285cf806080e3f82c4c7077
-	source_x86_64 = Lidarr.develop.2.6.4.4402.linux-core-x64.tar.gz::https://lidarr.servarr.com/v1/update/develop/updatefile?version=2.6.4.4402&os=linux&runtime=netcore&arch=x64
-	sha256sums_x86_64 = 2554f4ee3d782b7ed543d17e4669eb8b3e29f6d68fa30e676b0527aa68b44f1e
-	source_aarch64 = Lidarr.develop.2.6.4.4402.linux-core-arm64.tar.gz::https://lidarr.servarr.com/v1/update/develop/updatefile?version=2.6.4.4402&os=linux&runtime=netcore&arch=arm64
-	sha256sums_aarch64 = 15ce67026d21c90f1586243651528461b855960f4337c3440bf0cd03cc7cc4a9
-	source_armv7h = Lidarr.develop.2.6.4.4402.linux-core-arm.tar.gz::https://lidarr.servarr.com/v1/update/develop/updatefile?version=2.6.4.4402&os=linux&runtime=netcore&arch=arm
-	sha256sums_armv7h = f90631d93c39dae9bafdac1dc0698299f51eb1974ba893b566f29a0fe251a816
+	source_x86_64 = Lidarr.develop.2.7.0.4413.linux-core-x64.tar.gz::https://lidarr.servarr.com/v1/update/develop/updatefile?version=2.7.0.4413&os=linux&runtime=netcore&arch=x64
+	sha256sums_x86_64 = be28b94fe6f56d359020aabb31f202fbc25dc926766261ebebaf8bf66023da14
+	source_aarch64 = Lidarr.develop.2.7.0.4413.linux-core-arm64.tar.gz::https://lidarr.servarr.com/v1/update/develop/updatefile?version=2.7.0.4413&os=linux&runtime=netcore&arch=arm64
+	sha256sums_aarch64 = b48331978a01a3b18fbf12937aa0b1f68db73cc5c51cb6f1812bc0800627f5af
+	source_armv7h = Lidarr.develop.2.7.0.4413.linux-core-arm.tar.gz::https://lidarr.servarr.com/v1/update/develop/updatefile?version=2.7.0.4413&os=linux&runtime=netcore&arch=arm
+	sha256sums_armv7h = 18fa2df55924efaee7fa2d332a61f4bd626c17aa0e8cd74cd8e07a4e328d0f39
 
 pkgname = lidarr-develop-bin
