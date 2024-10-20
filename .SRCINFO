@@ -1,6 +1,6 @@
 pkgbase = readarr-develop-bin
 	pkgdesc = Ebook and audiobook collection manager for newsgroup and torrent users (develop branch)
-	pkgver = 0.4.0.2634
+	pkgver = 0.4.1.2648
 	pkgrel = 1
 	url = https://readarr.com
 	arch = x86_64
@@ -36,11 +36,11 @@ pkgbase = readarr-develop-bin
 	sha256sums = 3030252218445e3cb27025a1b567deef287ff3d5e2f32abc2d640a771d39ddd5
 	sha256sums = 1576aa21914edaa336d2b37d41ebf54fbaff6eb5099a3f46407cd79164ccdc67
 	sha256sums = c53f8d84eea20eb57f4fa200d18ccfee7ddac57e087f3ef00efb8e22862c9dde
-	source_x86_64 = Readarr.develop.0.4.0.2634.linux-core-x64.tar.gz::https://readarr.servarr.com/v1/update/develop/updatefile?version=0.4.0.2634&os=linux&runtime=netcore&arch=x64
-	sha256sums_x86_64 = 2eefadae810ffd8d4bbb83991e1d1789a13cf855572a63b7a03c3aee095d429f
-	source_aarch64 = Readarr.develop.0.4.0.2634.linux-core-arm64.tar.gz::https://readarr.servarr.com/v1/update/develop/updatefile?version=0.4.0.2634&os=linux&runtime=netcore&arch=arm64
-	sha256sums_aarch64 = 838cbca140701bc1514b21d608b769cbb4b1df21dcf102450f153b83075e3e14
-	source_armv7h = Readarr.develop.0.4.0.2634.linux-core-arm.tar.gz::https://readarr.servarr.com/v1/update/develop/updatefile?version=0.4.0.2634&os=linux&runtime=netcore&arch=arm
-	sha256sums_armv7h = 608d004de8370220425bbba0c9155a7909c3cbabd30784dde0439ea4d4f70be3
+	source_x86_64 = Readarr.develop.0.4.1.2648.linux-core-x64.tar.gz::https://readarr.servarr.com/v1/update/develop/updatefile?version=0.4.1.2648&os=linux&runtime=netcore&arch=x64
+	sha256sums_x86_64 = a0474ef55f502cf5e4661f9053256394c636d62153d69f22d83a0f5a94774258
+	source_aarch64 = Readarr.develop.0.4.1.2648.linux-core-arm64.tar.gz::https://readarr.servarr.com/v1/update/develop/updatefile?version=0.4.1.2648&os=linux&runtime=netcore&arch=arm64
+	sha256sums_aarch64 = 4a32c2ca8d8e73c48c965d5cad3c87fd33dfee3c792ee97ace66d5cbb9b72dc3
+	source_armv7h = Readarr.develop.0.4.1.2648.linux-core-arm.tar.gz::https://readarr.servarr.com/v1/update/develop/updatefile?version=0.4.1.2648&os=linux&runtime=netcore&arch=arm
+	sha256sums_armv7h = 73f9c266a0c3c1865c62384cd82d7b7bc34ef76a3552283adf73cb5b89ca9f09
 
 pkgname = readarr-develop-bin
