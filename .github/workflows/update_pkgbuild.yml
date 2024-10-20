@@ -110,7 +110,7 @@ jobs:
           echo '1------------------------------------------------------------'
           sed -ri "s/dotnet build-server shutdown/true/" PKGBUILD
           echo '2------------------------------------------------------------'
-          pkgctl build
+          sudo pkgctl build
           echo '3------------------------------------------------------------'
           runuser -u dev -- pacman -U ${{ matrix.package }}*.tar.zst --noconfirm
           echo '4------------------------------------------------------------'
