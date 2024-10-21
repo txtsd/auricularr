@@ -16,7 +16,9 @@ jobs:
   update_and_upload_pkgbuild:
     name: Update & Upload PKGBUILD
     runs-on: ubuntu-latest
-    container: ghcr.io/archlinux/archlinux:base-devel
+    container:
+      image: ghcr.io/archlinux/archlinux:base-devel
+      options: --privileged
     strategy:
       matrix:
         package: [bazarr, bazarr-beta, bazarr-git, lidarr, lidarr-bin, lidarr-develop, lidarr-develop-bin, lidarr-nightly-bin, prowlarr, prowlarr-bin, prowlarr-develop, prowlarr-develop-bin, prowlarr-nightly-bin, radarr, radarr-bin, radarr-develop, radarr-develop-bin, radarr-nightly-bin, readarr-develop, readarr-develop-bin, readarr-nightly-bin, recyclarr, recyclarr-bin, sonarr, sonarr-bin, sonarr-develop, sonarr-develop-bin, whisparr-nightly-bin]
@@ -110,7 +112,7 @@ jobs:
           echo '1------------------------------------------------------------'
           sed -ri "s/dotnet build-server shutdown/true/" PKGBUILD
           echo '2------------------------------------------------------------'
-          sudo pkgctl build
+          pkgctl build
           echo '3------------------------------------------------------------'
           runuser -u dev -- pacman -U ${{ matrix.package }}*.tar.zst --noconfirm
           echo '4------------------------------------------------------------'
