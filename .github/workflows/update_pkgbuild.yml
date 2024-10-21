@@ -19,7 +19,7 @@ jobs:
     container: ghcr.io/archlinux/archlinux:base-devel
     strategy:
       matrix:
-        package: [bazarr, lidarr, lidarr-bin, lidarr-develop, lidarr-develop-bin, lidarr-nightly-bin, prowlarr, prowlarr-bin, prowlarr-develop, prowlarr-develop-bin, prowlarr-nightly-bin, radarr, radarr-bin, radarr-develop, radarr-develop-bin, radarr-nightly-bin, readarr-develop, readarr-develop-bin, readarr-nightly-bin, recyclarr, recyclarr-bin, sonarr, sonarr-bin, sonarr-develop, sonarr-develop-bin, whisparr-nightly-bin]
+        package: [bazarr, bazarr-beta, bazarr-git, lidarr, lidarr-bin, lidarr-develop, lidarr-develop-bin, lidarr-nightly-bin, prowlarr, prowlarr-bin, prowlarr-develop, prowlarr-develop-bin, prowlarr-nightly-bin, radarr, radarr-bin, radarr-develop, radarr-develop-bin, radarr-nightly-bin, readarr-develop, readarr-develop-bin, readarr-nightly-bin, recyclarr, recyclarr-bin, sonarr, sonarr-bin, sonarr-develop, sonarr-develop-bin, whisparr-nightly-bin]
       fail-fast: false
     timeout-minutes: 30
 
