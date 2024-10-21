@@ -4,7 +4,7 @@
 
 pkgname=bazarr-git
 _pkgname=${pkgname/-git}
-pkgver=1.4.0.r42.g8282899fa
+pkgver=1.4.5.r50.gd6b74c908
 pkgrel=1
 pkgdesc="Subtitle management and download automation for Sonarr and Radarr."
 arch=('any')
