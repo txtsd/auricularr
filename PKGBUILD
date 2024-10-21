@@ -1,15 +1,19 @@
 # Maintainer: Donald Webster <fryfrog@gmail.com>
+# Maintainer: txtsd <aur.archlinux@ihavea.quest>
 # Conributor: Pieter Goetschalckx <3.14.e.ter <at> gmail <dot> com>
 
 pkgname=bazarr-git
+_pkgname=${pkgname/-git}
 pkgver=1.4.0.r42.g8282899fa
 pkgrel=1
-pkgdesc="Subtitle management and download automation for Sonarr and Radarr"
+pkgdesc="Subtitle management and download automation for Sonarr and Radarr."
 arch=('any')
-url="https://github.com/morpheus65535/bazarr"
-license=('GPL3')
+url="https://www.bazarr.media"
+license=('GPL-3.0-or-later')
 depends=(
+  'bash'
   'ffmpeg'
+  'gdk-pixbuf2'
   'python'
   'python-gevent'
   'python-gevent-websocket'
@@ -19,42 +23,49 @@ depends=(
   'python-webrtcvad'
   'sqlite'
   'unrar'
-)
-makedepends=(
-  'unzip'
+  'python-platformdirs'
+  'python-ujson'
+  'python-greenlet'
   'python-setuptools'
-  'git'
+  'python-tomli'
 )
+makedepends=('git')
 provides=('bazarr')
 conflicts=('bazarr')
-options=('!strip')
+options=('!debug')
 source=(
   'git+https://github.com/morpheus65535/bazarr'
   'bazarr.service'
   'bazarr.sysusers'
-  'bazarr.tmpfiles'
   'bazarr.install'
+  'bazarr.tmpfiles'
 )
-
 sha256sums=('SKIP'
-            'fe83f24cdd17b37f19108d93f30b552bc5edbcc23a22f01e9be963f26d7d61d8'
-            '92fd48cbd7e5fe3a0388bbe756a52098fc461ef2dc87d9e886452e4f15acdcdc'
-            '3aa2ebbf4083301d331f36486edcb81fcd094767a0ea404a89d870217d4f6632'
-            '573beeac951d427e980332ce4d8645ae2299082e6c9c04f96e2a41a98c3acc60')
+            '2782e250117f7a85110d62472b834316fadcf32ca1874ad01541e7dd9a54215c'
+            '73a60121fd2b7b8f5bad75ec4b0f92552fcae0e29a4b9e6aaf15f86a825a88a3'
+            '573beeac951d427e980332ce4d8645ae2299082e6c9c04f96e2a41a98c3acc60'
+            'e7055260d0f3554e8b628d9560d8e12a40f720d76542048df0dfc838db88357b')
 
 pkgver() {
-  cd "bazarr"
+  cd "${_pkgname}"
   git describe --long --tags | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g'
 }
 
 package() {
-  install -d -m 755 "$pkgdir/usr/lib/bazarr"
-  cp -dpr --no-preserve=ownership "$srcdir/bazarr" "${pkgdir}/usr/lib/"
-  rm -rf "$pkgdir/usr/lib/bazarr/.git"
-  find "$pkgdir/usr/lib/bazarr/" -name '*.gitignore' -delete
-  find "$pkgdir/usr/lib/bazarr/" -name '*.gitattributes' -delete
+  local _pyver="$(python -c 'import sys; print("%i.%i" % sys.version_info[:2])')"
+  local _pdir="${pkgdir}/usr/lib/python${_pyver}/site-packages/${pkgname}"
 
-  install -D -m 644 "$srcdir/bazarr.service" "$pkgdir/usr/lib/systemd/system/bazarr.service"
-  install -D -m 644 "$srcdir/bazarr.sysusers" "$pkgdir/usr/lib/sysusers.d/bazarr.conf"
-  install -D -m 644 "$srcdir/bazarr.tmpfiles" "$pkgdir/usr/lib/tmpfiles.d/bazarr.conf"
+  install -dm755 "${_pdir}"
+  cp -dpr --no-preserve=ownership "${srcdir}/${_pkgname}/"* "${_pdir}"
+  python -m compileall "${pkgdir}"
+
+  # License
+  install -Dm644 "${srcdir}/${_pkgname}/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+  rm "${_pdir}/LICENSE"
+
+  rm "${_pdir}/"{*.hbs,*.md,*.txt}
+
+  install -D -m 644 "${srcdir}/bazarr.service" "${pkgdir}/usr/lib/systemd/system/bazarr.service"
+  install -D -m 644 "${srcdir}/bazarr.sysusers" "${pkgdir}/usr/lib/sysusers.d/bazarr.conf"
+  install -D -m 644 "${srcdir}/bazarr.tmpfiles" "${pkgdir}/usr/lib/tmpfiles.d/bazarr.conf"
 }
