@@ -5,7 +5,7 @@
 pkgname=readarr-develop
 _pkgname=Readarr
 pkgver=0.4.1.2648
-pkgrel=1
+pkgrel=2
 pkgdesc='Ebook and audiobook collection manager for newsgroup and torrent users (develop branch)'
 arch=('x86_64' 'aarch64' 'armv7h')
 url='https://readarr.com'
@@ -65,9 +65,9 @@ prepare() {
   cd "${srcdir}/${_pkgname}-${pkgver}"
 
   # Fix CVE-2024-43485
-  sed 's/System\.Text\.Json" Version="6\.0\.9"/System\.Text\.Json" Version="6\.0\.10"/' -i src/NzbDrone.Common/Readarr.Common.csproj
-  sed 's/System\.Text\.Json" Version="6\.0\.9"/System\.Text\.Json" Version="6\.0\.10"/' -i src/NzbDrone.Core/Readarr.Core.csproj
-
+  sed 's/System\.Text\.Json" Version="6\.0\.9"/System\.Text\.Json" Version="6\.0\.10"/' -i src/Directory.Packages.props
+  # Fix CVE-2024-43483
+  sed 's/Microsoft\.Extensions\.Caching\.Memory" Version="6\.0\.1"/Microsoft\.Extensions\.Caching\.Memory" Version="6\.0\.2"/' -i src/Directory.Packages.props
   yarn install --frozen-lockfile --network-timeout 120000
 }
 
