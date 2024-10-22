@@ -27,6 +27,10 @@ jobs:
 
     steps:
 
+      - name: Setup Machine ID
+        run: |
+          systemd-machine-id-setup
+
       - name: Install dependencies in Arch container
         run: |
           pacman -Syu --noconfirm jq tree git pacman-contrib openssh python-jq nvchecker devtools eza
