@@ -4,7 +4,7 @@
 
 pkgname=bazarr-beta
 _pkgname=${pkgname/-beta}
-pkgver=1.4.6_beta.9
+pkgver=1.4.6_beta.10
 pkgrel=1
 pkgdesc="Subtitle management and download automation for Sonarr and Radarr."
 arch=('any')
@@ -41,7 +41,7 @@ source=(
   'bazarr.tmpfiles'
 )
 noextract=("${pkgname}-${pkgver//_/-}.zip")
-sha256sums=('9b9610dc6e976208bc85cb979c755f6b03da624436199ab930bf84fb92ce8254'
+sha256sums=('d2f9b430d84749c4f76f0692cd38cf2bcc0b130cd5bb1fa19e3a16890ce2af56'
             '2782e250117f7a85110d62472b834316fadcf32ca1874ad01541e7dd9a54215c'
             '73a60121fd2b7b8f5bad75ec4b0f92552fcae0e29a4b9e6aaf15f86a825a88a3'
             '573beeac951d427e980332ce4d8645ae2299082e6c9c04f96e2a41a98c3acc60'
@@ -53,7 +53,7 @@ prepare() {
 
 package() {
   local _pyver="$(python -c 'import sys; print("%i.%i" % sys.version_info[:2])')"
-  local _pdir="${pkgdir}/usr/lib/python${_pyver}/site-packages/${pkgname}"
+  local _pdir="${pkgdir}/usr/lib/python${_pyver}/site-packages/${_pkgname}"
 
   install -dm755 "${_pdir}"
   cp -dpr --no-preserve=ownership "${srcdir}/${pkgname}-${pkgver//_/-}/"* "${_pdir}"
