@@ -59,10 +59,6 @@ _artifacts="${_output}/${_framework}/${_runtime}/publish"
 prepare() {
   cd "${srcdir}/${_pkgname}-${pkgver}"
 
-  # Fix CVE-2024-43485
-  sed 's/System\.Text\.Json" Version="6\.0\.9"/System\.Text\.Json" Version="6\.0\.10"/' -i src/NzbDrone.Common/Prowlarr.Common.csproj
-  sed 's/System\.Text\.Json" Version="6\.0\.9"/System\.Text\.Json" Version="6\.0\.10"/' -i src/NzbDrone.Core/Prowlarr.Core.csproj
-
   yarn install --frozen-lockfile --network-timeout 120000
 }
 
