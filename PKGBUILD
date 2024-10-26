@@ -4,7 +4,7 @@
 
 pkgname=radarr-nightly-bin
 pkgver=5.14.0.9380
-pkgrel=1
+pkgrel=2
 pkgdesc='Movie organizer/manager for usenet and torrent users (nightly builds)'
 arch=('x86_64' 'aarch64' 'armv7h')
 url='https://radarr.video'
@@ -15,6 +15,7 @@ depends=(
   'glibc'
   'zlib'
   'sqlite'
+  'ffmpeg'
 )
 optdepends=(
   'postgresql: postgresql database'
@@ -23,6 +24,9 @@ optdepends=(
   'qbittorrent: torrent downloader'
   'deluge: torrent downloader'
   'rtorrent: torrent downloader'
+  'nodejs-flood: torrent downloader'
+  'vuze: torrent downloader'
+  'aria2: torrent downloader'
   'transmission-cli: torrent downloader (CLI and daemon)'
   'transmission-gtk: torrent downloader (GTK+)'
   'transmission-qt: torrent downloader (Qt)'
@@ -33,7 +37,7 @@ optdepends=(
 )
 provides=(radarr)
 conflicts=(radarr)
-options=('!debug')
+options=(!debug)
 source=(
   'radarr.service'
   'radarr.tmpfiles'
@@ -58,8 +62,16 @@ package() {
   install -Dm644 "${srcdir}/Radarr/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}"
   rm "${srcdir}/Radarr/LICENSE"
 
-  # Disable built in updater.
+  # Remove ffprobe, Service Helpers, and Update files
+  rm "${srcdir}/Radarr/ffprobe"
+  rm "${srcdir}/Radarr/ServiceInstall"*
+  rm "${srcdir}/Radarr/ServiceUninstall"*
   rm -rf "${srcdir}/Radarr/Radarr.Update"
+
+  # Use system ffprobe
+  ln -s /usr/bin/ffprobe "${pkgdir}/usr/lib/radarr/bin/ffprobe"
+
+  # Disable built in updater.
   install -Dm644 "${srcdir}/package_info" "${pkgdir}/usr/lib/radarr"
   echo "PackageVersion=${pkgver}-${pkgrel}" >> "${pkgdir}/usr/lib/radarr/package_info"
 
