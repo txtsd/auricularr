@@ -4,13 +4,14 @@
 
 pkgname=lidarr-develop-bin
 pkgver=2.7.1.4417
-pkgrel=1
+pkgrel=2
 pkgdesc='Music collection manager for newsgroup and torrent users (develop branch)'
 arch=('x86_64' 'aarch64' 'armv7h')
 url='https://lidarr.audio'
 license=('GPL-3.0-or-later')
 groups=('servarr-develop-bin')
 depends=(
+  'chromaprint'
   'gcc-libs'
   'glibc'
   'zlib'
@@ -23,6 +24,9 @@ optdepends=(
   'qbittorrent: torrent downloader'
   'deluge: torrent downloader'
   'rtorrent: torrent downloader'
+  'nodejs-flood: torrent downloader'
+  'vuze: torrent downloader'
+  'aria2: torrent downloader'
   'transmission-cli: torrent downloader (CLI and daemon)'
   'transmission-gtk: torrent downloader (GTK+)'
   'transmission-qt: torrent downloader (Qt)'
@@ -33,7 +37,7 @@ optdepends=(
 )
 provides=(lidarr)
 conflicts=(lidarr)
-options=('!debug')
+options=(!debug)
 source=(
   'lidarr.service'
   'lidarr.tmpfiles'
@@ -58,8 +62,13 @@ package() {
   install -Dm644 "${srcdir}/Lidarr/LICENSE.md" "${pkgdir}/usr/share/licenses/${pkgname}"
   rm "${srcdir}/Lidarr/LICENSE.md"
 
-  # Disable built in updater.
+  # Remove fpcalc, Service Helpers, and Update files
+  rm "${srcdir}/Lidarr/fpcalc"
+  rm "${srcdir}/Lidarr/ServiceInstall"*
+  rm "${srcdir}/Lidarr/ServiceUninstall"*
   rm -rf "${srcdir}/Lidarr/Lidarr.Update"
+
+  # Disable built in updater.
   install -Dm644 "${srcdir}/package_info" "${pkgdir}/usr/lib/lidarr"
   echo "PackageVersion=${pkgver}-${pkgrel}" >> "${pkgdir}/usr/lib/lidarr/package_info"
 
