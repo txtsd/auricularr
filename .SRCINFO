@@ -1,7 +1,7 @@
 pkgbase = lidarr-develop
 	pkgdesc = Music collection manager for newsgroup and torrent users (develop branch)
 	pkgver = 2.7.1.4417
-	pkgrel = 2
+	pkgrel = 3
 	url = https://lidarr.audio
 	arch = x86_64
 	arch = aarch64

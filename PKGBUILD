@@ -5,7 +5,7 @@
 pkgname=lidarr-develop
 _pkgname=Lidarr
 pkgver=2.7.1.4417
-pkgrel=2
+pkgrel=3
 pkgdesc='Music collection manager for newsgroup and torrent users (develop branch)'
 arch=('x86_64' 'aarch64' 'armv7h')
 url='https://lidarr.audio'
@@ -63,7 +63,7 @@ _framework='net6.0'
 _runtime="linux-${_CARCH}"
 _output="_output"
 _artifacts="${_output}/${_framework}/${_runtime}/publish"
-_branch='master'
+_branch='develop'
 
 prepare() {
   cd "${srcdir}/${_pkgname}-${pkgver}"
