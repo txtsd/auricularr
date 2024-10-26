@@ -4,7 +4,7 @@
 
 pkgname=readarr-nightly-bin
 pkgver=0.4.2.2653
-pkgrel=1
+pkgrel=2
 pkgdesc='Ebook and audiobook collection manager for newsgroup and torrent users (nightly builds)'
 arch=('x86_64' 'aarch64' 'armv7h')
 url='https://readarr.com'
@@ -23,6 +23,9 @@ optdepends=(
   'qbittorrent: torrent downloader'
   'deluge: torrent downloader'
   'rtorrent: torrent downloader'
+  'nodejs-flood: torrent downloader'
+  'vuze: torrent downloader'
+  'aria2: torrent downloader'
   'transmission-cli: torrent downloader (CLI and daemon)'
   'transmission-gtk: torrent downloader (GTK+)'
   'transmission-qt: torrent downloader (Qt)'
@@ -33,7 +36,7 @@ optdepends=(
 )
 provides=(readarr)
 conflicts=(readarr)
-options=('!debug')
+options=(!debug)
 source=(
   'readarr.service'
   'readarr.tmpfiles'
@@ -58,8 +61,12 @@ package() {
   install -Dm644 "${srcdir}/Readarr/LICENSE.md" "${pkgdir}/usr/share/licenses/${pkgname}"
   rm "${srcdir}/Readarr/LICENSE.md"
 
-  # Disable built in updater.
+  # Remove Service Helpers, and Update files
+  rm "${srcdir}/Readarr/ServiceInstall"*
+  rm "${srcdir}/Readarr/ServiceUninstall"*
   rm -rf "${srcdir}/Readarr/Readarr.Update"
+
+  # Disable built in updater.
   install -Dm644 "${srcdir}/package_info" "${pkgdir}/usr/lib/readarr"
   echo "PackageVersion=${pkgver}-${pkgrel}" >> "${pkgdir}/usr/lib/readarr/package_info"
 
