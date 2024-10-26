@@ -6,7 +6,7 @@
 
 pkgname=sonarr
 _pkgname=Sonarr
-pkgver=4.0.9.2244
+pkgver=4.0.10.2544
 pkgrel=1
 pkgdesc='Smart PVR for newsgroup and torrent users.'
 arch=('x86_64' 'aarch64' 'armv7h')
@@ -43,7 +43,7 @@ source=(
   'sonarr.sysusers'
   'sonarr.tmpfiles'
 )
-sha256sums=('5eb07dba6b45abbcd3f443fbe6d85539997aa663015156ee1ce4aa1ab52460f2'
+sha256sums=('d6f1b1d04ea572cfd2aba72d8adac1925f544c43b99f31f3a047588f8369be78'
             '19112dc0051224b4de66f28077c93b6ee06e163b5194e6aecf62dedf66ff45a9'
             'b26aa01e07e5864b588ebe51a2993eaafb03fa0f7ec3806f2996dd2daf46aee7'
             '047585a1d448ad2c6e2962fb60d4f71e01a2529e464b25d340bb0d31b8e0f08f'
@@ -66,10 +66,6 @@ prepare() {
   # Remove upstream dotnet version
   rm global.json
   
-  # Fix CVE-2024-43485
-  sed 's/System\.Text\.Json" Version="6\.0\.9"/System\.Text\.Json" Version="6\.0\.10"/' -i src/NzbDrone.Common/Sonarr.Common.csproj
-  sed 's/System\.Text\.Json" Version="6\.0\.9"/System\.Text\.Json" Version="6\.0\.10"/' -i src/NzbDrone.Core/Sonarr.Core.csproj
-
   yarn install --frozen-lockfile --network-timeout 120000
 }
 
