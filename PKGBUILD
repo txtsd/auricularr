@@ -6,7 +6,7 @@
 pkgname=lidarr
 _pkgname=Lidarr
 pkgver=2.7.1.4417
-pkgrel=1
+pkgrel=2
 pkgdesc='Music collection manager for newsgroup and torrent users.'
 arch=('x86_64' 'aarch64' 'armv7h')
 url='https://lidarr.audio'
@@ -27,6 +27,9 @@ optdepends=(
   'qbittorrent: torrent downloader'
   'deluge: torrent downloader'
   'rtorrent: torrent downloader'
+  'nodejs-flood: torrent downloader'
+  'vuze: torrent downloader'
+  'aria2: torrent downloader'
   'transmission-cli: torrent downloader (CLI and daemon)'
   'transmission-gtk: torrent downloader (GTK+)'
   'transmission-qt: torrent downloader (Qt)'
@@ -59,41 +62,49 @@ _framework='net6.0'
 _runtime="linux-${_CARCH}"
 _output="_output"
 _artifacts="${_output}/${_framework}/${_runtime}/publish"
+_branch='master'
 
 prepare() {
   cd "${srcdir}/${_pkgname}-${pkgver}"
 
-  # Fix CVE-2024-43485
-  sed 's/System\.Text\.Json" Version="6\.0\.9"/System\.Text\.Json" Version="6\.0\.10"/' -i src/NzbDrone.Common/Lidarr.Common.csproj
-  sed 's/System\.Text\.Json" Version="6\.0\.9"/System\.Text\.Json" Version="6\.0\.10"/' -i src/NzbDrone.Core/Lidarr.Core.csproj
+  # Prepare backend
+  export DOTNET_CLI_TELEMETRY_OPTOUT=1
+  export DOTNET_NOLOGO=1
+  export DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
+  dotnet restore src/${_pkgname}.sln \
+    --runtime ${_runtime} \
+    --locked-mode
 
+  # Prepare frontend
   yarn install --frozen-lockfile --network-timeout 120000
 }
 
 build() {
   cd "${srcdir}/${_pkgname}-${pkgver}"
 
+  # Build backend
   export DOTNET_CLI_TELEMETRY_OPTOUT=1
+  export DOTNET_NOLOGO=1
+  export DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
   dotnet build src/${_pkgname}.sln \
     --framework ${_framework} \
     --runtime ${_runtime} \
     --no-self-contained \
+    --no-restore \
     --configuration Release \
     -p:Platform=Posix \
     -p:AssemblyVersion=${pkgver} \
-    -p:AssemblyConfiguration=main \
+    -p:AssemblyConfiguration=${_branch} \
     -p:RuntimeIdentifiers=${_runtime} \
     -t:PublishAllRids \
-  && dotnet build-server shutdown   # Build servers do not terminate automatically
 
-  # Remove Service Helpers, Update, and Windows files
+  # Remove fpcalc, Service Helpers, Update, and Windows files
+  rm "${_artifacts}/fpcalc"
   rm "${_artifacts}/ServiceInstall."*
   rm "${_artifacts}/ServiceUninstall."*
   rm "${_artifacts}/Lidarr.Windows."*
 
-  # Use fpcalc from chromaprint package
-  rm -f "${_artifacts}/fpcalc"
-
+  # Build frontend
   yarn run build --env production
 }
 
@@ -108,10 +119,10 @@ check() {
   _filters="${_filters}&FullyQualifiedName!~should_get_version_info_from_actual_linux"
   _filters="${_filters}&Category!=IntegrationTest"
 
-  # Link build to tests
-  ln -sf ../../${_artifacts} _tests/${_framework}/${_runtime}/bin
+  # Prepare for tests
   mkdir -p ~/.config/Lidarr
 
+  # Test backend
   dotnet test src \
     --runtime "${_runtime}" \
     --configuration Release \
@@ -123,7 +134,9 @@ package() {
   cd "${srcdir}/${_pkgname}-${pkgver}"
   install -dm755 "${pkgdir}/usr/lib/lidarr/bin/UI"
 
+  # Copy backend
   cp -dpr --no-preserve=ownership "${_artifacts}/"* "${pkgdir}/usr/lib/lidarr/bin"
+  # Copy frontend
   cp -dpr --no-preserve=ownership "${_output}/UI/"* "${pkgdir}/usr/lib/lidarr/bin/UI"
 
   # License
