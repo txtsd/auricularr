@@ -129,7 +129,7 @@ check() {
   _filters="${_filters}&Category!=IntegrationTest"
 
   # Prepare for tests
-  mkdir -p ~/.config/Radarr
+  mkdir -p ~/.config/Sonarr
 
   # Test backend
   dotnet test src \
