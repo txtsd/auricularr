@@ -7,7 +7,7 @@
 pkgname=sonarr-develop
 _pkgname=Sonarr
 pkgver=4.0.9.2513
-pkgrel=3
+pkgrel=4
 pkgdesc='Smart PVR for newsgroup and torrent users (develop branch)'
 arch=('x86_64' 'aarch64' 'armv7h')
 url='https://sonarr.tv'
@@ -69,6 +69,10 @@ _branch='develop'
 
 prepare() {
   cd "${srcdir}/${_pkgname}-${pkgver}"
+
+  # Fix CVE-2024-43485
+  sed 's/System\.Text\.Json" Version="6\.0\.9"/System\.Text\.Json" Version="6\.0\.10"/' -i src/NzbDrone.Common/Sonarr.Common.csproj
+  sed 's/System\.Text\.Json" Version="6\.0\.9"/System\.Text\.Json" Version="6\.0\.10"/' -i src/NzbDrone.Core/Sonarr.Core.csproj
 
   # Remove upstream dotnet version
   rm global.json
