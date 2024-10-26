@@ -4,7 +4,7 @@
 
 pkgname=whisparr-nightly-bin
 pkgver=2.0.0.548
-pkgrel=1
+pkgrel=2
 pkgdesc='Adult movie organizer/manager for usenet and torrent users (nightly builds)'
 arch=('x86_64' 'aarch64' 'armv7h')
 url='https://whisparr.com'
@@ -15,6 +15,7 @@ depends=(
   'glibc'
   'zlib'
   'sqlite'
+  'ffmpeg'
 )
 optdepends=(
   'postgresql: postgresql database'
@@ -23,6 +24,9 @@ optdepends=(
   'qbittorrent: torrent downloader'
   'deluge: torrent downloader'
   'rtorrent: torrent downloader'
+  'nodejs-flood: torrent downloader'
+  'vuze: torrent downloader'
+  'aria2: torrent downloader'
   'transmission-cli: torrent downloader (CLI and daemon)'
   'transmission-gtk: torrent downloader (GTK+)'
   'transmission-qt: torrent downloader (Qt)'
@@ -33,7 +37,7 @@ optdepends=(
 )
 provides=(whisparr)
 conflicts=(whisparr)
-options=('!debug')
+options=(!debug)
 source=(
   'whisparr.service'
   'whisparr.tmpfiles'
@@ -58,8 +62,16 @@ package() {
   install -Dm644 "${srcdir}/Whisparr/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}"
   rm "${srcdir}/Whisparr/LICENSE"
 
-  # Disable built in updater.
+  # Remove ffprobe, Service Helpers, and Update files
+  rm "${srcdir}/Whisparr/ffprobe"
+  rm "${srcdir}/Whisparr/ServiceInstall"*
+  rm "${srcdir}/Whisparr/ServiceUninstall"*
   rm -rf "${srcdir}/Whisparr/Whisparr.Update"
+
+  # Use system ffprobe
+  ln -s /usr/bin/ffprobe "${pkgdir}/usr/lib/whisparr/bin/ffprobe"
+
+  # Disable built in updater.
   install -Dm644 "${srcdir}/package_info" "${pkgdir}/usr/lib/whisparr"
   echo "PackageVersion=${pkgver}-${pkgrel}" >> "${pkgdir}/usr/lib/whisparr/package_info"
 
