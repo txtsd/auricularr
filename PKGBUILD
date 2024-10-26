@@ -4,7 +4,7 @@
 
 pkgname=prowlarr-develop-bin
 pkgver=1.25.4.4818
-pkgrel=1
+pkgrel=2
 pkgdesc='Indexer manager/proxy for usenet and torrent users (develop branch)'
 arch=('x86_64' 'aarch64' 'armv7h')
 url='https://prowlarr.com'
@@ -23,15 +23,23 @@ optdepends=(
   'qbittorrent: torrent downloader'
   'deluge: torrent downloader'
   'rtorrent: torrent downloader'
+  'nodejs-flood: torrent downloader'
+  'vuze: torrent downloader'
+  'aria2: torrent downloader'
   'transmission-cli: torrent downloader (CLI and daemon)'
   'transmission-gtk: torrent downloader (GTK+)'
   'transmission-qt: torrent downloader (Qt)'
   'jackett: torrent indexer proxy'
   'nzbhydra2: torznab and usenet indexer proxy'
+  'sonarr: automatically integrates with and syncs indexers'
+  'radarr: automatically integrates with and syncs indexers'
+  'lidarr: automatically integrates with and syncs indexers'
+  'readarr: automatically integrates with and syncs indexers'
+  'whisparr: automatically integrates with and syncs indexers'
 )
 provides=(prowlarr)
 conflicts=(prowlarr)
-options=('!debug')
+options=(!debug)
 source=(
   'prowlarr.service'
   'prowlarr.tmpfiles'
@@ -56,8 +64,12 @@ package() {
   install -Dm644 "${srcdir}/Prowlarr/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}"
   rm "${srcdir}/Prowlarr/LICENSE"
 
-  # Disable built in updater.
+  # Remove Service Helpers, and Update files
+  rm "${srcdir}/Prowlarr/ServiceInstall"*
+  rm "${srcdir}/Prowlarr/ServiceUninstall"*
   rm -rf "${srcdir}/Prowlarr/Prowlarr.Update"
+
+  # Disable built in updater.
   install -Dm644 "${srcdir}/package_info" "${pkgdir}/usr/lib/prowlarr"
   echo "PackageVersion=${pkgver}-${pkgrel}" >> "${pkgdir}/usr/lib/prowlarr/package_info"
 
