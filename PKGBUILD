@@ -5,7 +5,7 @@
 pkgname=readarr-develop
 _pkgname=Readarr
 pkgver=0.4.1.2648
-pkgrel=3
+pkgrel=4
 pkgdesc='Ebook and audiobook collection manager for newsgroup and torrent users (develop branch)'
 arch=('x86_64' 'aarch64' 'armv7h')
 url='https://readarr.com'
@@ -62,7 +62,7 @@ _framework='net6.0'
 _runtime="linux-${_CARCH}"
 _output="_output"
 _artifacts="${_output}/${_framework}/${_runtime}/publish"
-_branch='master'
+_branch='develop'
 
 prepare() {
   cd "${srcdir}/${_pkgname}-${pkgver}"

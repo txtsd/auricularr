@@ -1,7 +1,7 @@
 pkgbase = readarr-develop
 	pkgdesc = Ebook and audiobook collection manager for newsgroup and torrent users (develop branch)
 	pkgver = 0.4.1.2648
-	pkgrel = 3
+	pkgrel = 4
 	url = https://readarr.com
 	arch = x86_64
 	arch = aarch64
