@@ -67,11 +67,6 @@ _branch='master'
 prepare() {
   cd "${srcdir}/${_pkgname}-${pkgver}"
 
-  # Fix CVE-2024-43485
-  # sed 's/System\.Text\.Json" Version="6\.0\.9"/System\.Text\.Json" Version="6\.0\.10"/' -i src/Directory.Packages.props
-  # Fix CVE-2024-43483
-  # sed 's/Microsoft\.Extensions\.Caching\.Memory" Version="6\.0\.1"/Microsoft\.Extensions\.Caching\.Memory" Version="6\.0\.2"/' -i src/Directory.Packages.props
-
   # Prepare backend
   export DOTNET_CLI_TELEMETRY_OPTOUT=1
   export DOTNET_NOLOGO=1
