@@ -6,7 +6,7 @@
 
 pkgname=sonarr-develop-bin
 pkgver=4.0.9.2513
-pkgrel=1
+pkgrel=2
 pkgdesc='Smart PVR for newsgroup and torrent users (develop branch)'
 arch=('x86_64' 'aarch64' 'armv7h')
 url='https://sonarr.tv'
@@ -17,6 +17,7 @@ depends=(
   'glibc'
   'zlib'
   'sqlite'
+  'ffmpeg'
 )
 optdepends=(
   'postgresql: postgresql database'
@@ -25,6 +26,9 @@ optdepends=(
   'qbittorrent: torrent downloader'
   'deluge: torrent downloader'
   'rtorrent: torrent downloader'
+  'nodejs-flood: torrent downloader'
+  'vuze: torrent downloader'
+  'aria2: torrent downloader'
   'transmission-cli: torrent downloader (CLI and daemon)'
   'transmission-gtk: torrent downloader (GTK+)'
   'transmission-qt: torrent downloader (Qt)'
@@ -60,8 +64,16 @@ package() {
   install -Dm644 "${srcdir}/Sonarr/LICENSE.md" "${pkgdir}/usr/share/licenses/${pkgname}"
   rm "${srcdir}/Sonarr/LICENSE.md"
 
-  # Disable built in updater.
+  # Remove ffprobe, Service Helpers, and Update files
+  rm "${srcdir}/Sonarr/ffprobe"
+  rm "${srcdir}/Sonarr/ServiceInstall"*
+  rm "${srcdir}/Sonarr/ServiceUninstall"*
   rm -rf "${srcdir}/Sonarr/Sonarr.Update"
+
+  # Use system ffprobe
+  ln -s /usr/bin/ffprobe "${pkgdir}/usr/lib/sonarr/bin/ffprobe"
+
+  # Disable built in updater.
   install -Dm644 "${srcdir}/package_info" "${pkgdir}/usr/lib/sonarr"
   echo "PackageVersion=${pkgver}-${pkgrel}" >> "${pkgdir}/usr/lib/sonarr/package_info"
 
@@ -70,5 +82,4 @@ package() {
   install -Dm644 "${srcdir}/sonarr.service" "${pkgdir}/usr/lib/systemd/system/sonarr.service"
   install -Dm644 "${srcdir}/sonarr.sysusers" "${pkgdir}/usr/lib/sysusers.d/sonarr.conf"
   install -Dm644 "${srcdir}/sonarr.tmpfiles" "${pkgdir}/usr/lib/tmpfiles.d/sonarr.conf"
-
 }
