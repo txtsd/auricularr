@@ -5,7 +5,7 @@
 pkgname=radarr-develop
 _pkgname=Radarr
 pkgver=5.13.1.9378
-pkgrel=2
+pkgrel=3
 pkgdesc='Movie organizer/manager for usenet and torrent users (develop branch)'
 arch=('x86_64' 'aarch64' 'armv7h')
 url='https://radarr.video'
@@ -63,6 +63,7 @@ _framework='net6.0'
 _runtime="linux-${_CARCH}"
 _output="_output"
 _artifacts="${_output}/${_framework}/${_runtime}/publish"
+_branch='master'
 
 prepare() {
   cd "${srcdir}/${_pkgname}-${pkgver}"
@@ -94,7 +95,7 @@ build() {
     --configuration Release \
     -p:Platform=Posix \
     -p:AssemblyVersion=${pkgver} \
-    -p:AssemblyConfiguration=main \
+    -p:AssemblyConfiguration=${_branch} \
     -p:RuntimeIdentifiers=${_runtime} \
     -t:PublishAllRids \
   && dotnet build-server shutdown   # Build servers do not terminate automatically
