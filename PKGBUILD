@@ -5,7 +5,7 @@
 pkgname=prowlarr-develop
 _pkgname=Prowlarr
 pkgver=1.25.4.4818
-pkgrel=1
+pkgrel=2
 pkgdesc='Indexer manager/proxy for usenet and torrent users (develop branch)'
 arch=('x86_64' 'aarch64' 'armv7h')
 url='https://prowlarr.com'
@@ -25,11 +25,19 @@ optdepends=(
   'qbittorrent: torrent downloader'
   'deluge: torrent downloader'
   'rtorrent: torrent downloader'
+  'nodejs-flood: torrent downloader'
+  'vuze: torrent downloader'
+  'aria2: torrent downloader'
   'transmission-cli: torrent downloader (CLI and daemon)'
   'transmission-gtk: torrent downloader (GTK+)'
   'transmission-qt: torrent downloader (Qt)'
   'jackett: torrent indexer proxy'
   'nzbhydra2: torznab and usenet indexer proxy'
+  'sonarr: automatically integrates with and syncs indexers'
+  'radarr: automatically integrates with and syncs indexers'
+  'lidarr: automatically integrates with and syncs indexers'
+  'readarr: automatically integrates with and syncs indexers'
+  'whisparr: automatically integrates with and syncs indexers'
 )
 provides=(prowlarr)
 conflicts=(prowlarr)
@@ -57,13 +65,24 @@ _framework='net6.0'
 _runtime="linux-${_CARCH}"
 _output="_output"
 _artifacts="${_output}/${_framework}/${_runtime}/publish"
+_branch='develop'
 
 prepare() {
   cd "${srcdir}/${_pkgname}-${pkgver}"
 
   # Fix CVE-2024-43485
-  sed 's/System\.Text\.Json" Version="6\.0\.9"/System\.Text\.Json" Version="6\.0\.10"/' -i src/NzbDrone.Common/Prowlarr.Common.csproj
-  sed 's/System\.Text\.Json" Version="6\.0\.9"/System\.Text\.Json" Version="6\.0\.10"/' -i src/NzbDrone.Core/Prowlarr.Core.csproj
+  # sed 's/System\.Text\.Json" Version="6\.0\.9"/System\.Text\.Json" Version="6\.0\.10"/' -i src/NzbDrone.Common/Prowlarr.Common.csproj
+  # sed 's/System\.Text\.Json" Version="6\.0\.9"/System\.Text\.Json" Version="6\.0\.10"/' -i src/NzbDrone.Core/Prowlarr.Core.csproj
+
+  # Prepare backend
+  export DOTNET_CLI_TELEMETRY_OPTOUT=1
+  export DOTNET_NOLOGO=1
+  export DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
+  dotnet restore src/${_pkgname}.sln \
+    --runtime ${_runtime} \
+    --locked-mode
+
+  # Prepare frontend
 
   yarn install --frozen-lockfile --network-timeout 120000
 }
@@ -71,24 +90,28 @@ prepare() {
 build() {
   cd "${srcdir}/${_pkgname}-${pkgver}"
 
+  # Build backend
   export DOTNET_CLI_TELEMETRY_OPTOUT=1
+  export DOTNET_NOLOGO=1
+  export DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
   dotnet build src/${_pkgname}.sln \
     --framework ${_framework} \
     --runtime ${_runtime} \
     --no-self-contained \
+    --no-restore \
     --configuration Release \
     -p:Platform=Posix \
     -p:AssemblyVersion=${pkgver} \
-    -p:AssemblyConfiguration=main \
+    -p:AssemblyConfiguration=${_branch} \
     -p:RuntimeIdentifiers=${_runtime} \
     -t:PublishAllRids \
-  && dotnet build-server shutdown   # Build servers do not terminate automatically
 
   # Remove Service Helpers, Update, and Windows files
-  rm "${_artifacts}/ServiceInstall."*
-  rm "${_artifacts}/ServiceUninstall."*
+  rm "${_artifacts}/ServiceInstall"*
+  rm "${_artifacts}/ServiceUninstall"*
   rm "${_artifacts}/Prowlarr.Windows."*
 
+  # Build frontend
   yarn run build --env production
 }
 
@@ -98,16 +121,15 @@ check() {
 
   # Skip Tests:
   # These tests fail because /etc/arch-release doesn't contain a ${VERSION_ID}
-  # See: https://github.com/Prowlarr/Prowlarr/issues/7299
-  # Integration tests also completely fail
+  # See: https://github.com/Sonarr/Sonarr/issues/7299
   _filters="${_filters}&FullyQualifiedName!~should_get_version_info"
   _filters="${_filters}&FullyQualifiedName!~should_get_version_info_from_actual_linux"
   _filters="${_filters}&Category!=IntegrationTest"
 
-  # Link build to tests
-  ln -sf ${srcdir}/${_pkgname}-${pkgver}/${_artifacts} _tests/${_framework}/${_runtime}/bin
+  # Prepare for tests
   mkdir -p ~/.config/Prowlarr
 
+  # Test backend
   dotnet test src \
     --runtime "${_runtime}" \
     --configuration Release \
@@ -119,7 +141,9 @@ package() {
   cd "${srcdir}/${_pkgname}-${pkgver}"
   install -dm755 "${pkgdir}/usr/lib/prowlarr/bin/UI"
 
+  # Copy backend
   cp -dpr --no-preserve=ownership "${_artifacts}/"* "${pkgdir}/usr/lib/prowlarr/bin"
+  # Copy frontend
   cp -dpr --no-preserve=ownership "${_output}/UI/"* "${pkgdir}/usr/lib/prowlarr/bin/UI"
 
   # License
