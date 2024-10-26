@@ -68,10 +68,6 @@ prepare() {
   # Remove upstream dotnet version
   rm global.json
 
-  # Fix CVE-2024-43485
-  sed 's/System\.Text\.Json" Version="6\.0\.9"/System\.Text\.Json" Version="6\.0\.10"/' -i src/NzbDrone.Common/Sonarr.Common.csproj
-  sed 's/System\.Text\.Json" Version="6\.0\.9"/System\.Text\.Json" Version="6\.0\.10"/' -i src/NzbDrone.Core/Sonarr.Core.csproj
-
   yarn install --frozen-lockfile --network-timeout 120000
 }
 
