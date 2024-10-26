@@ -101,8 +101,8 @@ build() {
 
   # Remove fpcalc, Service Helpers, Update, and Windows files
   rm "${_artifacts}/fpcalc"
-  rm "${_artifacts}/ServiceInstall."*
-  rm "${_artifacts}/ServiceUninstall."*
+  rm "${_artifacts}/ServiceInstall"*
+  rm "${_artifacts}/ServiceUninstall"*
   rm "${_artifacts}/Lidarr.Windows."*
 
   # Build frontend
