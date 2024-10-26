@@ -7,7 +7,7 @@
 pkgname=sonarr-develop
 _pkgname=Sonarr
 pkgver=4.0.9.2513
-pkgrel=2
+pkgrel=3
 pkgdesc='Smart PVR for newsgroup and torrent users (develop branch)'
 arch=('x86_64' 'aarch64' 'armv7h')
 url='https://sonarr.tv'
@@ -65,7 +65,7 @@ _framework='net6.0'
 _runtime="linux-${_CARCH}"
 _output="_output"
 _artifacts="${_output}/${_framework}/${_runtime}/publish"
-_branch='main'
+_branch='develop'
 
 prepare() {
   cd "${srcdir}/${_pkgname}-${pkgver}"
