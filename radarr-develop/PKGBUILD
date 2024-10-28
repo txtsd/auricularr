@@ -5,7 +5,7 @@
 pkgname=radarr-develop
 _pkgname=Radarr
 pkgver=5.14.0.9383
-pkgrel=1
+pkgrel=2
 pkgdesc='Movie organizer/manager for usenet and torrent users (develop branch)'
 arch=('x86_64' 'aarch64' 'armv7h')
 url='https://radarr.video'
@@ -49,9 +49,9 @@ source=(
 )
 sha256sums=('f93abce567cec9b64e12ec96d189e147cff549f4ff2e791c194c0405e4d52d03'
             '4a41a56ab30f8b6001a666e867c7012bfe23760ec29eac957bf90e1dcb4ee36e'
-            'e2d5222d78523c31be3b1cf638bb5e07f175acd5d10ce39c839dd26ea2b01f67'
-            '8875537e5bff23cde3e94ddbd7919ee8c4d7b42a63913dd8b80e45691a16ecbd'
-            '2ab8c83b07e81839a1273c12a2b9ddce98e14bd5361e26dee0c21c824fc6c2ea')
+            '69c52335d5a296ced3afacf8dbe4cc1182eda4d44e20d471542aedd14ee9d556'
+            'bb73e0c55711d7ddbf74140b3beb39cb8674ae92be8387c3dd8109bcd53faca8'
+            '8e9b537e76e936d079968fd3e0fd0d19364be193fa39ea9f259c62d3608fca4c')
 
 case ${CARCH} in
   x86_64)  _CARCH='x64';;
