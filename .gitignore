@@ -1,4 +1,9 @@
-pkg/
-src/
-
-*.tar.*
+*
+!PKGBUILD
+!.SRCINFO
+!.gitignore
+!.nvchecker.toml
+!radarr.service
+!radarr.sysusers
+!radarr.tmpfiles
+!package_info
