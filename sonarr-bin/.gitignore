@@ -1,4 +1,9 @@
-src/
-pkg/
-
-*.tar.*
+*
+!PKGBUILD
+!.SRCINFO
+!.gitignore
+!.nvchecker.toml
+!sonarr.service
+!sonarr.sysusers
+!sonarr.tmpfiles
+!package_info
