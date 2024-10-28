@@ -1,0 +1,50 @@
+pkgbase = sonarr-develop-bin
+	pkgdesc = Smart PVR for newsgroup and torrent users (develop branch)
+	pkgver = 4.0.10.2579
+	pkgrel = 1
+	url = https://sonarr.tv
+	arch = x86_64
+	arch = aarch64
+	arch = armv7h
+	groups = servarr-develop-bin
+	license = GPL-3.0-or-later
+	depends = gcc-libs
+	depends = glibc
+	depends = zlib
+	depends = sqlite
+	depends = ffmpeg
+	optdepends = postgresql: postgresql database
+	optdepends = sabnzbd: usenet downloader
+	optdepends = nzbget: usenet downloader
+	optdepends = qbittorrent: torrent downloader
+	optdepends = deluge: torrent downloader
+	optdepends = rtorrent: torrent downloader
+	optdepends = nodejs-flood: torrent downloader
+	optdepends = vuze: torrent downloader
+	optdepends = aria2: torrent downloader
+	optdepends = transmission-cli: torrent downloader (CLI and daemon)
+	optdepends = transmission-gtk: torrent downloader (GTK+)
+	optdepends = transmission-qt: torrent downloader (Qt)
+	optdepends = jackett: torrent indexer proxy
+	optdepends = nzbhydra2: torznab and usenet indexer proxy
+	optdepends = prowlarr: torrent and usenet indexer proxy
+	optdepends = autobrr: irc, torrent and usenet indexer proxy
+	provides = sonarr
+	conflicts = sonarr
+	options = !debug
+	source = package_info
+	source = sonarr.service
+	source = sonarr.sysusers
+	source = sonarr.tmpfiles
+	sha256sums = 1a609451c6de4fe0f03c8019e2232b04a552bea98e5863f7e49bba9f00ed05ba
+	sha256sums = b26aa01e07e5864b588ebe51a2993eaafb03fa0f7ec3806f2996dd2daf46aee7
+	sha256sums = 047585a1d448ad2c6e2962fb60d4f71e01a2529e464b25d340bb0d31b8e0f08f
+	sha256sums = 7bf87304383b7d58ecab59b3686d00a8f1b6fbe4af3a86da35a887e4cebee411
+	source_x86_64 = Sonarr.develop.4.0.10.2579.linux-x64.tar.gz::https://services.sonarr.tv/v1/update/develop/download?version=4.0.10.2579&os=linux&runtime=netcore&arch=x64
+	sha256sums_x86_64 = 224b3017693884ee9a6e8a810c2c0a1e0e750b3aed62de028f1b15a9799df303
+	source_aarch64 = Sonarr.develop.4.0.10.2579.linux-arm64.tar.gz::https://services.sonarr.tv/v1/update/develop/download?version=4.0.10.2579&os=linux&runtime=netcore&arch=arm64
+	sha256sums_aarch64 = 49fc91abac753f36b2fd451336165d4780ab0d9ab6ad4995784cedeef7e576e9
+	source_armv7h = Sonarr.develop.4.0.10.2579.linux-arm.tar.gz::https://services.sonarr.tv/v1/update/develop/download?version=4.0.10.2579&os=linux&runtime=netcore&arch=arm
+	sha256sums_armv7h = be06539a15aab50101dd9654fca414abef33bc291af537a420723880a72f5017
+
+pkgname = sonarr-develop-bin
