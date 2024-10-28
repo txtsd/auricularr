@@ -1,0 +1,50 @@
+pkgbase = radarr-develop-bin
+	pkgdesc = Movie organizer/manager for usenet and torrent users (develop branch)
+	pkgver = 5.14.0.9383
+	pkgrel = 1
+	url = https://radarr.video
+	arch = x86_64
+	arch = aarch64
+	arch = armv7h
+	groups = servarr-develop-bin
+	license = GPL-3.0-or-later
+	depends = gcc-libs
+	depends = glibc
+	depends = zlib
+	depends = sqlite
+	depends = ffmpeg
+	optdepends = postgresql: postgresql database
+	optdepends = sabnzbd: usenet downloader
+	optdepends = nzbget: usenet downloader
+	optdepends = qbittorrent: torrent downloader
+	optdepends = deluge: torrent downloader
+	optdepends = rtorrent: torrent downloader
+	optdepends = nodejs-flood: torrent downloader
+	optdepends = vuze: torrent downloader
+	optdepends = aria2: torrent downloader
+	optdepends = transmission-cli: torrent downloader (CLI and daemon)
+	optdepends = transmission-gtk: torrent downloader (GTK+)
+	optdepends = transmission-qt: torrent downloader (Qt)
+	optdepends = jackett: torrent indexer proxy
+	optdepends = nzbhydra2: torznab and usenet indexer proxy
+	optdepends = prowlarr: torrent and usenet indexer proxy
+	optdepends = autobrr: irc, torrent and usenet indexer proxy
+	provides = radarr
+	conflicts = radarr
+	options = !debug
+	source = radarr.service
+	source = radarr.tmpfiles
+	source = radarr.sysusers
+	source = package_info
+	sha256sums = e2d5222d78523c31be3b1cf638bb5e07f175acd5d10ce39c839dd26ea2b01f67
+	sha256sums = 2ab8c83b07e81839a1273c12a2b9ddce98e14bd5361e26dee0c21c824fc6c2ea
+	sha256sums = 8875537e5bff23cde3e94ddbd7919ee8c4d7b42a63913dd8b80e45691a16ecbd
+	sha256sums = ecfb21473ea15ab5595cce0ea01533e6d4b7835bcea9789ef617ec8d5d364a6f
+	source_x86_64 = Radarr.develop.5.14.0.9383.linux-core-x64.tar.gz::https://radarr.servarr.com/v1/update/develop/updatefile?version=5.14.0.9383&os=linux&runtime=netcore&arch=x64
+	sha256sums_x86_64 = 46fcc05959b6ad448bdbde87d0536cbc6a756821aedb14a889010924cde12d12
+	source_aarch64 = Radarr.develop.5.14.0.9383.linux-core-arm64.tar.gz::https://radarr.servarr.com/v1/update/develop/updatefile?version=5.14.0.9383&os=linux&runtime=netcore&arch=arm64
+	sha256sums_aarch64 = fe3ef2ca25011491c343ed78b1062b643796b81a8d43a229a3630e556b986257
+	source_armv7h = Radarr.develop.5.14.0.9383.linux-core-arm.tar.gz::https://radarr.servarr.com/v1/update/develop/updatefile?version=5.14.0.9383&os=linux&runtime=netcore&arch=arm
+	sha256sums_armv7h = cb9c7903b32d3d5da83638ea8eecdf0a90d1c989bcffe8f7d9dcded0faa39726
+
+pkgname = radarr-develop-bin
