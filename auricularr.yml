@@ -86,7 +86,7 @@ tasks:
             service_name=${service_name//-nightly}
             
             sudo systemctl start ${service_name}
-            sleep 5
+            sleep 30
 
             case ${service_name} in
               bazarr)
