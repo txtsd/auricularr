@@ -1,7 +1,7 @@
 pkgbase = sonarr-develop
 	pkgdesc = Smart PVR for newsgroup and torrent users (develop branch)
 	pkgver = 4.0.10.2579
-	pkgrel = 5
+	pkgrel = 6
 	url = https://sonarr.tv
 	arch = x86_64
 	arch = aarch64
@@ -43,6 +43,6 @@ pkgbase = sonarr-develop
 	sha256sums = a6b37e75143a309b1d8c163c3f90f7f0275fd730015c3f74e3ad27c278b1ae90
 	sha256sums = 3fe3cef29b846bd294eb1f7b24451c18a5cc5ceed6142ca4994de3788c4db665
 	sha256sums = 00141d4cbf34daa6d91b26179d4847ec970e2767382e18fdf9af2ec84a0ff43e
-	sha256sums = 1f76177648e0c424ef76bb94fc7b806fae2c474272e022af662dc8033fe76652
+	sha256sums = 0acb3697a5001b00f79269581cd08645f9d5e1e9f0a57cc3e7deeb12d66accc9
 
 pkgname = sonarr-develop
