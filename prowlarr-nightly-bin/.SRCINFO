@@ -1,6 +1,6 @@
 pkgbase = prowlarr-nightly-bin
 	pkgdesc = Indexer manager/proxy for usenet and torrent users (nightly builds)
-	pkgver = 1.26.0.4826
+	pkgver = 1.26.0.4832
 	pkgrel = 1
 	url = https://prowlarr.com
 	arch = x86_64
@@ -42,11 +42,11 @@ pkgbase = prowlarr-nightly-bin
 	sha256sums = 4c3f9b5fa71810697efbe60f20a2cba24fd1b997d5372c3726457b197d61ccb5
 	sha256sums = 08d51099f09721b173233e58172c486025c16034dd89e73ccb42b647dcc34c4b
 	sha256sums = 5cb90253a2c8c42a98ad8b7573d6905ad478b877dffbe50b9f7667f28cdbd806
-	source_x86_64 = Prowlarr.nightly.1.26.0.4826.linux-core-x64.tar.gz::https://prowlarr.servarr.com/v1/update/nightly/updatefile?version=1.26.0.4826&os=linux&runtime=netcore&arch=x64
-	sha256sums_x86_64 = ae668fa8cc37b28a136dcc3275642ccb2c2ed4a0a8ea1046a31904c210d92e30
-	source_aarch64 = Prowlarr.nightly.1.26.0.4826.linux-core-arm64.tar.gz::https://prowlarr.servarr.com/v1/update/nightly/updatefile?version=1.26.0.4826&os=linux&runtime=netcore&arch=arm64
-	sha256sums_aarch64 = 4ac9f147d9a2d90954a9baf2601fda8519852f3e63420257772cb20acca2726e
-	source_armv7h = Prowlarr.nightly.1.26.0.4826.linux-core-arm.tar.gz::https://prowlarr.servarr.com/v1/update/nightly/updatefile?version=1.26.0.4826&os=linux&runtime=netcore&arch=arm
-	sha256sums_armv7h = 10faae9a72acbf581002726cd42b51f19426c66539d418bb2e91e2f240ca96c7
+	source_x86_64 = Prowlarr.nightly.1.26.0.4832.linux-core-x64.tar.gz::https://prowlarr.servarr.com/v1/update/nightly/updatefile?version=1.26.0.4832&os=linux&runtime=netcore&arch=x64
+	sha256sums_x86_64 = 52de9603829b76c16de054c0a278c67a4c924cc8a7d47e37f9f84d11bb4722b1
+	source_aarch64 = Prowlarr.nightly.1.26.0.4832.linux-core-arm64.tar.gz::https://prowlarr.servarr.com/v1/update/nightly/updatefile?version=1.26.0.4832&os=linux&runtime=netcore&arch=arm64
+	sha256sums_aarch64 = 1942dd1ac1d7756ba1d26955573c3934f5c570531387e306bd606943d34f83f5
+	source_armv7h = Prowlarr.nightly.1.26.0.4832.linux-core-arm.tar.gz::https://prowlarr.servarr.com/v1/update/nightly/updatefile?version=1.26.0.4832&os=linux&runtime=netcore&arch=arm
+	sha256sums_armv7h = 09e8116d6856a35592d292b925188b4007b0b7fa6fc66a27a5d49e5b372b357c
 
 pkgname = prowlarr-nightly-bin
