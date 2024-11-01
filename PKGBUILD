@@ -4,7 +4,7 @@
 
 pkgname=radarr-nightly-bin
 pkgver=5.15.0.9405
-pkgrel=1
+pkgrel=2
 pkgdesc='Movie organizer/manager for usenet and torrent users (nightly builds)'
 arch=('x86_64' 'aarch64' 'armv7h')
 url='https://radarr.video'
@@ -47,7 +47,7 @@ source=(
 source_x86_64=("Radarr.nightly.${pkgver}.linux-core-x64.tar.gz::https://radarr.servarr.com/v1/update/nightly/updatefile?version=${pkgver}&os=linux&runtime=netcore&arch=x64")
 source_aarch64=("Radarr.nightly.${pkgver}.linux-core-arm64.tar.gz::https://radarr.servarr.com/v1/update/nightly/updatefile?version=${pkgver}&os=linux&runtime=netcore&arch=arm64")
 source_armv7h=("Radarr.nightly.${pkgver}.linux-core-arm.tar.gz::https://radarr.servarr.com/v1/update/nightly/updatefile?version=${pkgver}&os=linux&runtime=netcore&arch=arm")
-sha256sums=('8cc28b46c7e5e2fa129e1fdc358eca7ca7fd09b5e99506bafdcf88c392f9b889'
+sha256sums=('6278a37ad05d6242f00351cadd329606b1972bdee69edc0e49a53d260a58875c'
             '8e9b537e76e936d079968fd3e0fd0d19364be193fa39ea9f259c62d3608fca4c'
             'bb73e0c55711d7ddbf74140b3beb39cb8674ae92be8387c3dd8109bcd53faca8'
             'e7d22110337234a9d5ce1ea0f65d0dcd7c76e339c61da77c33b80218638d5c3a')
