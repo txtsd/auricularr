@@ -1,110 +1,111 @@
-# Maintainer: George Rawlinson <grawlinson@archlinux.org>
+# Maintainer: txtsd <aur.archlinux@ihavea.quest>
+# Maintainer: Donald Webster <fryfrog@gmail.com>
+# Contributor: George Rawlinson <grawlinson@archlinux.org>
 
 pkgname=autobrr
 pkgver=1.48.0
-_commit='f029de233fa2489948d2b76d2db8fc0dfea8ea7f'
-pkgrel=1
+pkgrel=2
 pkgdesc='The modern download automation tool for torrents'
 arch=('x86_64')
 url='https://autobrr.com'
-license=('GPL2')
+license=('GPL-2.0-or-later')
 depends=('glibc')
 makedepends=(
   'git'
   'go'
-  'nodejs'
+  'pnpm'
 )
 optdepends=(
-  'postgresql'
-  'qbittorrent'
-  'rtorrent'
-  'transmission-cli'
-  'deluge'
-  'radarr'
-  'sonarr'
-  'lidarr'
+  'postgresql: postgresql database'
+  'sabnzbd: usenet downloader'
+  'qbittorrent: torrent downloader'
+  'deluge: torrent downloader'
+  'rtorrent: torrent downloader'
+  'transmission-cli: torrent downloader (CLI and daemon)'
+  'transmission-gtk: torrent downloader (GTK+)'
+  'transmission-qt: torrent downloader (Qt)'
+  'porla: A high performance BitTorrent client for servers and seedboxes'
+  'sonarr: Smart PVR for newsgroup and torrent users'
+  'radarr: Movie organizer/manager for usenet and torrent users'
+  'lidarr: Music collection manager for newsgroup and torrent users'
+  'readarr: Ebook and audiobook collection manager for newsgroup and torrent users'
+  'whisparr: Adult movie organizer/manager for usenet and torrent users'
 )
-options=('!lto')
+options=()
 source=(
-  "$pkgname::git+https://github.com/autobrr/autobrr#commit=$_commit"
-  'systemd.service'
-  'sysusers.conf'
-  'tmpfiles.conf'
+  "${pkgname}-${pkgver}::git+https://github.com/autobrr/autobrr#tag=v${pkgver}"
+  'autobrr.service'
+  'autobrr.sysusers'
+  'autobrr.tmpfiles'
 )
-b2sums=('931fc7e58cf6ca525820f9a58ddae2cc8f3fb52b91f82012d9d6789173156271d50ee1e1f4f759580c6c3aafc9670e8b1b2e990c3c354949a2ebd23644828874'
-        '68956fdadf43c4c714b0867dd5840971472e5647d3fef81a9b6a371610e7dbf1665b19945812ea2731da8e66f063db4f7fcefb1a4e70c5a437ecfa164697d8f7'
-        'bd63a8a0f66561c10c81c85f8488c4e89e6c65fda6fb21715c24f7d9c565f0da502dd6b6ab68df360620dcc5aa5cc3fcf3e9ede6f202b5ddde6d2c2d0765342d'
-        '55e4ab4ad7434d8868fb90e764a541aacf0bbe9e5236fa17f0184252c494d9d77d6b16b6f8106e5eb5d8161f0f20dd464ab052a46de949d5e4a5f89c51e2fdab')
-
-pkgver() {
-  cd "$pkgname"
-
-  git describe --tags | sed 's/^v//'
-}
+sha256sums=('53ff55e5ac1811225b8a05454fcac341d554429abcaff837f0b7bd167f18a09a'
+            '59da808851a722c9151946de5112851207a33a5a9a01cae722af0cafb388d4dd'
+            '780adccd60ca1ca465668d163d19bb892df7c42e03e442bda0c095ca3ee6eed1'
+            'c8d7972c67963aa3f720176e2fb351f3c0ea8be8f1ed84a46b7a13ea8d032bb3')
 
 prepare() {
-  cd "$pkgname"
+  cd "${pkgname}-${pkgver}"
 
-  # create directory for build output
+  # Create directory for build output
   mkdir build
 
-  # download go dependencies
+  # Download go dependencies
   export GOPATH="${srcdir}"
   go mod download
 
-  # setup corepack
-  mkdir tmp-bin
-  corepack enable --install-directory "$(pwd)/tmp-bin"
-  export PATH="$(pwd)/tmp-bin:$PATH"
-
-  # download node dependencies
+  # Download node dependencies
   cd web
   pnpm install --frozen-lockfile
 }
 
 build() {
-  cd "$pkgname"
+  cd "${pkgname}-${pkgver}"
 
-  # ensure build date is reproducible
+  # Ensure build date is reproducible
   local _build_date="$(date --utc --date="@${SOURCE_DATE_EPOCH:-$(date +%s)}" +%Y-%m-%d)"
 
-  # build web app
+  # Build web app
   pushd web
   pnpm run build
   popd
 
-  # set Go flags
+  # Set Go flags
   export CGO_CPPFLAGS="${CPPFLAGS}"
   export CGO_CFLAGS="${CFLAGS}"
   export CGO_CXXFLAGS="${CXXFLAGS}"
+  export CGO_LDFLAGS="${LDFLAGS}"
   export GOPATH="${srcdir}"
 
-  # build binaries
+  # Build binaries
   go build -v \
     -buildmode=pie \
     -mod=readonly \
     -modcacherw \
     -ldflags "-compressdwarf=false \
-    -linkmode external \
-    -extldflags '${LDFLAGS}' \
-    -X main.version=$pkgver \
-    -X main.commit=$_commit \
-    -X main.date=$_build_date" \
+      -linkmode external \
+      -X main.version=${pkgver} \
+      -X main.commit=$(git rev-parse --verify HEAD) \
+      -X main.date=${_build_date}" \
     -o build \
     ./cmd/...
 }
 
+check() {
+  cd "${pkgname}-${pkgver}"
+  go test -v ./test/...
+}
+
 package() {
-  # systemd integration
-  install -vDm644 systemd.service "$pkgdir/usr/lib/systemd/system/$pkgname.service"
-  install -vDm644 sysusers.conf "$pkgdir/usr/lib/sysusers.d/$pkgname.conf"
-  install -vDm644 tmpfiles.conf "$pkgdir/usr/lib/tmpfiles.d/$pkgname.conf"
+  # Systemd integration
+  install -Dm644 autobrr.service "${pkgdir}/usr/lib/systemd/system/${pkgname}.service"
+  install -Dm644 autobrr.sysusers "${pkgdir}/usr/lib/sysusers.d/${pkgname}.conf"
+  install -Dm644 autobrr.tmpfiles "${pkgdir}/usr/lib/tmpfiles.d/${pkgname}.conf"
 
-  cd "$pkgname"
+  cd "${pkgname}-${pkgver}"
 
-  # binary
-  install -vDm755 -t "$pkgdir/usr/bin" build/*
+  # Binary
+  install -Dm755 -t "${pkgdir}/usr/bin" build/*
 
-  # documentation
-  install -vDm644 -t "$pkgdir/usr/share/doc/$pkgname" README.md
+  # Documentation
+  install -Dm644 -t "${pkgdir}/usr/share/doc/${pkgname}" README.md
 }
