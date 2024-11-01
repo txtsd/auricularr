@@ -1,6 +1,8 @@
-*.xz
-*.gz
-*.log
-/src/
-/pkg/
-/autobrr/
+*
+!PKGBUILD
+!.SRCINFO
+!.gitignore
+!.nvchecker.toml
+!autobrr.service
+!autobrr.sysusers
+!autobrr.tmpfiles

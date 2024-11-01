@@ -1,12 +1,17 @@
 [Unit]
-Description=autobrr service
-Documentation=https://autobrr.com/
-After=syslog.target network-online.target
+Description=Autobrr Daemon
+Documentation=https://autobrr.com
+Wants=network-online.target
+After=network-online.target
 
 [Service]
 User=autobrr
 Group=autobrr
 Type=simple
+SyslogIdentifier=sonarr
+Restart=on-failure
+RestartSec=10
+TimeoutStopSec=20
 ExecStart=/usr/bin/autobrr --config=/var/lib/autobrr
 ReadWritePaths=/var/lib/autobrr
 
