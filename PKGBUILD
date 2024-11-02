@@ -54,9 +54,9 @@ sha256sums=('d6f1b1d04ea572cfd2aba72d8adac1925f544c43b99f31f3a047588f8369be78'
             '0acb3697a5001b00f79269581cd08645f9d5e1e9f0a57cc3e7deeb12d66accc9')
 
 case ${CARCH} in
-  x86_64)  _CARCH='x64';;
-  aarch64) _CARCH='arm64';;
-  armv7h)  _CARCH='arm';;
+  x86_64)  _CARCH='x64' ;;
+  aarch64) _CARCH='arm64' ;;
+  armv7h)  _CARCH='arm' ;;
 esac
 
 _framework='net6.0'
@@ -68,19 +68,19 @@ _branch='main'
 prepare() {
   cd "${srcdir}/${_pkgname}-${pkgver}"
 
-# Fix CVE-2024-43485
+  # Fix CVE-2024-43485
   sed 's/System\.Text\.Json" Version="6\.0\.9"/System\.Text\.Json" Version="6\.0\.10"/' -i src/NzbDrone.Common/Sonarr.Common.csproj
   sed 's/System\.Text\.Json" Version="6\.0\.9"/System\.Text\.Json" Version="6\.0\.10"/' -i src/NzbDrone.Core/Sonarr.Core.csproj
 
-# Remove upstream dotnet version
+  # Remove upstream dotnet version
   rm global.json
 
   # Prepare backend
   export DOTNET_CLI_TELEMETRY_OPTOUT=1
   export DOTNET_NOLOGO=1
   export DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
-  dotnet restore src/${_pkgname}.sln \
-    --runtime ${_runtime} \
+  dotnet restore "src/${_pkgname}.sln" \
+    --runtime "${_runtime}" \
     --locked-mode
 
   # Prepare frontend
@@ -94,18 +94,18 @@ build() {
   export DOTNET_CLI_TELEMETRY_OPTOUT=1
   export DOTNET_NOLOGO=1
   export DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
-  dotnet build src/${_pkgname}.sln \
-    --framework ${_framework} \
-    --runtime ${_runtime} \
+  dotnet build "src/${_pkgname}.sln" \
+    --framework "${_framework}" \
+    --runtime "${_runtime}" \
     --no-self-contained \
     --no-restore \
     --configuration Release \
     -p:Platform=Posix \
     -p:AssemblyVersion=${pkgver} \
     -p:AssemblyConfiguration=${_branch} \
-    -p:RuntimeIdentifiers=${_runtime} \
+    -p:RuntimeIdentifiers="${_runtime}" \
     -t:PublishAllRids \
-  && dotnet build-server shutdown   # Build servers do not terminate automatically
+    && dotnet build-server shutdown # Build servers do not terminate automatically
 
   # Remove ffprobe, Service Helpers, Update, and Windows files
   rm "${_artifacts}/ffprobe"
