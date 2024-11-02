@@ -56,9 +56,9 @@ sha256sums=('dfd78999d9ea2b41780a9e133e7abc281fd2c505721c8cee0a94c8775a3baa34'
             '0acb3697a5001b00f79269581cd08645f9d5e1e9f0a57cc3e7deeb12d66accc9')
 
 case ${CARCH} in
-  x86_64)  _CARCH='x64';;
-  aarch64) _CARCH='arm64';;
-  armv7h)  _CARCH='arm';;
+  x86_64)  _CARCH='x64' ;;
+  aarch64) _CARCH='arm64' ;;
+  armv7h)  _CARCH='arm' ;;
 esac
 
 _framework='net6.0'
@@ -82,7 +82,7 @@ prepare() {
   export DOTNET_NOLOGO=1
   export DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
   dotnet restore src/${_pkgname}.sln \
-    --runtime ${_runtime} \
+    --runtime "${_runtime}" \
     --locked-mode
 
   # Prepare frontend
@@ -98,16 +98,16 @@ build() {
   export DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
   dotnet build src/${_pkgname}.sln \
     --framework ${_framework} \
-    --runtime ${_runtime} \
+    --runtime "${_runtime}" \
     --no-self-contained \
     --no-restore \
     --configuration Release \
     -p:Platform=Posix \
     -p:AssemblyVersion=${pkgver} \
     -p:AssemblyConfiguration=${_branch} \
-    -p:RuntimeIdentifiers=${_runtime} \
+    -p:RuntimeIdentifiers="${_runtime}" \
     -t:PublishAllRids \
-  && dotnet build-server shutdown   # Build servers do not terminate automatically
+    && dotnet build-server shutdown # Build servers do not terminate automatically
 
   # Remove ffprobe, Service Helpers, Update, and Windows files
   rm "${_artifacts}/ffprobe"
