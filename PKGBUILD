@@ -5,7 +5,7 @@
 
 pkgname=radarr-bin
 pkgver=5.14.0.9383
-pkgrel=5
+pkgrel=6
 pkgdesc='Movie organizer/manager for usenet and torrent users.'
 arch=('x86_64' 'aarch64' 'armv7h')
 url='https://radarr.video'
@@ -48,7 +48,7 @@ source=(
 source_x86_64=("Radarr.master.${pkgver}.linux-core-x64.tar.gz::https://radarr.servarr.com/v1/update/master/updatefile?version=${pkgver}&os=linux&runtime=netcore&arch=x64")
 source_aarch64=("Radarr.master.${pkgver}.linux-core-arm64.tar.gz::https://radarr.servarr.com/v1/update/master/updatefile?version=${pkgver}&os=linux&runtime=netcore&arch=arm64")
 source_armv7h=("Radarr.master.${pkgver}.linux-core-arm.tar.gz::https://radarr.servarr.com/v1/update/master/updatefile?version=${pkgver}&os=linux&runtime=netcore&arch=arm")
-sha256sums=('6278a37ad05d6242f00351cadd329606b1972bdee69edc0e49a53d260a58875c'
+sha256sums=('6abfbb9e308b945bd74e7d46d30d418c5a7a51aab12aefa4e2289ca2398ca3f2'
             'b4dbab5257d60ae73197662930ef4cdc5be2e7135df451e2541c181ed28ea5db'
             'bb73e0c55711d7ddbf74140b3beb39cb8674ae92be8387c3dd8109bcd53faca8'
             'dd9a40cb2885bcc80d0057c50920707f003a64012df03ab6dad0bf67e651e591')
