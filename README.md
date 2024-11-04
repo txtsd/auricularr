@@ -2,6 +2,9 @@
 
 A PKGBUILD updater for the \*arr stack on the [Arch User Repository](https://aur.archlinux.org)
 
+My jackett updater can be found at [centaur](https://github.com/txtsd/centaur/)\
+The rest of my AUR packages can be found at [ankylosaurus](https://github.com/txtsd/ankylosaurus/)
+
 ## Meaning
 
 ### Etymology
@@ -18,7 +21,7 @@ The finger is so called because it can be readily introduced into the ear passag
 
 1. The little finger, the outermost and smallest finger of the hand.
 
-    Synonyms: ear finger, fourth finger, little finger, mercurial finger, pinkie
+   Synonyms: ear finger, fourth finger, little finger, mercurial finger, pinkie
 
 2. (humorous) The ear.
 3. Certainly, definitely, absolutely, not just for the AUR and arr in the word.
