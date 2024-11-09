@@ -6,7 +6,7 @@
 pkgname=lidarr
 _pkgname=Lidarr
 pkgver=2.7.1.4417
-pkgrel=2
+pkgrel=4
 pkgdesc='Music collection manager for newsgroup and torrent users.'
 arch=('x86_64' 'aarch64' 'armv7h')
 url='https://lidarr.audio'
@@ -39,23 +39,26 @@ optdepends=(
   'autobrr: irc, torrent and usenet indexer proxy'
 )
 options=(!debug)
+install=lidarr.install
 source=(
   "${pkgname}-${pkgver}.tar.gz::https://github.com/Lidarr/Lidarr/archive/refs/tags/v${pkgver}.tar.gz"
   'package_info'
   'lidarr.service'
   'lidarr.sysusers'
   'lidarr.tmpfiles'
+  'lidarr.install'
 )
 sha256sums=('cfcf55f49d6a012f1fa77559ebd1ba8892b404312430afdec684d0c924deeca3'
             '19435dff2251782714875af95a38d8491cee6c178e8f32e3c3b6e566b3edc931'
-            'dcbe3d2a3d64a78a4b2b84a3486991a8b90fdd6900d7345004827a168f8b5645'
+            '1a542d493eafbd28ac268c5f9ef29688ffa6e9326436d2ef05eb66413c18a082'
             '19b36aefd2ef93d4a630ceaefe582573ecdaa72ec21bfb48ce3941ead7b967fb'
-            'abde8989e7ab9dc62b6a501644da5a9253953b6394b890565e00a69cbfd89068')
+            'd71e37213ac65722e42f6f2c5772d4515c2d28a77b9f7608dc05c787d86ebaa5'
+            '2f3eeca41a77cec8e86a107365b34a29bf1fc2c5251173f7b200d81b318bca40')
 
 case ${CARCH} in
-  x86_64)  _CARCH='x64';;
-  aarch64) _CARCH='arm64';;
-  armv7h)  _CARCH='arm';;
+  x86_64) _CARCH='x64' ;;
+  aarch64) _CARCH='arm64' ;;
+  armv7h) _CARCH='arm' ;;
 esac
 
 _framework='net6.0'
@@ -96,7 +99,7 @@ build() {
     -p:AssemblyVersion=${pkgver} \
     -p:AssemblyConfiguration=${_branch} \
     -p:RuntimeIdentifiers=${_runtime} \
-    -t:PublishAllRids \
+    -t:PublishAllRids
 
   # Remove fpcalc, Service Helpers, Update, and Windows files
   rm "${_artifacts}/fpcalc"
