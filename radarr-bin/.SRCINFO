@@ -1,8 +1,9 @@
 pkgbase = radarr-bin
 	pkgdesc = Movie organizer/manager for usenet and torrent users.
 	pkgver = 5.14.0.9383
-	pkgrel = 7
+	pkgrel = 8
 	url = https://radarr.video
+	install = radarr.install
 	arch = x86_64
 	arch = aarch64
 	arch = armv7h
