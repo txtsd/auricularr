@@ -5,7 +5,7 @@
 pkgname=radarr-develop
 _pkgname=Radarr
 pkgver=5.15.0.9412
-pkgrel=1
+pkgrel=2
 pkgdesc='Movie organizer/manager for usenet and torrent users (develop branch)'
 arch=('x86_64' 'aarch64' 'armv7h')
 url='https://radarr.video'
@@ -46,17 +46,19 @@ source=(
   'radarr.service'
   'radarr.sysusers'
   'radarr.tmpfiles'
+  'radarr.install'
 )
 sha256sums=('271135fa4d7bb24e406850c170e66f3c7a23c680abd122a86c0c9e63c7d83833'
             '4a41a56ab30f8b6001a666e867c7012bfe23760ec29eac957bf90e1dcb4ee36e'
             '6abfbb9e308b945bd74e7d46d30d418c5a7a51aab12aefa4e2289ca2398ca3f2'
             'bb73e0c55711d7ddbf74140b3beb39cb8674ae92be8387c3dd8109bcd53faca8'
-            'b4dbab5257d60ae73197662930ef4cdc5be2e7135df451e2541c181ed28ea5db')
+            'b4dbab5257d60ae73197662930ef4cdc5be2e7135df451e2541c181ed28ea5db'
+            '243ded7d0e9d59b9adf912bb4e35ba63247d85577b417b54dcd74f16f0cfbd26')
 
 case ${CARCH} in
-  x86_64)  _CARCH='x64' ;;
+  x86_64) _CARCH='x64' ;;
   aarch64) _CARCH='arm64' ;;
-  armv7h)  _CARCH='arm' ;;
+  armv7h) _CARCH='arm' ;;
 esac
 
 _framework='net6.0'
