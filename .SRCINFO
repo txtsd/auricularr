@@ -1,8 +1,9 @@
 pkgbase = radarr-nightly-bin
 	pkgdesc = Movie organizer/manager for usenet and torrent users (nightly builds)
 	pkgver = 5.15.1.9435
-	pkgrel = 2
+	pkgrel = 3
 	url = https://radarr.video
+	install = radarr.install
 	arch = x86_64
 	arch = aarch64
 	arch = armv7h
