@@ -4,7 +4,7 @@
 
 pkgname=lidarr-nightly-bin
 pkgver=2.8.1.4445
-pkgrel=2
+pkgrel=3
 pkgdesc='Music collection manager for newsgroup and torrent users (nightly builds)'
 arch=('x86_64' 'aarch64' 'armv7h')
 url='https://lidarr.audio'
@@ -51,7 +51,7 @@ source_aarch64=("Lidarr.nightly.${pkgver}.linux-core-arm64.tar.gz::https://lidar
 source_armv7h=("Lidarr.nightly.${pkgver}.linux-core-arm.tar.gz::https://lidarr.servarr.com/v1/update/nightly/updatefile?version=${pkgver}&os=linux&runtime=netcore&arch=arm")
 sha256sums=('1a542d493eafbd28ac268c5f9ef29688ffa6e9326436d2ef05eb66413c18a082'
             'd71e37213ac65722e42f6f2c5772d4515c2d28a77b9f7608dc05c787d86ebaa5'
-            '19b36aefd2ef93d4a630ceaefe582573ecdaa72ec21bfb48ce3941ead7b967fb'
+            'cd3eac6e50c421460b6215b0a6322374a0cc190fb841fddad4b196a759fc00d6'
             '2f3eeca41a77cec8e86a107365b34a29bf1fc2c5251173f7b200d81b318bca40'
             '90a1960fef0d3833cd3635cedd16af3ee9ae6c7b95babc3021f6031d4e44c200')
 sha256sums_x86_64=('4226e1d769c652bc779cf670a50804d216de04e2ccf204c13515f2d6f303d886')
