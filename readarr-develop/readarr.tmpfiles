@@ -1,4 +1,6 @@
 # Override this file with a modified version in /etc/tmpfiles.d/
-d /var/lib/readarr 0755 readarr readarr
-Z /var/lib/readarr - readarr readarr
-L /var/log/readarr - - - - /var/lib/readarr/logs
+d /var/lib/readarr/logs   0755 readarr media
+Z /var/lib/readarr        - readarr media
+L /var/log/readarr        - - - - /var/lib/readarr/logs/
+L /run/readarr/readarr.pid - - - - /var/lib/readarr/readarr.pid
+L /etc/readarr/config.xml - - - - /var/lib/readarr/config.xml
