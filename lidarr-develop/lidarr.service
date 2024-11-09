@@ -1,10 +1,20 @@
-# Be sure to use `systemctl edit lidarr` to modify this service with an override.conf because
-# direct changes will be overwritten by package updates.
+# Be sure to use `systemctl edit lidarr` to modify this service with an
+# override.conf because direct changes will be overwritten by package updates.
 #
-# A user per service w/ shared group setup would have an override like:
+# A user per service with shared group setup would have an override like:
 # [Service]
 # Group=sharedgroupname
 # UMask=002
+#
+# If your media directory is in /home (it shouldn't be)
+# You will need to have an override like:
+# [Service]
+# PrivateUsers=false
+# ProtectHome=false
+#
+# When running lidarr in LXC:
+# [Service]
+# PrivateUsers=false
 
 [Unit]
 Description=Lidarr Daemon
@@ -14,14 +24,48 @@ After=network-online.target
 [Service]
 Type=simple
 User=lidarr
-Group=lidarr
-SyslogIdentifier=lidarr
+Group=media
+UMask=002
 Environment=XDG_DATA_HOME=/var/lib/lidarr
-WorkingDirectory=/usr/lib/lidarr
 ExecStart=/usr/lib/lidarr/bin/Lidarr -nobrowser -data=/var/lib/lidarr
-Restart=on-failure
-RestartSec=5
 KillMode=process
+PIDFile=/run/lidarr/lidarr.pid
+Restart=on-failure
+RestartSec=10
+TimeoutStopSec=20
+SyslogIdentifier=lidarr
+ConfigurationDirectory=lidarr
+LogsDirectory=lidarr
+RuntimeDirectory=lidarr
+StateDirectory=lidarr
+WorkingDirectory=/var/lib/lidarr
+
+# Hardening
+CapabilityBoundingSet=CAP_CHOWN CAP_FSETID CAP_SETGID
+LockPersonality=true
+NoNewPrivileges=true
+PrivateTmp=true
+PrivateUsers=true
+ProtectClock=true
+ProtectControlGroups=true
+ProtectHome=read-only
+ProtectHostname=true
+ProtectKernelLogs=true
+ProtectKernelModules=true
+ProtectKernelTunables=true
+ProtectProc=invisible
+ProtectSystem=full
+RemoveIPC=true
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+RestrictNamespaces=true
+RestrictRealtime=true
+SocketBindAllow=ipv4:tcp
+SocketBindAllow=ipv6:tcp
+SocketBindDeny=any
+SystemCallArchitectures=native
+SystemCallErrorNumber=EPERM
+SystemCallFilter=@system-service
+SystemCallFilter=~@privileged
 
 [Install]
 WantedBy=multi-user.target
