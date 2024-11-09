@@ -5,7 +5,7 @@
 pkgname=readarr-develop
 _pkgname=Readarr
 pkgver=0.4.3.2665
-pkgrel=1
+pkgrel=2
 pkgdesc='Ebook and audiobook collection manager for newsgroup and torrent users (develop branch)'
 arch=('x86_64' 'aarch64' 'armv7h')
 url='https://readarr.com'
@@ -39,23 +39,26 @@ optdepends=(
 provides=(readarr)
 conflicts=(readarr)
 options=(!debug)
+install=readarr.install
 source=(
   "${pkgname}-${pkgver}.tar.gz::https://github.com/Readarr/Readarr/archive/refs/tags/v${pkgver}.tar.gz"
   'package_info'
   'readarr.service'
   'readarr.sysusers'
   'readarr.tmpfiles'
+  'readarr.install'
 )
 sha256sums=('bb6509614455939617dd3c5486439584cea591d3ddca47b71bf1cda176ac1f10'
             '12235af27b47fe1a353bc79fdfdf8c0e03fca5c0eb08f9eb57c0b66532c37648'
-            '09386a5a87038f227e4a0995b37ac7ba561712712ad610323ea7ee8a1bf18c32'
-            '1576aa21914edaa336d2b37d41ebf54fbaff6eb5099a3f46407cd79164ccdc67'
-            '3030252218445e3cb27025a1b567deef287ff3d5e2f32abc2d640a771d39ddd5')
+            '4696e52bc1cd8b7860eeb1ffaefc4153c3bf27defd7e7e91da03ad8aa28aa3df'
+            '2a3a67ccd03d85396d7c08e8c5ef530b31c6d847102b35af705b43c0714a4a3a'
+            'a4cfdf882ab62dea54d85dfae4a633cf21bce597a19c3287d90c024e3ff399ce'
+            '244ef89032a7af9fc22e9a9a600a3b9e407137c7d7d99ed227cafe2efb800a85')
 
 case ${CARCH} in
-  x86_64)  _CARCH='x64';;
-  aarch64) _CARCH='arm64';;
-  armv7h)  _CARCH='arm';;
+  x86_64) _CARCH='x64' ;;
+  aarch64) _CARCH='arm64' ;;
+  armv7h) _CARCH='arm' ;;
 esac
 
 _framework='net6.0'
@@ -96,7 +99,7 @@ build() {
     -p:AssemblyVersion=${pkgver} \
     -p:AssemblyConfiguration=${_branch} \
     -p:RuntimeIdentifiers=${_runtime} \
-    -t:PublishAllRids \
+    -t:PublishAllRids
 
   # Remove Service Helpers, Update, and Windows files
   rm "${_artifacts}/ServiceInstall"*
