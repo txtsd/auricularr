@@ -4,7 +4,7 @@
 
 pkgname=whisparr-nightly-bin
 pkgver=2.0.0.548
-pkgrel=2
+pkgrel=3
 pkgdesc='Adult movie organizer/manager for usenet and torrent users (nightly builds)'
 arch=('x86_64' 'aarch64' 'armv7h')
 url='https://whisparr.com'
@@ -38,18 +38,21 @@ optdepends=(
 provides=(whisparr)
 conflicts=(whisparr)
 options=(!debug)
+install=whisparr.install
 source=(
   'whisparr.service'
   'whisparr.tmpfiles'
   'whisparr.sysusers'
+  'whisparr.install'
   'package_info'
 )
 source_x86_64=("Whisparr.nightly.${pkgver}.linux-core-x64.tar.gz::https://whisparr.servarr.com/v1/update/nightly/updatefile?version=${pkgver}&os=linux&runtime=netcore&arch=x64")
 source_aarch64=("Whisparr.nightly.${pkgver}.linux-core-arm64.tar.gz::https://whisparr.servarr.com/v1/update/nightly/updatefile?version=${pkgver}&os=linux&runtime=netcore&arch=arm64")
 source_armv7h=("Whisparr.nightly.${pkgver}.linux-core-arm.tar.gz::https://whisparr.servarr.com/v1/update/nightly/updatefile?version=${pkgver}&os=linux&runtime=netcore&arch=arm")
-sha256sums=('e700c5398ca63a053963bb6969988cf489a72cc9507a2b11ff0f90e9e2615f31'
-            '4ad46e1c00e60b96cf3df222d996eb24ff96fad4999442d3d3c5e5248c7d7530'
-            'd9ea6c40d38602ec0ee25f44f3cec462aba03bc12455e166f79666abeb062338'
+sha256sums=('bb39c900d2e3c46681635fa9be81b55a49b10e479060a729da8e4ab3fc0bf1cf'
+            '0b235aed73eb0155d77c485ccff415e82e520d27013ba498ac70574e7106a762'
+            'a2bb10852688071baafcc8956fc581961a0c4f6233c7d5ba2f8f9ec4d7863488'
+            '2502d45d726f88b1283066fd6a797d335f572740a27499c7806554f518cd633c'
             '50da66b86fb42b6457a84c61fe02af5845599fd67f538c79457713795d96d8ed')
 sha256sums_x86_64=('9982c3431012e9657c096cc6d604a33e5dfb489695a0b576d4c7a1d5c464e39c')
 sha256sums_aarch64=('b348f7658a92d1fa7cc8bc4f5cfdb906f2f32eded48ac97673ef78b1a31610cc')

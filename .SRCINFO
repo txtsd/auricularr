@@ -1,8 +1,9 @@
 pkgbase = whisparr-nightly-bin
 	pkgdesc = Adult movie organizer/manager for usenet and torrent users (nightly builds)
 	pkgver = 2.0.0.548
-	pkgrel = 2
+	pkgrel = 3
 	url = https://whisparr.com
+	install = whisparr.install
 	arch = x86_64
 	arch = aarch64
 	arch = armv7h
@@ -35,10 +36,12 @@ pkgbase = whisparr-nightly-bin
 	source = whisparr.service
 	source = whisparr.tmpfiles
 	source = whisparr.sysusers
+	source = whisparr.install
 	source = package_info
-	sha256sums = e700c5398ca63a053963bb6969988cf489a72cc9507a2b11ff0f90e9e2615f31
-	sha256sums = 4ad46e1c00e60b96cf3df222d996eb24ff96fad4999442d3d3c5e5248c7d7530
-	sha256sums = d9ea6c40d38602ec0ee25f44f3cec462aba03bc12455e166f79666abeb062338
+	sha256sums = bb39c900d2e3c46681635fa9be81b55a49b10e479060a729da8e4ab3fc0bf1cf
+	sha256sums = 0b235aed73eb0155d77c485ccff415e82e520d27013ba498ac70574e7106a762
+	sha256sums = a2bb10852688071baafcc8956fc581961a0c4f6233c7d5ba2f8f9ec4d7863488
+	sha256sums = 2502d45d726f88b1283066fd6a797d335f572740a27499c7806554f518cd633c
 	sha256sums = 50da66b86fb42b6457a84c61fe02af5845599fd67f538c79457713795d96d8ed
 	source_x86_64 = Whisparr.nightly.2.0.0.548.linux-core-x64.tar.gz::https://whisparr.servarr.com/v1/update/nightly/updatefile?version=2.0.0.548&os=linux&runtime=netcore&arch=x64
 	sha256sums_x86_64 = 9982c3431012e9657c096cc6d604a33e5dfb489695a0b576d4c7a1d5c464e39c
