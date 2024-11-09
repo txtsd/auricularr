@@ -4,7 +4,7 @@
 
 pkgname=radarr-nightly-bin
 pkgver=5.15.1.9435
-pkgrel=2
+pkgrel=3
 pkgdesc='Movie organizer/manager for usenet and torrent users (nightly builds)'
 arch=('x86_64' 'aarch64' 'armv7h')
 url='https://radarr.video'
@@ -38,6 +38,7 @@ optdepends=(
 provides=(radarr)
 conflicts=(radarr)
 options=(!debug)
+install=radarr.install
 source=(
   'radarr.service'
   'radarr.tmpfiles'
