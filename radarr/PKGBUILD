@@ -6,7 +6,7 @@
 pkgname=radarr
 _pkgname=Radarr
 pkgver=5.14.0.9383
-pkgrel=8
+pkgrel=9
 pkgdesc='Movie organizer/manager for usenet and torrent users.'
 arch=('x86_64' 'aarch64' 'armv7h')
 url='https://radarr.video'
@@ -39,6 +39,7 @@ optdepends=(
   'autobrr: irc, torrent and usenet indexer proxy'
 )
 options=(!debug)
+install=radarr.install
 source=(
   "${pkgname}-${pkgver}.tar.gz::https://github.com/Radarr/Radarr/archive/refs/tags/v${pkgver}.tar.gz"
   'package_info'
@@ -48,11 +49,11 @@ source=(
   'radarr.install'
 )
 sha256sums=('f93abce567cec9b64e12ec96d189e147cff549f4ff2e791c194c0405e4d52d03'
-  '1868e8df575bfda008cc82f92440c2a0465de28b7a032bf46fc2745d760b3fba'
-  '6abfbb9e308b945bd74e7d46d30d418c5a7a51aab12aefa4e2289ca2398ca3f2'
-  'bb73e0c55711d7ddbf74140b3beb39cb8674ae92be8387c3dd8109bcd53faca8'
-  'b4dbab5257d60ae73197662930ef4cdc5be2e7135df451e2541c181ed28ea5db'
-  '243ded7d0e9d59b9adf912bb4e35ba63247d85577b417b54dcd74f16f0cfbd26')
+            '1868e8df575bfda008cc82f92440c2a0465de28b7a032bf46fc2745d760b3fba'
+            '6abfbb9e308b945bd74e7d46d30d418c5a7a51aab12aefa4e2289ca2398ca3f2'
+            'bb73e0c55711d7ddbf74140b3beb39cb8674ae92be8387c3dd8109bcd53faca8'
+            'b4dbab5257d60ae73197662930ef4cdc5be2e7135df451e2541c181ed28ea5db'
+            '243ded7d0e9d59b9adf912bb4e35ba63247d85577b417b54dcd74f16f0cfbd26')
 
 case ${CARCH} in
   x86_64) _CARCH='x64' ;;
