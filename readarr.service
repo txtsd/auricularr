@@ -1,10 +1,20 @@
-# Be sure to use `systemctl edit readarr` to modify this service with an override.conf because
-# direct changes will be overwritten by package updates.
+# Be sure to use `systemctl edit readarr` to modify this service with an
+# override.conf because direct changes will be overwritten by package updates.
 #
-# A user per service w/ shared group setup would have an override like:
+# A user per service with shared group setup would have an override like:
 # [Service]
 # Group=sharedgroupname
 # UMask=002
+#
+# If your media directory is in /home (it shouldn't be)
+# You will need to have an override like:
+# [Service]
+# PrivateUsers=false
+# ProtectHome=false
+#
+# When running readarr in LXC:
+# [Service]
+# PrivateUsers=false
 
 [Unit]
 Description=Readarr Daemon
@@ -14,14 +24,48 @@ After=network-online.target
 [Service]
 Type=simple
 User=readarr
-Group=readarr
-SyslogIdentifier=readarr
+Group=media
+UMask=002
 Environment=XDG_DATA_HOME=/var/lib/readarr
-WorkingDirectory=/usr/lib/readarr
 ExecStart=/usr/lib/readarr/bin/Readarr -nobrowser -data=/var/lib/readarr
-Restart=on-failure
-RestartSec=5
 KillMode=process
+PIDFile=/run/readarr/readarr.pid
+Restart=on-failure
+RestartSec=10
+TimeoutStopSec=20
+SyslogIdentifier=readarr
+ConfigurationDirectory=readarr
+LogsDirectory=readarr
+RuntimeDirectory=readarr
+StateDirectory=readarr
+WorkingDirectory=/var/lib/readarr
+
+# Hardening
+CapabilityBoundingSet=CAP_CHOWN CAP_FSETID CAP_SETGID
+LockPersonality=true
+NoNewPrivileges=true
+PrivateTmp=true
+PrivateUsers=true
+ProtectClock=true
+ProtectControlGroups=true
+ProtectHome=read-only
+ProtectHostname=true
+ProtectKernelLogs=true
+ProtectKernelModules=true
+ProtectKernelTunables=true
+ProtectProc=invisible
+ProtectSystem=full
+RemoveIPC=true
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+RestrictNamespaces=true
+RestrictRealtime=true
+SocketBindAllow=ipv4:tcp
+SocketBindAllow=ipv6:tcp
+SocketBindDeny=any
+SystemCallArchitectures=native
+SystemCallErrorNumber=EPERM
+SystemCallFilter=@system-service
+SystemCallFilter=~@privileged
 
 [Install]
 WantedBy=multi-user.target
