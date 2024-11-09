@@ -5,7 +5,7 @@
 
 pkgname=radarr-bin
 pkgver=5.14.0.9383
-pkgrel=7
+pkgrel=8
 pkgdesc='Movie organizer/manager for usenet and torrent users.'
 arch=('x86_64' 'aarch64' 'armv7h')
 url='https://radarr.video'
@@ -39,6 +39,7 @@ optdepends=(
 provides=(radarr)
 conflicts=(radarr)
 options=(!debug)
+install=radarr.install
 source=(
   'radarr.service'
   'radarr.tmpfiles'
