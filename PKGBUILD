@@ -7,7 +7,7 @@
 pkgname=sonarr-develop
 _pkgname=Sonarr
 pkgver=4.0.10.2624
-pkgrel=1
+pkgrel=2
 pkgdesc='Smart PVR for newsgroup and torrent users (develop branch)'
 arch=('x86_64' 'aarch64' 'armv7h')
 url='https://sonarr.tv'
@@ -42,18 +42,21 @@ optdepends=(
 provides=(sonarr)
 conflicts=(sonarr)
 options=(!debug)
+install=sonarr.install
 source=(
   "${pkgname}-${pkgver}.tar.gz::https://github.com/Sonarr/Sonarr/archive/refs/tags/v${pkgver}.tar.gz"
   'package_info'
   'sonarr.service'
   'sonarr.sysusers'
   'sonarr.tmpfiles'
+  'sonarr.install'
 )
 sha256sums=('925711b14a313548655126a13c2747ad5b19308c553456bbe23b5d758ae1f0cf'
             'a6b37e75143a309b1d8c163c3f90f7f0275fd730015c3f74e3ad27c278b1ae90'
             'b2673e7b2c7964ceb9672a078797d12fb3c1c8ea908bfaf6330514b8644b0ba2'
             '00141d4cbf34daa6d91b26179d4847ec970e2767382e18fdf9af2ec84a0ff43e'
-            '0acb3697a5001b00f79269581cd08645f9d5e1e9f0a57cc3e7deeb12d66accc9')
+            '0acb3697a5001b00f79269581cd08645f9d5e1e9f0a57cc3e7deeb12d66accc9'
+            '3d912d367eeb89ead06dc9dc45de093f48ddc601188731d54775c33e04e369aa')
 
 case ${CARCH} in
   x86_64)  _CARCH='x64' ;;
