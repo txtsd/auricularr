@@ -3,8 +3,8 @@
 # Contributor: George Rawlinson <grawlinson@archlinux.org>
 
 pkgname=autobrr
-pkgver=1.48.0
-pkgrel=2
+pkgver=1.49.0
+pkgrel=1
 pkgdesc='The modern download automation tool for torrents'
 arch=('x86_64')
 url='https://autobrr.com'
@@ -38,7 +38,7 @@ source=(
   'autobrr.sysusers'
   'autobrr.tmpfiles'
 )
-sha256sums=('53ff55e5ac1811225b8a05454fcac341d554429abcaff837f0b7bd167f18a09a'
+sha256sums=('84223e0e8eee7c64e8ad5fce31155bf4a278e436874567daa970c3650b64d9c4'
             '90b920d9a1b0ad616e340556f826e8354ce75a331548370726de253ad5c302d6'
             '780adccd60ca1ca465668d163d19bb892df7c42e03e442bda0c095ca3ee6eed1'
             'c8d7972c67963aa3f720176e2fb351f3c0ea8be8f1ed84a46b7a13ea8d032bb3')
