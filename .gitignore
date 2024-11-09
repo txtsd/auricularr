@@ -6,4 +6,5 @@
 !radarr.service
 !radarr.sysusers
 !radarr.tmpfiles
+!radarr.install
 !package_info
