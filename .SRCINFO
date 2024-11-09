@@ -1,8 +1,9 @@
 pkgbase = sonarr-develop-bin
 	pkgdesc = Smart PVR for newsgroup and torrent users (develop branch)
 	pkgver = 4.0.10.2624
-	pkgrel = 1
+	pkgrel = 2
 	url = https://sonarr.tv
+	install = sonarr.install
 	arch = x86_64
 	arch = aarch64
 	arch = armv7h
@@ -36,10 +37,12 @@ pkgbase = sonarr-develop-bin
 	source = sonarr.service
 	source = sonarr.sysusers
 	source = sonarr.tmpfiles
+	source = sonarr.install
 	sha256sums = 1a609451c6de4fe0f03c8019e2232b04a552bea98e5863f7e49bba9f00ed05ba
 	sha256sums = b2673e7b2c7964ceb9672a078797d12fb3c1c8ea908bfaf6330514b8644b0ba2
 	sha256sums = 00141d4cbf34daa6d91b26179d4847ec970e2767382e18fdf9af2ec84a0ff43e
 	sha256sums = 0acb3697a5001b00f79269581cd08645f9d5e1e9f0a57cc3e7deeb12d66accc9
+	sha256sums = 3d912d367eeb89ead06dc9dc45de093f48ddc601188731d54775c33e04e369aa
 	source_x86_64 = Sonarr.develop.4.0.10.2624.linux-x64.tar.gz::https://services.sonarr.tv/v1/update/develop/download?version=4.0.10.2624&os=linux&runtime=netcore&arch=x64
 	sha256sums_x86_64 = f5e8a1145bb4c02fc572a985e9f0c0cb3b5a829b0260a51be20f3dffad0d4704
 	source_aarch64 = Sonarr.develop.4.0.10.2624.linux-arm64.tar.gz::https://services.sonarr.tv/v1/update/develop/download?version=4.0.10.2624&os=linux&runtime=netcore&arch=arm64

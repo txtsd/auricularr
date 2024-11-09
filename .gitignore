@@ -6,4 +6,5 @@
 !sonarr.service
 !sonarr.sysusers
 !sonarr.tmpfiles
+!sonarr.install
 !package_info
