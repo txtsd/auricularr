@@ -5,7 +5,7 @@
 
 pkgname=jellyseerr
 pkgver=2.0.1
-pkgrel=4
+pkgrel=5
 pkgdesc='Request management and media discovery tool for the Plex ecosystem'
 arch=('x86_64' 'aarch64')
 url='https://github.com/Fallenbagel/jellyseerr'
@@ -20,7 +20,6 @@ optdepends=(
   'emby-server: The open media solution'
 )
 makedepends=('pnpm' 'nodejs-lts-iron')
-options=('!strip' '!debug')
 backup=(
   'etc/conf.d/jellyseerr'
   'etc/jellyseerr/settings.json'
@@ -58,7 +57,7 @@ build() {
   cd "${srcdir}/${pkgname}-${pkgver}"
 
   mkdir -p .next "${srcdir}/.jellyseer_cache"
-  rm -rf .next/cache  # In case previous builds have it as real folder
+  rm -rf .next/cache # In case previous builds have it as real folder
   ln -s "${srcdir}/.jellyseer_cache" .next/cache
 
   export NEXT_TELEMETRY_DISABLED=1
@@ -74,15 +73,15 @@ package() {
   install -dm755 "${pkgdir}/usr/lib/jellyseerr"
   install -dm755 "${pkgdir}/usr/lib/jellyseerr/.next/standalone/.next"
   cp -dr --no-preserve='ownership' "${srcdir}/${pkgname}-${pkgver}/"{.next,dist,public,node_modules} "${pkgdir}/usr/lib/jellyseerr"
-  cp -d --no-preserve='ownership' "${srcdir}/${pkgname}-${pkgver}/"{package.json,overseerr-api.yml} "${pkgdir}/usr/lib/jellyseerr"
+  cp -d --no-preserve='ownership' "${srcdir}/${pkgname}-${pkgver}/"{package.json,overseerr-api.yml,next.config.js} "${pkgdir}/usr/lib/jellyseerr"
 
   find "${pkgdir}/usr/lib/jellyseerr/.next" -type f -print0 | xargs -0 sed -i "s^${srcdir}/${pkgname}-${pkgver}^/usr/lib/jellyseerr^g"
 
   ln -s "/var/lib/jellyseerr" "${pkgdir}/usr/lib/jellyseerr/config"
 
   install -Dm644 'LICENSE' "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
-  install -Dm644 "${srcdir}/jellyseerr.conf.d"   "${pkgdir}/etc/conf.d/jellyseerr"
+  install -Dm644 "${srcdir}/jellyseerr.conf.d" "${pkgdir}/etc/conf.d/jellyseerr"
   install -Dm644 "${srcdir}/jellyseerr.sysusers" "${pkgdir}/usr/lib/sysusers.d/jellyseerr.conf"
   install -Dm644 "${srcdir}/jellyseerr.tmpfiles" "${pkgdir}/usr/lib/tmpfiles.d/jellyseerr.conf"
-  install -Dm644 "${srcdir}/jellyseerr.service"  "${pkgdir}/usr/lib/systemd/system/jellyseerr.service"
+  install -Dm644 "${srcdir}/jellyseerr.service" "${pkgdir}/usr/lib/systemd/system/jellyseerr.service"
 }
