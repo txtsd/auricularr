@@ -7,7 +7,7 @@ packages:
   - nvchecker
 
 environment:
-  packages: [bazarr, bazarr-beta, lidarr, lidarr-bin, lidarr-develop, lidarr-develop-bin, lidarr-nightly-bin, prowlarr, prowlarr-bin, prowlarr-develop, prowlarr-develop-bin, prowlarr-nightly-bin, radarr, radarr-bin, radarr-develop, radarr-develop-bin, radarr-nightly-bin, readarr-develop, readarr-develop-bin, readarr-nightly-bin, recyclarr, recyclarr-bin, sonarr, sonarr-bin, sonarr-develop, sonarr-develop-bin, whisparr-nightly-bin]
+  packages: [autobrr, bazarr, bazarr-beta, bitmagnet, bitmagnet-beta, bitmagnet-bin, jellyseerr, lidarr, lidarr-bin, lidarr-develop, lidarr-develop-bin, lidarr-nightly-bin, lunasea-bin, prowlarr, prowlarr-bin, prowlarr-develop, prowlarr-develop-bin, prowlarr-nightly-bin, radarr, radarr-bin, radarr-develop, radarr-develop-bin, radarr-nightly-bin, readarr-develop, readarr-develop-bin, readarr-nightly-bin, recyclarr, recyclarr-bin, sonarr, sonarr-bin, sonarr-develop, sonarr-develop-bin, whisparr-nightly-bin]
   GPG_TTY: /dev/pts/0
 
 secrets:
@@ -18,7 +18,7 @@ secrets:
 tasks:
   - system_update: |
       yay -Syu --noconfirm
-  
+
   - system_configure_ssh: |
       mkdir -p ~/.ssh/
       cat <<EOF > ~/.ssh/known_hosts
@@ -26,7 +26,7 @@ tasks:
       aur.archlinux.org ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDKF9vAFWdgm9Bi8uc+tYRBmXASBb5cB5iZsB7LOWWFeBrLp3r14w0/9S2vozjgqY5sJLDPONWoTTaVTbhe3vwO8CBKZTEt1AcWxuXNlRnk9FliR1/eNB9uz/7y1R0+c1Md+P98AJJSJWKN12nqIDIhjl2S1vOUvm7FNY43fU2knIhEbHybhwWeg+0wxpKwcAd/JeL5i92Uv03MYftOToUijd1pqyVFdJvQFhqD4v3M157jxS5FTOBrccAEjT+zYmFyD8WvKUa9vUclRddNllmBJdy4NyLB8SvVZULUPrP3QOlmzemeKracTlVOUG1wsDbxknF1BwSCU7CmU6UFP90kpWIyz66bP0bl67QAvlIc52Yix7pKJPbw85+zykvnfl2mdROsaT8p8R9nwCdFsBc9IiD0NhPEHcyHRwB8fokXTajk2QnGhL+zP5KnkmXnyQYOCUYo3EKMXIlVOVbPDgRYYT/XqvBuzq5S9rrU70KoI/S5lDnFfx/+lPLdtcnnEPk=
       aur.archlinux.org ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEuBKrPzbawxA/k2g6NcyV5jmqwJ2s+zpgZGZ7tpLIcN
       EOF
-  
+
   - system_configure_git: |
       git config --global user.email 'code@ihavea.quest'
       git config --global user.name 'txtsd'
@@ -41,7 +41,7 @@ tasks:
       git config --global format.signOff no
       git config --global gpg.program gpg2
       # git ignore --global '*.log'
-  
+
   - system_configure_gpgagent: |
       mkdir -p ~/.gnupg/
       echo use-agent >> ~/.gnupg/gpg.conf
@@ -51,57 +51,71 @@ tasks:
       echo allow-preset-passphrase >> ~/.gnupg/gpg-agent.conf
       echo allow-loopback-pinentry >> ~/.gnupg/gpg-agent.conf
       gpgconf -R gpg-agent
-  
+
   - system_configure_gpg: |
       gpg --batch --pinentry-mode loopback --passphrase-file ~/.gpgkeypassphrase --import ~/.gpgkey
-  
+
   - build_test_publish: |
       cat ~/.gpgkeypassphrase | /usr/lib/gnupg/gpg-preset-passphrase --preset 6763F413B8C1DC577FCB62F4FAD4DB216AE194C4
-      for repo in ${packages[@]};
-      do
-        git clone ssh://aur@aur.archlinux.org/${repo}.git
-        cd ${repo}
-        
-        (env TERM=xterm pkgctl version check >/dev/null 2>&1) && true
-        
+      for repo in ${packages[@]}; do
+        git clone "ssh://aur@aur.archlinux.org/${repo}.git"
+        cd "${repo}" || exit
+
+        (env TERM=xterm pkgctl version check > /dev/null 2>&1) && true
+
         exit_code_1=$?
-        if [ ${exit_code_1} == 2 ];
-        then
+        if [ ${exit_code_1} == 2 ]; then
           echo 'New version available!'
-          
+
           source PKGBUILD
-          
+
           env TERM=xterm pkgctl version upgrade
-          
+
           (pkgctl build) && true
           exit_code_2=$?
 
-          if [ ${exit_code_2} == 0 ];
-          then
-            yay -U ${repo}-*.pkg.tar.zst --noconfirm
-            
-            service_name=${repo//-bin}
-            service_name=${service_name//-beta}
-            service_name=${service_name//-develop}
-            service_name=${service_name//-nightly}
-            
-            sudo systemctl start ${service_name}
+          if [ ${exit_code_2} == 0 ]; then
+            yay -U "${repo}"-*.pkg.tar.zst --noconfirm
+
+            service_name=${repo%-bin}
+            service_name=${service_name%-beta}
+            service_name=${service_name%-develop}
+            service_name=${service_name%-nightly}
+
+            sudo systemctl start "${service_name}"
             sleep 30
 
             case ${service_name} in
-              bazarr)
-                grep -Gm1 '.*BAZARR is started and waiting for requests on.*' <(sudo journalctl -xeu ${service_name} --follow)
+              autobrr)
+                grep -Gm1 'Starting API tcp server\. Listening on' <(sudo journalctl -xeu "${service_name}" --follow)
                 ;;
 
+              bazarr)
+                grep -Gm1 '.*BAZARR is started and waiting for requests on.*' <(sudo journalctl -xeu "${service_name}" --follow)
+                ;;
+
+              bitmagnet)
+                yay -S --noconfirm postgresql
+                sudo systemctl start postgresql
+                grep -Gm1 'started worker\s*{"key": "http_server"}' <(sudo journalctl -xeu "${service_name}" --follow)
+                sudo systemctl stop postgresql
+                ;;
+
+              jellyseerr)
+                grep -Gm1 '\[info\]\[Server\]: Server ready on port' <(sudo journalctl -xeu "${service_name}" --follow)
+                ;;
+
+              lunasea) ;;
+
               recyclarr)
-                grep -Gm1 'recyclarr\.service: Deactivated successfully\.' <(sudo journalctl -xeu ${service_name} --follow)
+                grep -Gm1 'recyclarr\.service: Deactivated successfully\.' <(sudo journalctl -xeu "${service_name}" --follow)
                 ;;
 
               *)
-                grep -Gm1 'Application started\. Press Ctrl+C to shut down\.' <(sudo journalctl -xeu ${service_name} --follow)
+                grep -Gm1 'Application started\. Press Ctrl+C to shut down\.' <(sudo journalctl -xeu "${service_name}" --follow)
                 ;;
             esac
-            
+
             unset pkgname
             unset pkgver
             unset pkgrel
@@ -110,8 +124,8 @@ tasks:
             git commit --status -S -m "upgpkg: ${pkgname} ${pkgver}-${pkgrel}"
             git push
 
-            sudo systemctl stop ${service_name}
-            yay -R ${pkgname} --noconfirm
+            sudo systemctl stop "${service_name}"
+            yay -R "${pkgname}" --noconfirm
 
           fi
         else
@@ -119,5 +133,3 @@ tasks:
         fi
         cd ..
       done
-
-
