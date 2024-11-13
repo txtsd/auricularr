@@ -5,7 +5,7 @@
 pkgname=ombi-bin
 _pkgname="${pkgname%-bin}"
 pkgver=4.44.1
-pkgrel=1
+pkgrel=2
 pkgdesc='A media request tool that automatically syncs with your media servers'
 arch=(x86_64 aarch64 armv7h)
 url='https://ombi.io'
@@ -32,13 +32,13 @@ source=(
   ombi.tmpfiles
   ombi.install
 )
-source_x86_64=("${_pkgname}-${pkgver}.x86_64.tar.gz::https://github.com/Ombi-app/Ombi/releases/download/v${pkgver}/linux-x64.tar.gz")
-source_aarch64=("${_pkgname}-${pkgver}.aarch64.tar.gz::https://github.com/Ombi-app/Ombi/releases/download/v${pkgver}/linux-arm64.tar.gz")
-source_armv7h=("${_pkgname}-${pkgver}.armv7h.tar.gz::https://github.com/Ombi-app/Ombi/releases/download/v${pkgver}/linux-arm.tar.gz")
+source_x86_64=("${pkgname}-${pkgver}.x86_64.tar.gz::https://github.com/Ombi-app/Ombi/releases/download/v${pkgver}/linux-x64.tar.gz")
+source_aarch64=("${pkgname}-${pkgver}.aarch64.tar.gz::https://github.com/Ombi-app/Ombi/releases/download/v${pkgver}/linux-arm64.tar.gz")
+source_armv7h=("${pkgname}-${pkgver}.armv7h.tar.gz::https://github.com/Ombi-app/Ombi/releases/download/v${pkgver}/linux-arm.tar.gz")
 noextract=(
-  "${_pkgname}-${pkgver}.x86_64.tar.gz"
-  "${_pkgname}-${pkgver}.aarch64.tar.gz"
-  "${_pkgname}-${pkgver}.armv7h.tar.gz"
+  "${pkgname}-${pkgver}.x86_64.tar.gz"
+  "${pkgname}-${pkgver}.aarch64.tar.gz"
+  "${pkgname}-${pkgver}.armv7h.tar.gz"
 )
 sha256sums=('24f1dbe25589719e831d512624ceeb1289a7037002b74d9473719c8564a8950f'
             'd78dadc24ddb11e3ef07269a0a1c6dcf8ca8d32d39d152eaa9bffab6c32dba36'
@@ -49,8 +49,8 @@ sha256sums_aarch64=('8aa83208d63ad85048ca37075c3935cd9634473161500e4843c103cc0a2
 sha256sums_armv7h=('22471a6bd57cc5e57ee3aab2d55d7016c748b07e87f9edbbc9851d34ffec311a')
 
 prepare() {
-  mkdir -p "${srcdir}/ombi"
-  tar -xf "${srcdir}/${_pkgname}-${pkgver}.${CARCH}.tar.gz" -C "${srcdir}/ombi"
+  mkdir -p "ombi"
+  tar -xf "${pkgname}-${pkgver}.${CARCH}.tar.gz" -C "ombi"
 }
 
 package() {
