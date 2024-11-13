@@ -1,0 +1,17 @@
+[Unit]
+Description=Ombi
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+User=ombi
+Group=media
+Type=simple
+SyslogIdentifier=ombi
+WorkingDirectory=/usr/lib/ombi
+ExecStart=/usr/lib/ombi/Ombi --storage /var/lib/ombi
+Restart=on-failure
+TimeoutStopSec=30
+
+[Install]
+WantedBy=multi-user.target
