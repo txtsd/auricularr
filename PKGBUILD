@@ -1,68 +1,100 @@
+# Maintainer: txtsd <aur.archlinux@ihavea.quest>
 # Maintainer: Donald Webster <fryfrog@gmail.com>
-# Maintainer: Zack Baldwin <zack@zackb.com>
 
 pkgname=ombi
+_pkgname=Ombi
 pkgver=4.44.1
-pkgrel=1
-pkgdesc='Simple automated way for users to request new content for Plex'
-arch=('x86_64' 'aarch64' 'armv7h')
-url='https://github.com/Ombi-app/Ombi'
-license=('GPL2')
-depends=('libunwind' 'openssl-1.0' 'icu')
-optdepends=('sonarr: TV daemon for usenet & torrents'
-            'radarr: Movie daemon for usenet & torrents (sonarr fork)'
-            'lidarr: Music daemon for usenet & torrents (sonarr fork)'
-            'sickrage: TV daemon for usenet & torrents (sickbeard fork)'
-            'couchpotato: Movie daemon for usenet & torrents'
-            'plex-media-server: Media server'
-            'plex-media-server-plexpass: Media server (plexpass version)'
-            'emby-server: Media server')
-backup=('var/lib/ombi/appsettings.json')
-replaces=('plexrequests')
-options=('!strip' 'staticlibs')
+pkgrel=2
+pkgdesc='A media request tool that automatically syncs with your media servers'
+arch=(x86_64 aarch64 armv7h)
+url='https://ombi.io'
+license=('GPL-2.0-or-later')
+depends=(
+  aspnet-runtime-8.0
+  gcc-libs
+  glibc
+)
+makedepends=(dotnet-sdk-8.0 yarn)
+optdepends=(
+  'jellyfin-server: The Free Software Media System'
+  'plex-media-server: Plex Media Server'
+  'emby-server: The open media solution'
+  'sonarr: Smart PVR for newsgroup and torrent users'
+  'radarr: Movie organizer/manager for usenet and torrent users'
+)
+install=ombi.install
+source=(
+  "${pkgname}-${pkgver}::https://github.com/Ombi-app/Ombi/archive/refs/tags/v${pkgver}.tar.gz"
+  ombi.service
+  ombi.sysusers
+  ombi.tmpfiles
+  ombi.install
+)
+sha256sums=('21e13cb3b183b5c543374b100fd6c6700e2112d412e9a0f666a8cd92f7b76a1a'
+            '24f1dbe25589719e831d512624ceeb1289a7037002b74d9473719c8564a8950f'
+            'd78dadc24ddb11e3ef07269a0a1c6dcf8ca8d32d39d152eaa9bffab6c32dba36'
+            '71fe8ec1810d7ab91b30d8e07b9edc6f97827034935404124cc6e428bbc7c5bf'
+            '9b1514478af3e13284214495066e6233318c25e44929947e66dcf299daa7c23c')
 
-source=("ombi.service"
-        "ombi.sysusers"
-        "ombi.tmpfiles")
+case ${CARCH} in
+  x86_64) _CARCH='x64' ;;
+  aarch64) _CARCH='arm64' ;;
+  armv7h) _CARCH='arm' ;;
+esac
 
-# https://github.com/Ombi-app/Ombi/releases/download/v4.0.1342/linux-x64.tar.gz
-source_x86_64=("ombi-x86_64-${pkgver}.tar.gz::https://github.com/Ombi-app/Ombi/releases/download/v${pkgver}/linux-x64.tar.gz")
-source_armv7h=("ombi-armv7h-${pkgver}.tar.gz::https://github.com/Ombi-app/Ombi/releases/download/v${pkgver}/linux-arm.tar.gz")
-source_aarch64=("ombi-aarch64-${pkgver}.tar.gz::https://github.com/Ombi-app/Ombi/releases/download/v${pkgver}/linux-arm64.tar.gz")
-
-noextract=("ombi-x86_64-${pkgver}.tar.gz"
-           "ombi-i686-${pkgver}.tar.gz"
-           "ombi-armv7h-${pkgver}.tar.gz")
-
-sha256sums=('263c0f3bce912441c8473203096958c8037e577df879403f6f93ac9317cee185'
-            '6efc381990e1113737686d4f61795095fa8edbc176daa877fd755f1ddb3a40fa'
-            '49fc5edca9d88fc9d6e9f0f4a6d707b072f32daa097305f0bf905dfff342f44a')
-sha256sums_x86_64=('c321af4d7b174ac7d3ae559505aa9b783863e6ceb0df5f88c62d2cc6c1dc3a30')
-sha256sums_aarch64=('8aa83208d63ad85048ca37075c3935cd9634473161500e4843c103cc0a272911')
-sha256sums_armv7h=('22471a6bd57cc5e57ee3aab2d55d7016c748b07e87f9edbbc9851d34ffec311a')
+_framework='net8.0'
+_runtime="linux-${_CARCH}"
+_output='bin'
+_artifacts="${_output}/${_framework}/${_runtime}/publish"
 
 prepare() {
-  # The source is packaged w/o a sub directory, so create our own and 
-  # extract to it. Arm package has a different name too.
-  mkdir -p "${srcdir}/ombi"
-  bsdtar -x -C "${srcdir}/ombi" -f "ombi-${CARCH}-${pkgver}.tar.gz"
+  cd "${_pkgname}-${pkgver}"
+
+  # Install dotnet-setversion
+  if [[ ! -f /tmp/dotnet-setversion/setversion ]]; then
+    dotnet tool install --tool-path /tmp/dotnet-setversion dotnet-setversion
+  fi
+
+  # Prepare frontend
+  yarn --cwd src/Ombi/ClientApp install --immutable --immutable-cache --check-cache
+}
+
+build() {
+  cd "${_pkgname}-${pkgver}"
+
+  # Restore and build backend
+  export DOTNET_CLI_TELEMETRY_OPTOUT=1
+  export DOTNET_NOLOGO=1
+  export DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
+  /tmp/dotnet-setversion/setversion -r ${pkgver}
+  dotnet publish "src/${_pkgname}" \
+    --framework "${_framework}" \
+    --runtime ${_runtime} \
+    --no-self-contained \
+    --configuration Release \
+    --output build
+
+  # Build frontend
+  export NODE_ENV=production
+  yarn --cwd src/Ombi/ClientApp run build
 }
 
 package() {
-  # Copy the default appsettings.json
-  install -d -m 755 "${pkgdir}/var/lib/ombi"
-  install -D -m 644 "${srcdir}/ombi/appsettings.json" "${pkgdir}/var/lib/ombi/"
-  #install -D -m 644 "${srcdir}/ombi/HealthCheck.css" "${pkgdir}/var/lib/ombi/"
+  cd "${_pkgname}-${pkgver}/build"
 
-  # Copy in files and then fix permissions
-  install -d -m 755 "${pkgdir}/usr/lib/ombi"
-  cp -dpr --no-preserve=ownership "${srcdir}/ombi/"* "${pkgdir}/usr/lib/ombi/"
-  chmod -R a=,a+rX,u+w ${pkgdir}/usr/lib/ombi/
-  chmod 755 ${pkgdir}/usr/lib/ombi/Ombi
+  # appsettings.json
+  install -Dm644 appsettings.json "${pkgdir}/var/lib/ombi/appsettings.json"
 
-  install -D -m 644 "${srcdir}/ombi.service" "${pkgdir}/usr/lib/systemd/system/ombi.service"
-  install -D -m 644 "${srcdir}/ombi.sysusers" "${pkgdir}/usr/lib/sysusers.d/ombi.conf"
-  install -D -m 644 "${srcdir}/ombi.tmpfiles" "${pkgdir}/usr/lib/tmpfiles.d/ombi.conf"
+  # Copy backend
+  install -dm755 "${pkgdir}/usr/lib/ombi/ClientApp/dist/"
+  cp -dpr --no-preserve=ownership * "${pkgdir}/usr/lib/ombi"
+  cd ../../
+
+  # Copy frontend
+  cp -dpr --no-preserve=ownership "${_pkgname}-${pkgver}/src/${_pkgname}/ClientApp/dist" "${pkgdir}/usr/lib/ombi/ClientApp"
+
+  # Install systemd service files
+  install -Dm644 "ombi.service" "${pkgdir}/usr/lib/systemd/system/ombi.service"
+  install -Dm644 "ombi.sysusers" "${pkgdir}/usr/lib/sysusers.d/ombi.conf"
+  install -Dm644 "ombi.tmpfiles" "${pkgdir}/usr/lib/tmpfiles.d/ombi.conf"
 }
-
-# vim:set ts=2 sw=2 et:
