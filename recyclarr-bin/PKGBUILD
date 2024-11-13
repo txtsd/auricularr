@@ -3,7 +3,7 @@
 
 pkgname=recyclarr-bin
 _pkgname=${pkgname%%-bin}
-pkgver=7.3.0
+pkgver=7.4.0
 pkgrel=1
 pkgdesc='Automatically synchronize recommended settings from the TRaSH guides to your Sonarr/Radarr instances.'
 arch=('x86_64' 'aarch64' 'armv7h')
@@ -39,9 +39,9 @@ sha256sums=('f0b6b437fad6072f55be0eb57c4eaf6a44eecda4588633edd5ad716ea3e41c7d'
             'e8a2959e079a6a77c3eefaf77defd69e76944c2a1378257dcaf0286abde002a6'
             '458b7c0550f3c2e41f63bac197ce55a5699432ee24080f7917b001c0eec2c7ec'
             '3d2a1b3690d956a8f195c2cd1b28c28beecda354023e8de78471ca35610fb57d')
-sha256sums_x86_64=('c4123eb522c4f89fe9a8b3ce4d7bc8e6110b1d2f200782892ac3be5ccfad28ab')
-sha256sums_aarch64=('e8b8607f50363ad22766b44d65d52cb9b3fbe7a045a6ca7379b01500efac518a')
-sha256sums_armv7h=('bb9a5946ce1661ac4cac227accaa34e219cd74e23e05c90489290fa901f3845e')
+sha256sums_x86_64=('55f7dd1edf489694b2c99d1e010e27b65ad5d8ce07bed58d4a69c687fffbc173')
+sha256sums_aarch64=('fbc6e1a5c55e4c0bff3c537710e8f7bf3aa03383e1fd230dc5dc51b528b65235')
+sha256sums_armv7h=('473559d5fbee4440a38f0e0dfc897f04ffcf2a6d0dfd93ea68d7db7848382706')
 
 package() {
   install -Dm755 "${srcdir}/recyclarr" "${pkgdir}/usr/bin/recyclarr"
