@@ -1,5 +1,5 @@
 pkgbase = sonarr-bin
-	pkgdesc = Smart PVR for newsgroup and torrent users.
+	pkgdesc = Smart PVR for newsgroup and torrent users
 	pkgver = 4.0.10.2544
 	pkgrel = 9
 	url = https://sonarr.tv
