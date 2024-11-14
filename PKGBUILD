@@ -7,17 +7,17 @@
 pkgname=sonarr-bin
 pkgver=4.0.10.2544
 pkgrel=9
-pkgdesc='Smart PVR for newsgroup and torrent users.'
-arch=('x86_64' 'aarch64' 'armv7h')
+pkgdesc='Smart PVR for newsgroup and torrent users'
+arch=(x86_64 aarch64 armv7h)
 url='https://sonarr.tv'
 license=('GPL-3.0-or-later')
-groups=('servarr-bin')
+groups=(servarr-bin)
 depends=(
-  'gcc-libs'
-  'glibc'
-  'zlib'
-  'sqlite'
-  'ffmpeg'
+  gcc-libs
+  glibc
+  zlib
+  sqlite
+  ffmpeg
 )
 optdepends=(
   'postgresql: postgresql database'
@@ -42,11 +42,11 @@ conflicts=(sonarr)
 options=(!debug)
 install=sonarr.install
 source=(
-  'package_info'
-  'sonarr.service'
-  'sonarr.sysusers'
-  'sonarr.tmpfiles'
-  'sonarr.install'
+  package_info
+  sonarr.service
+  sonarr.sysusers
+  sonarr.tmpfiles
+  sonarr.install
 )
 source_x86_64=("Sonarr.main.${pkgver}.linux-x64.tar.gz::https://services.sonarr.tv/v1/update/main/download?version=${pkgver}&os=linux&runtime=netcore&arch=x64")
 source_aarch64=("Sonarr.main.${pkgver}.linux-arm64.tar.gz::https://services.sonarr.tv/v1/update/main/download?version=${pkgver}&os=linux&runtime=netcore&arch=arm64")
@@ -64,25 +64,27 @@ package() {
   install -dm755 "${pkgdir}/usr/lib/sonarr/bin"
 
   # License
-  install -Dm644 "${srcdir}/Sonarr/LICENSE.md" "${pkgdir}/usr/share/licenses/${pkgname}"
-  rm "${srcdir}/Sonarr/LICENSE.md"
+  install -Dm644 Sonarr/LICENSE.md "${pkgdir}/usr/share/licenses/${pkgname}"
+  rm Sonarr/LICENSE.md
 
   # Remove ffprobe, Service Helpers, and Update files
-  rm "${srcdir}/Sonarr/ffprobe"
-  rm "${srcdir}/Sonarr/ServiceInstall"*
-  rm "${srcdir}/Sonarr/ServiceUninstall"*
-  rm -rf "${srcdir}/Sonarr/Sonarr.Update"
+  rm Sonarr/ffprobe
+  rm Sonarr/ServiceInstall*
+  rm Sonarr/ServiceUninstall*
+  rm -rf Sonarr/Sonarr.Update
 
   # Use system ffprobe
   ln -s /usr/bin/ffprobe "${pkgdir}/usr/lib/sonarr/bin/ffprobe"
 
   # Disable built in updater.
-  install -Dm644 "${srcdir}/package_info" "${pkgdir}/usr/lib/sonarr"
+  install -Dm644 package_info "${pkgdir}/usr/lib/sonarr"
   echo "PackageVersion=${pkgver}-${pkgrel}" >> "${pkgdir}/usr/lib/sonarr/package_info"
 
-  cp -dpr --no-preserve=ownership "${srcdir}/Sonarr/"* "${pkgdir}/usr/lib/sonarr/bin"
+  # Copy Sonarr
+  cp -dpr --no-preserve=ownership "Sonarr/"* "${pkgdir}/usr/lib/sonarr/bin"
 
-  install -Dm644 "${srcdir}/sonarr.service" "${pkgdir}/usr/lib/systemd/system/sonarr.service"
-  install -Dm644 "${srcdir}/sonarr.sysusers" "${pkgdir}/usr/lib/sysusers.d/sonarr.conf"
-  install -Dm644 "${srcdir}/sonarr.tmpfiles" "${pkgdir}/usr/lib/tmpfiles.d/sonarr.conf"
+  # Systemd
+  install -Dm644 "sonarr.service" "${pkgdir}/usr/lib/systemd/system/sonarr.service"
+  install -Dm644 "sonarr.sysusers" "${pkgdir}/usr/lib/sysusers.d/sonarr.conf"
+  install -Dm644 "sonarr.tmpfiles" "${pkgdir}/usr/lib/tmpfiles.d/sonarr.conf"
 }
