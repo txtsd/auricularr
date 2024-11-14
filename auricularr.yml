@@ -7,7 +7,7 @@ packages:
   - nvchecker
 
 environment:
-  packages: [autobrr, bazarr, bazarr-beta, bitmagnet, bitmagnet-beta, bitmagnet-bin, jellyseerr, lidarr, lidarr-bin, lidarr-develop, lidarr-develop-bin, lidarr-nightly-bin, lunasea-bin, prowlarr, prowlarr-bin, prowlarr-develop, prowlarr-develop-bin, prowlarr-nightly-bin, radarr, radarr-bin, radarr-develop, radarr-develop-bin, radarr-nightly-bin, readarr-develop, readarr-develop-bin, readarr-nightly-bin, recyclarr, recyclarr-bin, sonarr, sonarr-bin, sonarr-develop, sonarr-develop-bin, whisparr-nightly-bin]
+  packages: [autobrr, bazarr, bazarr-beta, bitmagnet, bitmagnet-beta, bitmagnet-bin, jellyseerr, lidarr, lidarr-bin, lidarr-develop, lidarr-develop-bin, lidarr-nightly-bin, lunasea-bin, ombi, ombi-bin, ombi-develop-bin, prowlarr, prowlarr-bin, prowlarr-develop, prowlarr-develop-bin, prowlarr-nightly-bin, radarr, radarr-bin, radarr-develop, radarr-develop-bin, radarr-nightly-bin, readarr-develop, readarr-develop-bin, readarr-nightly-bin, recyclarr, recyclarr-bin, sonarr, sonarr-bin, sonarr-develop, sonarr-develop-bin, whisparr-nightly-bin]
   GPG_TTY: /dev/pts/0
 
 secrets:
@@ -106,6 +106,10 @@ tasks:
                 ;;
 
               lunasea) ;;
+
+              ombi)
+                grep -Gm1 'We are running on ' <(sudo journalctl -xeu ombi --follow)
+                ;;
 
               recyclarr)
                 grep -Gm1 'recyclarr\.service: Deactivated successfully\.' <(sudo journalctl -xeu "${service_name}" --follow)
