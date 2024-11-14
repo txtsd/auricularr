@@ -34,7 +34,6 @@ pkgbase = sonarr-develop
 	optdepends = autobrr: irc, torrent and usenet indexer proxy
 	provides = sonarr
 	conflicts = sonarr
-	options = !debug
 	source = sonarr-develop-4.0.10.2624.tar.gz::https://github.com/Sonarr/Sonarr/archive/refs/tags/v4.0.10.2624.tar.gz
 	source = package_info
 	source = sonarr.service
