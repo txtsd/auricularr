@@ -1,0 +1,4 @@
+[ombi-develop]
+source = "git"
+git = "https://github.com/Ombi-app/Ombi"
+prefix = "v"
