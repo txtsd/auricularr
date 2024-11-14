@@ -1,15 +1,16 @@
 [Unit]
 Description=Ombi
-After=network.target
+Wants=network-online.target
+After=network-online.target
 
 [Service]
 User=ombi
-Group=ombi
+Group=media
 Type=simple
 SyslogIdentifier=ombi
 WorkingDirectory=/usr/lib/ombi
-ExecStart=/usr/lib/ombi/Ombi --storage /var/lib/ombi --host http://*:5000
-Restart=always
+ExecStart=/usr/lib/ombi/Ombi --storage /var/lib/ombi
+Restart=on-failure
 TimeoutStopSec=30
 
 [Install]

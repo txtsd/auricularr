@@ -1,1 +1,3 @@
-u ombi - "ombi" /var/lib/ombi
+u ombi - "Ombi Daemon" /var/lib/ombi
+g ombi
+m ombi media
