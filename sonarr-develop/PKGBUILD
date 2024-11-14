@@ -9,18 +9,18 @@ _pkgname=Sonarr
 pkgver=4.0.10.2624
 pkgrel=2
 pkgdesc='Smart PVR for newsgroup and torrent users (develop branch)'
-arch=('x86_64' 'aarch64' 'armv7h')
+arch=(x86_64 aarch64 armv7h)
 url='https://sonarr.tv'
 license=('GPL-3.0-or-later')
-groups=('servarr-develop')
+groups=(servarr-develop)
 depends=(
-  'aspnet-runtime-6.0'
-  'gcc-libs'
-  'glibc'
-  'sqlite'
-  'ffmpeg'
+  aspnet-runtime-6.0
+  gcc-libs
+  glibc
+  sqlite
+  ffmpeg
 )
-makedepends=('dotnet-sdk-6.0' 'yarn')
+makedepends=(dotnet-sdk-6.0 yarn)
 optdepends=(
   'postgresql: postgresql database'
   'sabnzbd: usenet downloader'
@@ -41,15 +41,14 @@ optdepends=(
 )
 provides=(sonarr)
 conflicts=(sonarr)
-options=(!debug)
 install=sonarr.install
 source=(
   "${pkgname}-${pkgver}.tar.gz::https://github.com/Sonarr/Sonarr/archive/refs/tags/v${pkgver}.tar.gz"
-  'package_info'
-  'sonarr.service'
-  'sonarr.sysusers'
-  'sonarr.tmpfiles'
-  'sonarr.install'
+  package_info
+  sonarr.service
+  sonarr.sysusers
+  sonarr.tmpfiles
+  sonarr.install
 )
 sha256sums=('925711b14a313548655126a13c2747ad5b19308c553456bbe23b5d758ae1f0cf'
             'a6b37e75143a309b1d8c163c3f90f7f0275fd730015c3f74e3ad27c278b1ae90'
@@ -59,9 +58,9 @@ sha256sums=('925711b14a313548655126a13c2747ad5b19308c553456bbe23b5d758ae1f0cf'
             '3d912d367eeb89ead06dc9dc45de093f48ddc601188731d54775c33e04e369aa')
 
 case ${CARCH} in
-  x86_64)  _CARCH='x64' ;;
+  x86_64) _CARCH='x64' ;;
   aarch64) _CARCH='arm64' ;;
-  armv7h)  _CARCH='arm' ;;
+  armv7h) _CARCH='arm' ;;
 esac
 
 _framework='net6.0'
@@ -71,7 +70,7 @@ _artifacts="${_output}/${_framework}/${_runtime}/publish"
 _branch='develop'
 
 prepare() {
-  cd "${srcdir}/${_pkgname}-${pkgver}"
+  cd "${_pkgname}-${pkgver}"
 
   # Fix CVE-2024-43485
   sed 's/System\.Text\.Json" Version="6\.0\.9"/System\.Text\.Json" Version="6\.0\.10"/' -i src/NzbDrone.Common/Sonarr.Common.csproj
@@ -93,7 +92,7 @@ prepare() {
 }
 
 build() {
-  cd "${srcdir}/${_pkgname}-${pkgver}"
+  cd "${_pkgname}-${pkgver}"
 
   # Build backend
   export DOTNET_CLI_TELEMETRY_OPTOUT=1
@@ -124,16 +123,17 @@ build() {
 }
 
 check() {
-  cd "${srcdir}/${_pkgname}-${pkgver}"
-  local _filters="Category!=ManualTest&Category!=AutomationTest&Category!=WINDOWS"
+  cd "${_pkgname}-${pkgver}"
 
   # Skip Tests:
+  local _filters='Category!=ManualTest'
+  _filters+='&Category!=AutomationTest'
+  _filters+='&Category!=IntegrationTest'
+  _filters+='&Category!=WINDOWS'
   # These tests fail because /etc/arch-release doesn't contain a ${VERSION_ID}
   # See: https://github.com/Sonarr/Sonarr/issues/7299
-  # Integration tests also completely fail
-  _filters="${_filters}&FullyQualifiedName!~should_get_version_info"
-  _filters="${_filters}&FullyQualifiedName!~should_get_version_info_from_actual_linux"
-  _filters="${_filters}&Category!=IntegrationTest"
+  _filters+='&FullyQualifiedName!~should_get_version_info'
+  _filters+='&FullyQualifiedName!~should_get_version_info_from_actual_linux'
 
   # Prepare for tests
   mkdir -p ~/.config/Sonarr
@@ -147,7 +147,7 @@ check() {
 }
 
 package() {
-  cd "${srcdir}/${_pkgname}-${pkgver}"
+  cd "${_pkgname}-${pkgver}"
   install -dm755 "${pkgdir}/usr/lib/sonarr/bin/UI"
 
   # Copy backend
@@ -159,13 +159,15 @@ package() {
   ln -s /usr/bin/ffprobe "${pkgdir}/usr/lib/sonarr/bin/ffprobe"
 
   # License
-  install -Dm644 "${srcdir}/${_pkgname}-${pkgver}/LICENSE.md" "${pkgdir}/usr/share/licenses/${pkgname}"
+  install -Dm644 LICENSE.md "${pkgdir}/usr/share/licenses/${pkgname}"
 
+  cd "${srcdir}"
   # Disable built in updater.
-  install -Dm644 "${srcdir}/package_info" "${pkgdir}/usr/lib/sonarr"
+  install -Dm644 package_info "${pkgdir}/usr/lib/sonarr"
   echo "PackageVersion=${pkgver}-${pkgrel}" >> "${pkgdir}/usr/lib/sonarr/package_info"
 
-  install -Dm644 "${srcdir}/sonarr.service" "${pkgdir}/usr/lib/systemd/system/sonarr.service"
-  install -Dm644 "${srcdir}/sonarr.sysusers" "${pkgdir}/usr/lib/sysusers.d/sonarr.conf"
-  install -Dm644 "${srcdir}/sonarr.tmpfiles" "${pkgdir}/usr/lib/tmpfiles.d/sonarr.conf"
+  # Systemd
+  install -Dm644 sonarr.service "${pkgdir}/usr/lib/systemd/system/sonarr.service"
+  install -Dm644 sonarr.sysusers "${pkgdir}/usr/lib/sysusers.d/sonarr.conf"
+  install -Dm644 sonarr.tmpfiles "${pkgdir}/usr/lib/tmpfiles.d/sonarr.conf"
 }
