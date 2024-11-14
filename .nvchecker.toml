@@ -1,0 +1,5 @@
+[autobrr]
+source = "git"
+git = "https://github.com/autobrr/autobrr.git"
+prefix = "v"
+include_regex = "v\\d+\\.\\d+\\.\\d+$"
