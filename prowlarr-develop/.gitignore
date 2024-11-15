@@ -1,4 +1,10 @@
-pkg/
-src/
-
-*.tar.*
+*
+!PKGBUILD
+!.SRCINFO
+!.gitignore
+!.nvchecker.toml
+!prowlarr.service
+!prowlarr.sysusers
+!prowlarr.tmpfiles
+!prowlarr.install
+!package_info
