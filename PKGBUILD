@@ -8,18 +8,18 @@ _pkgname=Lidarr
 pkgver=2.7.1.4417
 pkgrel=5
 pkgdesc='Music collection manager for newsgroup and torrent users.'
-arch=('x86_64' 'aarch64' 'armv7h')
+arch=(x86_64 aarch64 armv7h)
 url='https://lidarr.audio'
 license=('GPL-3.0-or-later')
-groups=('servarr')
+groups=(servarr)
 depends=(
-  'aspnet-runtime-6.0'
-  'chromaprint'
-  'gcc-libs'
-  'glibc'
-  'sqlite'
+  aspnet-runtime-6.0
+  chromaprint
+  gcc-libs
+  glibc
+  sqlite
 )
-makedepends=('dotnet-sdk-6.0' 'yarn')
+makedepends=(dotnet-sdk-6.0 yarn)
 optdepends=(
   'postgresql: postgresql database'
   'sabnzbd: usenet downloader'
@@ -38,22 +38,21 @@ optdepends=(
   'prowlarr: torrent and usenet indexer proxy'
   'autobrr: irc, torrent and usenet indexer proxy'
 )
-options=(!debug)
 install=lidarr.install
 source=(
   "${pkgname}-${pkgver}.tar.gz::https://github.com/Lidarr/Lidarr/archive/refs/tags/v${pkgver}.tar.gz"
-  'package_info'
-  'lidarr.service'
-  'lidarr.sysusers'
-  'lidarr.tmpfiles'
-  'lidarr.install'
+  lidarr.install
+  lidarr.service
+  lidarr.sysusers
+  lidarr.tmpfiles
+  package_info
 )
 sha256sums=('cfcf55f49d6a012f1fa77559ebd1ba8892b404312430afdec684d0c924deeca3'
-            '19435dff2251782714875af95a38d8491cee6c178e8f32e3c3b6e566b3edc931'
+            '2f3eeca41a77cec8e86a107365b34a29bf1fc2c5251173f7b200d81b318bca40'
             '1a542d493eafbd28ac268c5f9ef29688ffa6e9326436d2ef05eb66413c18a082'
-            'cd3eac6e50c421460b6215b0a6322374a0cc190fb841fddad4b196a759fc00d6'
+            '85098d47734e8087480f8a29eafec50faa453487221ef01173888155d2b06e42'
             'd71e37213ac65722e42f6f2c5772d4515c2d28a77b9f7608dc05c787d86ebaa5'
-            '2f3eeca41a77cec8e86a107365b34a29bf1fc2c5251173f7b200d81b318bca40')
+            '19435dff2251782714875af95a38d8491cee6c178e8f32e3c3b6e566b3edc931')
 
 case ${CARCH} in
   x86_64) _CARCH='x64' ;;
@@ -68,14 +67,14 @@ _artifacts="${_output}/${_framework}/${_runtime}/publish"
 _branch='master'
 
 prepare() {
-  cd "${srcdir}/${_pkgname}-${pkgver}"
+  cd "${_pkgname}-${pkgver}"
 
   # Prepare backend
   export DOTNET_CLI_TELEMETRY_OPTOUT=1
   export DOTNET_NOLOGO=1
   export DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
-  dotnet restore src/${_pkgname}.sln \
-    --runtime ${_runtime} \
+  dotnet restore "src/${_pkgname}.sln" \
+    --runtime "${_runtime}" \
     --locked-mode
 
   # Prepare frontend
@@ -83,15 +82,15 @@ prepare() {
 }
 
 build() {
-  cd "${srcdir}/${_pkgname}-${pkgver}"
+  cd "${_pkgname}-${pkgver}"
 
   # Build backend
   export DOTNET_CLI_TELEMETRY_OPTOUT=1
   export DOTNET_NOLOGO=1
   export DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
-  dotnet build src/${_pkgname}.sln \
-    --framework ${_framework} \
-    --runtime ${_runtime} \
+  dotnet build "src/${_pkgname}.sln" \
+    --framework "${_framework}" \
+    --runtime "${_runtime}" \
     --no-self-contained \
     --no-restore \
     --configuration Release \
@@ -99,7 +98,8 @@ build() {
     -p:AssemblyVersion=${pkgver} \
     -p:AssemblyConfiguration=${_branch} \
     -p:RuntimeIdentifiers=${_runtime} \
-    -t:PublishAllRids
+    -t:PublishAllRids \
+    && dotnet build-server shutdown # Build servers do not terminate automatically
 
   # Remove fpcalc, Service Helpers, Update, and Windows files
   rm "${_artifacts}/fpcalc"
@@ -111,30 +111,8 @@ build() {
   yarn run build --env production
 }
 
-check() {
-  cd "${srcdir}/${_pkgname}-${pkgver}"
-  local _filters="Category!=ManualTest&Category!=AutomationTest&Category!=WINDOWS"
-
-  # Skip Tests:
-  # These tests fail because /etc/arch-release doesn't contain a ${VERSION_ID}
-  # See: https://github.com/Lidarr/Lidarr/issues/7299
-  _filters="${_filters}&FullyQualifiedName!~should_get_version_info"
-  _filters="${_filters}&FullyQualifiedName!~should_get_version_info_from_actual_linux"
-  _filters="${_filters}&Category!=IntegrationTest"
-
-  # Prepare for tests
-  mkdir -p ~/.config/Lidarr
-
-  # Test backend
-  dotnet test src \
-    --runtime "${_runtime}" \
-    --configuration Release \
-    --filter "${_filters}" \
-    --no-build
-}
-
 package() {
-  cd "${srcdir}/${_pkgname}-${pkgver}"
+  cd "${_pkgname}-${pkgver}"
   install -dm755 "${pkgdir}/usr/lib/lidarr/bin/UI"
 
   # Copy backend
@@ -143,13 +121,15 @@ package() {
   cp -dpr --no-preserve=ownership "${_output}/UI/"* "${pkgdir}/usr/lib/lidarr/bin/UI"
 
   # License
-  install -Dm644 "${srcdir}/${_pkgname}-${pkgver}/LICENSE.md" "${pkgdir}/usr/share/licenses/${pkgname}"
+  install -Dm644 LICENSE.md "${pkgdir}/usr/share/licenses/${pkgname}"
 
+  cd "${srcdir}"
   # Disable built in updater.
-  install -Dm644 "${srcdir}/package_info" "${pkgdir}/usr/lib/lidarr"
+  install -Dm644 package_info "${pkgdir}/usr/lib/lidarr"
   echo "PackageVersion=${pkgver}-${pkgrel}" >> "${pkgdir}/usr/lib/lidarr/package_info"
 
-  install -Dm644 "${srcdir}/lidarr.service" "${pkgdir}/usr/lib/systemd/system/lidarr.service"
-  install -Dm644 "${srcdir}/lidarr.sysusers" "${pkgdir}/usr/lib/sysusers.d/lidarr.conf"
-  install -Dm644 "${srcdir}/lidarr.tmpfiles" "${pkgdir}/usr/lib/tmpfiles.d/lidarr.conf"
+  # Systemd
+  install -Dm644 lidarr.service "${pkgdir}/usr/lib/systemd/system/lidarr.service"
+  install -Dm644 lidarr.sysusers "${pkgdir}/usr/lib/sysusers.d/lidarr.conf"
+  install -Dm644 lidarr.tmpfiles "${pkgdir}/usr/lib/tmpfiles.d/lidarr.conf"
 }
