@@ -6,16 +6,16 @@ pkgname=lidarr-nightly-bin
 pkgver=2.8.1.4445
 pkgrel=3
 pkgdesc='Music collection manager for newsgroup and torrent users (nightly builds)'
-arch=('x86_64' 'aarch64' 'armv7h')
+arch=(x86_64 aarch64 armv7h)
 url='https://lidarr.audio'
 license=('GPL-3.0-or-later')
-groups=('servarr-nightly-bin')
+groups=(servarr-nightly-bin)
 depends=(
-  'chromaprint'
-  'gcc-libs'
-  'glibc'
-  'zlib'
-  'sqlite'
+  chromaprint
+  gcc-libs
+  glibc
+  sqlite
+  zlib
 )
 optdepends=(
   'postgresql: postgresql database'
@@ -40,19 +40,19 @@ conflicts=(lidarr)
 options=(!debug)
 install=lidarr.install
 source=(
-  'lidarr.service'
-  'lidarr.tmpfiles'
-  'lidarr.sysusers'
-  'lidarr.install'
-  'package_info'
+  lidarr.install
+  lidarr.service
+  lidarr.sysusers
+  lidarr.tmpfiles
+  package_info
 )
 source_x86_64=("Lidarr.nightly.${pkgver}.linux-core-x64.tar.gz::https://lidarr.servarr.com/v1/update/nightly/updatefile?version=${pkgver}&os=linux&runtime=netcore&arch=x64")
 source_aarch64=("Lidarr.nightly.${pkgver}.linux-core-arm64.tar.gz::https://lidarr.servarr.com/v1/update/nightly/updatefile?version=${pkgver}&os=linux&runtime=netcore&arch=arm64")
 source_armv7h=("Lidarr.nightly.${pkgver}.linux-core-arm.tar.gz::https://lidarr.servarr.com/v1/update/nightly/updatefile?version=${pkgver}&os=linux&runtime=netcore&arch=arm")
-sha256sums=('1a542d493eafbd28ac268c5f9ef29688ffa6e9326436d2ef05eb66413c18a082'
+sha256sums=('2f3eeca41a77cec8e86a107365b34a29bf1fc2c5251173f7b200d81b318bca40'
+            '1a542d493eafbd28ac268c5f9ef29688ffa6e9326436d2ef05eb66413c18a082'
+            '85098d47734e8087480f8a29eafec50faa453487221ef01173888155d2b06e42'
             'd71e37213ac65722e42f6f2c5772d4515c2d28a77b9f7608dc05c787d86ebaa5'
-            'cd3eac6e50c421460b6215b0a6322374a0cc190fb841fddad4b196a759fc00d6'
-            '2f3eeca41a77cec8e86a107365b34a29bf1fc2c5251173f7b200d81b318bca40'
             '90a1960fef0d3833cd3635cedd16af3ee9ae6c7b95babc3021f6031d4e44c200')
 sha256sums_x86_64=('4226e1d769c652bc779cf670a50804d216de04e2ccf204c13515f2d6f303d886')
 sha256sums_aarch64=('a3de62e4077783d7b57a4462e181c6b9d8b7f4d1e33459085e0b2c523714f7ab')
@@ -62,22 +62,24 @@ package() {
   install -dm755 "${pkgdir}/usr/lib/lidarr/bin"
 
   # License
-  install -Dm644 "${srcdir}/Lidarr/LICENSE.md" "${pkgdir}/usr/share/licenses/${pkgname}"
-  rm "${srcdir}/Lidarr/LICENSE.md"
+  install -Dm644 Lidarr/LICENSE.md "${pkgdir}/usr/share/licenses/${pkgname}"
+  rm Lidarr/LICENSE.md
 
   # Remove fpcalc, Service Helpers, and Update files
-  rm "${srcdir}/Lidarr/fpcalc"
-  rm "${srcdir}/Lidarr/ServiceInstall"*
-  rm "${srcdir}/Lidarr/ServiceUninstall"*
-  rm -rf "${srcdir}/Lidarr/Lidarr.Update"
+  rm Lidarr/fpcalc
+  rm Lidarr/ServiceInstall*
+  rm Lidarr/ServiceUninstall*
+  rm -rf Lidarr/Lidarr.Update
 
   # Disable built in updater.
-  install -Dm644 "${srcdir}/package_info" "${pkgdir}/usr/lib/lidarr"
+  install -Dm644 package_info "${pkgdir}/usr/lib/lidarr"
   echo "PackageVersion=${pkgver}-${pkgrel}" >> "${pkgdir}/usr/lib/lidarr/package_info"
 
-  cp -dpr --no-preserve=ownership "${srcdir}/Lidarr/"* "${pkgdir}/usr/lib/lidarr/bin"
+  # Copy Lidarr
+  cp -dpr --no-preserve=ownership "Lidarr/"* "${pkgdir}/usr/lib/lidarr/bin"
 
-  install -Dm644 "${srcdir}/lidarr.service" "${pkgdir}/usr/lib/systemd/system/lidarr.service"
-  install -Dm644 "${srcdir}/lidarr.sysusers" "${pkgdir}/usr/lib/sysusers.d/lidarr.conf"
-  install -Dm644 "${srcdir}/lidarr.tmpfiles" "${pkgdir}/usr/lib/tmpfiles.d/lidarr.conf"
+  # Systemd
+  install -Dm644 lidarr.service "${pkgdir}/usr/lib/systemd/system/lidarr.service"
+  install -Dm644 lidarr.sysusers "${pkgdir}/usr/lib/sysusers.d/lidarr.conf"
+  install -Dm644 lidarr.tmpfiles "${pkgdir}/usr/lib/tmpfiles.d/lidarr.conf"
 }
