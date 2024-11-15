@@ -1,5 +1,20 @@
-# Be sure to use `systemctl edit prowlarr` to modify this service with an override.conf because
-# direct changes will be overwritten by package updates.
+# Be sure to use `systemctl edit prowlarr` to modify this service with an
+# override.conf because direct changes will be overwritten by package updates.
+#
+# A user per service with shared group setup would have an override like:
+# [Service]
+# Group=sharedgroupname
+# UMask=002
+#
+# If your media directory is in /home (it shouldn't be)
+# You will need to have an override like:
+# [Service]
+# PrivateUsers=false
+# ProtectHome=false
+#
+# When running prowlarr in LXC:
+# [Service]
+# PrivateUsers=false
 
 [Unit]
 Description=Prowlarr Daemon
@@ -9,14 +24,47 @@ After=network-online.target
 [Service]
 Type=simple
 User=prowlarr
-Group=prowlarr
-SyslogIdentifier=prowlarr
+Group=media
+UMask=002
 Environment=XDG_DATA_HOME=/var/lib/prowlarr
-WorkingDirectory=/usr/lib/prowlarr
 ExecStart=/usr/lib/prowlarr/bin/Prowlarr -nobrowser -data=/var/lib/prowlarr
-Restart=on-failure
-RestartSec=5
 KillMode=process
+PIDFile=/run/prowlarr/prowlarr.pid
+Restart=on-failure
+RestartSec=10
+TimeoutStopSec=20
+SyslogIdentifier=prowlarr
+ConfigurationDirectory=prowlarr
+LogsDirectory=prowlarr
+RuntimeDirectory=prowlarr
+StateDirectory=prowlarr
+WorkingDirectory=/var/lib/prowlarr
+
+# Hardening
+LockPersonality=true
+NoNewPrivileges=true
+PrivateTmp=true
+PrivateUsers=true
+ProtectClock=true
+ProtectControlGroups=true
+ProtectHome=read-only
+ProtectHostname=true
+ProtectKernelLogs=true
+ProtectKernelModules=true
+ProtectKernelTunables=true
+ProtectProc=invisible
+ProtectSystem=full
+RemoveIPC=true
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX AF_NETLINK
+RestrictNamespaces=true
+RestrictRealtime=true
+SocketBindAllow=ipv4:tcp
+SocketBindAllow=ipv6:tcp
+SocketBindDeny=any
+SystemCallArchitectures=native
+SystemCallErrorNumber=EPERM
+SystemCallFilter=@system-service
+SystemCallFilter=~@privileged
 
 [Install]
 WantedBy=multi-user.target
