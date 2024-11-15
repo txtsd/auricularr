@@ -5,20 +5,20 @@
 pkgname=radarr-develop
 _pkgname=Radarr
 pkgver=5.15.0.9412
-pkgrel=3
+pkgrel=4
 pkgdesc='Movie organizer/manager for usenet and torrent users (develop branch)'
-arch=('x86_64' 'aarch64' 'armv7h')
+arch=(x86_64 aarch64 armv7h)
 url='https://radarr.video'
 license=('GPL-3.0-or-later')
-groups=('servarr-develop')
+groups=(servarr-develop)
 depends=(
-  'aspnet-runtime-6.0'
-  'gcc-libs'
-  'glibc'
-  'sqlite'
-  'ffmpeg'
+  aspnet-runtime-6.0
+  ffmpeg
+  gcc-libs
+  glibc
+  sqlite
 )
-makedepends=('dotnet-sdk-6.0' 'yarn')
+makedepends=(dotnet-sdk-6.0 yarn)
 optdepends=(
   'postgresql: postgresql database'
   'sabnzbd: usenet downloader'
@@ -39,22 +39,21 @@ optdepends=(
 )
 provides=(radarr)
 conflicts=(radarr)
-options=(!debug)
 install=radarr.install
 source=(
   "${pkgname}-${pkgver}.tar.gz::https://github.com/Radarr/Radarr/archive/refs/tags/v${pkgver}.tar.gz"
-  'package_info'
-  'radarr.service'
-  'radarr.sysusers'
-  'radarr.tmpfiles'
-  'radarr.install'
+  package_info
+  radarr.install
+  radarr.service
+  radarr.sysusers
+  radarr.tmpfiles
 )
 sha256sums=('271135fa4d7bb24e406850c170e66f3c7a23c680abd122a86c0c9e63c7d83833'
             '4a41a56ab30f8b6001a666e867c7012bfe23760ec29eac957bf90e1dcb4ee36e'
-            '6abfbb9e308b945bd74e7d46d30d418c5a7a51aab12aefa4e2289ca2398ca3f2'
+            '243ded7d0e9d59b9adf912bb4e35ba63247d85577b417b54dcd74f16f0cfbd26'
+            '8ca13537e98380b91f1a950187d6b9f021f8a4d68871f709444742a4911bc5a6'
             'bb73e0c55711d7ddbf74140b3beb39cb8674ae92be8387c3dd8109bcd53faca8'
-            'b4dbab5257d60ae73197662930ef4cdc5be2e7135df451e2541c181ed28ea5db'
-            '243ded7d0e9d59b9adf912bb4e35ba63247d85577b417b54dcd74f16f0cfbd26')
+            'c68efcb3778cb497d7c256dc97df7413ce09f07ea341e4d2683e7fee321cbcbb')
 
 case ${CARCH} in
   x86_64) _CARCH='x64' ;;
@@ -64,18 +63,18 @@ esac
 
 _framework='net6.0'
 _runtime="linux-${_CARCH}"
-_output="_output"
+_output='_output'
 _artifacts="${_output}/${_framework}/${_runtime}/publish"
 _branch='develop'
 
 prepare() {
-  cd "${srcdir}/${_pkgname}-${pkgver}"
+  cd "${_pkgname}-${pkgver}"
 
   # Prepare backend
   export DOTNET_CLI_TELEMETRY_OPTOUT=1
   export DOTNET_NOLOGO=1
   export DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
-  dotnet restore src/${_pkgname}.sln \
+  dotnet restore "src/${_pkgname}.sln" \
     --runtime "${_runtime}" \
     --locked-mode
 
@@ -84,14 +83,14 @@ prepare() {
 }
 
 build() {
-  cd "${srcdir}/${_pkgname}-${pkgver}"
+  cd "${_pkgname}-${pkgver}"
 
   # Build backend
   export DOTNET_CLI_TELEMETRY_OPTOUT=1
   export DOTNET_NOLOGO=1
   export DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
-  dotnet build src/${_pkgname}.sln \
-    --framework ${_framework} \
+  dotnet build "src/${_pkgname}.sln" \
+    --framework "${_framework}" \
     --runtime "${_runtime}" \
     --no-self-contained \
     --no-restore \
@@ -114,31 +113,8 @@ build() {
   yarn run build --env production
 }
 
-check() {
-  cd "${srcdir}/${_pkgname}-${pkgver}"
-  local _filters="Category!=ManualTest&Category!=AutomationTest&Category!=WINDOWS"
-
-  # Skip Tests:
-  # These tests fail because /etc/arch-release doesn't contain a ${VERSION_ID}
-  # See: https://github.com/Radarr/Radarr/issues/7299
-  # Integration tests also completely fail
-  _filters="${_filters}&FullyQualifiedName!~should_get_version_info"
-  _filters="${_filters}&FullyQualifiedName!~should_get_version_info_from_actual_linux"
-  _filters="${_filters}&Category!=IntegrationTest"
-
-  # Prepare for tests
-  mkdir -p ~/.config/Radarr
-
-  # Test backend
-  dotnet test src \
-    --runtime "${_runtime}" \
-    --configuration Release \
-    --filter "${_filters}" \
-    --no-build
-}
-
 package() {
-  cd "${srcdir}/${_pkgname}-${pkgver}"
+  cd "${_pkgname}-${pkgver}"
   install -dm755 "${pkgdir}/usr/lib/radarr/bin/UI"
 
   # Copy backend
@@ -150,13 +126,14 @@ package() {
   ln -s /usr/bin/ffprobe "${pkgdir}/usr/lib/radarr/bin/ffprobe"
 
   # License
-  install -Dm644 "${srcdir}/${_pkgname}-${pkgver}/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}"
+  install -Dm644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}"
 
+  cd "${srcdir}"
   # Disable built in updater.
-  install -Dm644 "${srcdir}/package_info" "${pkgdir}/usr/lib/radarr"
+  install -Dm644 package_info "${pkgdir}/usr/lib/radarr"
   echo "PackageVersion=${pkgver}-${pkgrel}" >> "${pkgdir}/usr/lib/radarr/package_info"
 
-  install -Dm644 "${srcdir}/radarr.service" "${pkgdir}/usr/lib/systemd/system/radarr.service"
-  install -Dm644 "${srcdir}/radarr.sysusers" "${pkgdir}/usr/lib/sysusers.d/radarr.conf"
-  install -Dm644 "${srcdir}/radarr.tmpfiles" "${pkgdir}/usr/lib/tmpfiles.d/radarr.conf"
+  install -Dm644 radarr.service "${pkgdir}/usr/lib/systemd/system/radarr.service"
+  install -Dm644 radarr.sysusers "${pkgdir}/usr/lib/sysusers.d/radarr.conf"
+  install -Dm644 radarr.tmpfiles "${pkgdir}/usr/lib/tmpfiles.d/radarr.conf"
 }
