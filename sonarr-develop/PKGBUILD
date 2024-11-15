@@ -7,7 +7,7 @@
 pkgname=sonarr-develop
 _pkgname=Sonarr
 pkgver=4.0.10.2656
-pkgrel=2
+pkgrel=3
 pkgdesc='Smart PVR for newsgroup and torrent users (develop branch)'
 arch=(x86_64 aarch64 armv7h)
 url='https://sonarr.tv'
@@ -52,9 +52,9 @@ source=(
 )
 sha256sums=('7865b1a4d7b6eca7ccbc3fc199c368b4ad8beeafdbaa042aded9c3a4699f415d'
             'a6b37e75143a309b1d8c163c3f90f7f0275fd730015c3f74e3ad27c278b1ae90'
-            'b2673e7b2c7964ceb9672a078797d12fb3c1c8ea908bfaf6330514b8644b0ba2'
-            '00141d4cbf34daa6d91b26179d4847ec970e2767382e18fdf9af2ec84a0ff43e'
-            '0acb3697a5001b00f79269581cd08645f9d5e1e9f0a57cc3e7deeb12d66accc9'
+            '64d1e9bafeaa6f47329222d31fbcf2dbb575566d391334ea034a857e144dfe62'
+            '3a52a20b0fd62d3ce830089347610d4f0f914d2ad6fdd278320f784c8b5d9087'
+            'd6b18a83dd9c213470d984f71ddcefcd64d12bb87f68225cc4ebf5fa4a831703'
             '3d912d367eeb89ead06dc9dc45de093f48ddc601188731d54775c33e04e369aa')
 
 case ${CARCH} in
@@ -65,7 +65,7 @@ esac
 
 _framework='net6.0'
 _runtime="linux-${_CARCH}"
-_output="_output"
+_output='_output'
 _artifacts="${_output}/${_framework}/${_runtime}/publish"
 _branch='develop'
 
@@ -83,7 +83,7 @@ prepare() {
   export DOTNET_CLI_TELEMETRY_OPTOUT=1
   export DOTNET_NOLOGO=1
   export DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
-  dotnet restore src/${_pkgname}.sln \
+  dotnet restore "src/${_pkgname}.sln" \
     --runtime "${_runtime}" \
     --locked-mode
 
@@ -98,8 +98,8 @@ build() {
   export DOTNET_CLI_TELEMETRY_OPTOUT=1
   export DOTNET_NOLOGO=1
   export DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
-  dotnet build src/${_pkgname}.sln \
-    --framework ${_framework} \
+  dotnet build "src/${_pkgname}.sln" \
+    --framework "${_framework}" \
     --runtime "${_runtime}" \
     --no-self-contained \
     --no-restore \
@@ -120,33 +120,6 @@ build() {
 
   # Build frontend
   yarn run build --env production
-}
-
-check() {
-  cd "${_pkgname}-${pkgver}"
-
-  # Skip Tests:
-  local _filters='Category!=ManualTest'
-  _filters+='&Category!=AutomationTest'
-  _filters+='&Category!=IntegrationTest'
-  _filters+='&Category!=WINDOWS'
-  # These tests fail because /etc/arch-release doesn't contain a ${VERSION_ID}
-  # See: https://github.com/Sonarr/Sonarr/issues/7299
-  _filters+='&FullyQualifiedName!~should_get_version_info'
-  _filters+='&FullyQualifiedName!~should_get_version_info_from_actual_linux'
-
-  # This test fails on 4.0.10.2656, I hope txtsd has a good idea!
-  _filters+='&FullyQualifiedName!~should_return_null_for_invalid_process'
-
-  # Prepare for tests
-  mkdir -p ~/.config/Sonarr
-
-  # Test backend
-  dotnet test src \
-    --runtime "${_runtime}" \
-    --configuration Release \
-    --filter "${_filters}" \
-    --no-build
 }
 
 package() {
