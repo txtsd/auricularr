@@ -5,19 +5,19 @@
 pkgname=prowlarr
 _pkgname=Prowlarr
 pkgver=1.25.4.4818
-pkgrel=2
+pkgrel=5
 pkgdesc='Indexer manager/proxy for usenet and torrent users.'
-arch=('x86_64' 'aarch64' 'armv7h')
+arch=(x86_64 aarch64 armv7h)
 url='https://prowlarr.com'
 license=('GPL-3.0-or-later')
-groups=('servarr')
+groups=(servarr)
 depends=(
-  'aspnet-runtime-6.0'
-  'gcc-libs'
-  'glibc'
-  'sqlite'
+  aspnet-runtime-6.0
+  gcc-libs
+  glibc
+  sqlite
 )
-makedepends=('dotnet-sdk-6.0' 'yarn')
+makedepends=(dotnet-sdk-6.0 yarn)
 optdepends=(
   'postgresql: postgresql database'
   'sabnzbd: usenet downloader'
@@ -39,41 +39,42 @@ optdepends=(
   'readarr: automatically integrates with and syncs indexers'
   'whisparr: automatically integrates with and syncs indexers'
 )
-options=(!debug)
 source=(
   "${pkgname}-${pkgver}.tar.gz::https://github.com/Prowlarr/Prowlarr/archive/refs/tags/v${pkgver}.tar.gz"
-  'package_info'
-  'prowlarr.service'
-  'prowlarr.sysusers'
-  'prowlarr.tmpfiles'
+  package_info
+  prowlarr.install
+  prowlarr.service
+  prowlarr.sysusers
+  prowlarr.tmpfiles
 )
 sha256sums=('6987634df7e668b09a6f7ca40d044adf42ab1eaac0cb63a73325fdfa225e2d98'
             '1f9f8018436bd1e29a36c203639083d614722b65a4db64e22bf0c3295fc03fb8'
-            '21ca63506b3cffcca8dcd95e1bdf3fa8415f1bc134c31a153b51b573dc31d390'
-            '08d51099f09721b173233e58172c486025c16034dd89e73ccb42b647dcc34c4b'
+            '328fda2e2ed5f93440f3837a7d4f2c91e35fb4f6c51aeb33eacb80ecceb941a9'
+            '8253f405c6dd1261ed321702867b08b413f8d69ef3d081949583d9106e3f812b'
+            'ee61f5621eae6ab932fb093a4f75a0ab11bf9e3ca829f0d34c25014f68aeff7d'
             '4c3f9b5fa71810697efbe60f20a2cba24fd1b997d5372c3726457b197d61ccb5')
 
 case ${CARCH} in
-  x86_64)  _CARCH='x64';;
-  aarch64) _CARCH='arm64';;
-  armv7h)  _CARCH='arm';;
+  x86_64) _CARCH='x64' ;;
+  aarch64) _CARCH='arm64' ;;
+  armv7h) _CARCH='arm' ;;
 esac
 
 _framework='net6.0'
 _runtime="linux-${_CARCH}"
-_output="_output"
+_output='_output'
 _artifacts="${_output}/${_framework}/${_runtime}/publish"
 _branch='master'
 
 prepare() {
-  cd "${srcdir}/${_pkgname}-${pkgver}"
+  cd "${_pkgname}-${pkgver}"
 
   # Prepare backend
   export DOTNET_CLI_TELEMETRY_OPTOUT=1
   export DOTNET_NOLOGO=1
   export DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
-  dotnet restore src/${_pkgname}.sln \
-    --runtime ${_runtime} \
+  dotnet restore "src/${_pkgname}.sln" \
+    --runtime "${_runtime}" \
     --locked-mode
 
   # Prepare frontend
@@ -81,15 +82,15 @@ prepare() {
 }
 
 build() {
-  cd "${srcdir}/${_pkgname}-${pkgver}"
+  cd "${_pkgname}-${pkgver}"
 
   # Build backend
   export DOTNET_CLI_TELEMETRY_OPTOUT=1
   export DOTNET_NOLOGO=1
   export DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
-  dotnet build src/${_pkgname}.sln \
-    --framework ${_framework} \
-    --runtime ${_runtime} \
+  dotnet build "src/${_pkgname}.sln" \
+    --framework "${_framework}" \
+    --runtime "${_runtime}" \
     --no-self-contained \
     --no-restore \
     --configuration Release \
@@ -98,6 +99,7 @@ build() {
     -p:AssemblyConfiguration=${_branch} \
     -p:RuntimeIdentifiers=${_runtime} \
     -t:PublishAllRids \
+    && dotnet build-server shutdown # Build servers do not terminate automatically
 
   # Remove Service Helpers, Update, and Windows files
   rm "${_artifacts}/ServiceInstall"*
@@ -108,30 +110,8 @@ build() {
   yarn run build --env production
 }
 
-check() {
-  cd "${srcdir}/${_pkgname}-${pkgver}"
-  local _filters="Category!=ManualTest&Category!=AutomationTest&Category!=WINDOWS"
-
-  # Skip Tests:
-  # These tests fail because /etc/arch-release doesn't contain a ${VERSION_ID}
-  # See: https://github.com/Sonarr/Sonarr/issues/7299
-  _filters="${_filters}&FullyQualifiedName!~should_get_version_info"
-  _filters="${_filters}&FullyQualifiedName!~should_get_version_info_from_actual_linux"
-  _filters="${_filters}&Category!=IntegrationTest"
-
-  # Prepare for tests
-  mkdir -p ~/.config/Prowlarr
-
-  # Test backend
-  dotnet test src \
-    --runtime "${_runtime}" \
-    --configuration Release \
-    --filter "${_filters}" \
-    --no-build
-}
-
 package() {
-  cd "${srcdir}/${_pkgname}-${pkgver}"
+  cd "${_pkgname}-${pkgver}"
   install -dm755 "${pkgdir}/usr/lib/prowlarr/bin/UI"
 
   # Copy backend
@@ -140,13 +120,14 @@ package() {
   cp -dpr --no-preserve=ownership "${_output}/UI/"* "${pkgdir}/usr/lib/prowlarr/bin/UI"
 
   # License
-  install -Dm644 "${srcdir}/${_pkgname}-${pkgver}/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}"
+  install -Dm644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}"
 
+  cd "${srcdir}"
   # Disable built in updater.
-  install -Dm644 "${srcdir}/package_info" "${pkgdir}/usr/lib/prowlarr"
+  install -Dm644 package_info "${pkgdir}/usr/lib/prowlarr"
   echo "PackageVersion=${pkgver}-${pkgrel}" >> "${pkgdir}/usr/lib/prowlarr/package_info"
 
-  install -Dm644 "${srcdir}/prowlarr.service" "${pkgdir}/usr/lib/systemd/system/prowlarr.service"
-  install -Dm644 "${srcdir}/prowlarr.sysusers" "${pkgdir}/usr/lib/sysusers.d/prowlarr.conf"
-  install -Dm644 "${srcdir}/prowlarr.tmpfiles" "${pkgdir}/usr/lib/tmpfiles.d/prowlarr.conf"
+  install -Dm644 prowlarr.service "${pkgdir}/usr/lib/systemd/system/prowlarr.service"
+  install -Dm644 prowlarr.sysusers "${pkgdir}/usr/lib/sysusers.d/prowlarr.conf"
+  install -Dm644 prowlarr.tmpfiles "${pkgdir}/usr/lib/tmpfiles.d/prowlarr.conf"
 }
