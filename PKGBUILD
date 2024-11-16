@@ -3,7 +3,7 @@
 
 pkgname=mylar3
 pkgver=0.8.0
-pkgrel=1
+pkgrel=2
 pkgdesc='Comic book download automation for usenet and torrent users'
 arch=(any)
 url='https://github.com/mylar3/mylar3'
@@ -34,8 +34,20 @@ depends=(
   python-tzlocal
   python-urllib3
   python-user_agent2
+  unrar
 )
-# options=(!strip)
+optdepends=(
+  'sabnzbd: usenet downloader'
+  'nzbget: usenet downloader'
+  'qbittorrent: torrent downloader'
+  'deluge: torrent downloader'
+  'rtorrent: torrent downloader'
+  'vuze: torrent downloader'
+  'transmission-cli: torrent downloader (CLI and daemon)'
+  'transmission-gtk: torrent downloader (GTK+)'
+  'transmission-qt: torrent downloader (Qt)'
+  'prowlarr: automatically integrates with and syncs indexers'
+)
 source=(
   "${pkgname}-${pkgver}.tar.gz::${url}/archive/v${pkgver}.tar.gz"
   mylar3.service
