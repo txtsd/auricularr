@@ -1,0 +1,9 @@
+*
+!PKGBUILD
+!.SRCINFO
+!.gitignore
+!.nvchecker.toml
+!lazylibrarian.service
+!lazylibrarian.sysusers
+!lazylibrarian.tmpfiles
+!lazylibrarian.install

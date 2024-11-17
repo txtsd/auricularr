@@ -1,0 +1,39 @@
+# Be sure to use `systemctl edit lazylibrarian` to modify this service with an
+# override.conf because direct changes will be overwritten by package updates.
+#
+# A user per service with shared group setup would have an override like:
+# [Service]
+# Group=sharedgroupname
+# UMask=002
+#
+# If your media directory is in /home (it shouldn't be)
+# You will need to have an override like:
+# [Service]
+# PrivateUsers=false
+# ProtectHome=false
+#
+# When running sonarr in LXC:
+# [Service]
+# PrivateUsers=false
+
+[Unit]
+Description=LazyLibrarian Daemon
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+User=lazylibrarian
+Group=media
+UMask=002
+Environment=XDG_DATA_HOME=/var/lib/lazylibrarian
+ExecStart=/usr/bin/python /usr/lib/lazylibrarian/LazyLibrarian.py --config /var/lib/lazylibrarian/lazylibrarian.ini --datadir /var/lib/lazylibrarian --nolaunch
+# KillMode=process
+KillSignal=SIGINT
+Restart=on-failure
+RestartSec=10
+TimeoutStopSec=20
+WorkingDirectory=/var/lib/lazylibrarian
+
+[Install]
+WantedBy=multi-user.target

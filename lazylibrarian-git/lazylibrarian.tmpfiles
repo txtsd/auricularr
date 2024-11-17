@@ -1,0 +1,6 @@
+# Override this file with a modified version in /etc/tmpfiles.d/
+d /var/lib/lazylibrarian               0755 lazylibrarian media
+Z /var/lib/lazylibrarian               - lazylibrarian media
+Z /usr/lib/lazylibrarian               - lazylibrarian media
+L /var/log/lazylibrarian               - - - - /var/lib/lazylibrarian/Logs
+L /etc/lazylibrarian/lazylibrarian.ini - - - - /var/lib/lazylibrarian/lazylibrarian.ini
