@@ -1,4 +1,6 @@
 # Override this file with a modified version in /etc/tmpfiles.d/
-d /var/lib/prowlarr 0755 prowlarr prowlarr
-Z /var/lib/prowlarr - prowlarr prowlarr
-L /var/log/prowlarr - - - - /var/lib/prowlarr/logs/
+d /var/lib/prowlarr/logs     0755 prowlarr media
+Z /var/lib/prowlarr          - prowlarr media
+L /var/log/prowlarr          - - - - /var/lib/prowlarr/logs/
+L /run/prowlarr/prowlarr.pid - - - - /var/lib/prowlarr/prowlarr.pid
+L /etc/prowlarr/config.xml   - - - - /var/lib/prowlarr/config.xml
