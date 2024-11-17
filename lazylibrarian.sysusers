@@ -1,1 +1,3 @@
-u lazylibrarian - "LazyLibrarian Server" /var/lib/lazylibrarian
+u lazylibrarian - "LazyLibrarian Daemon" /var/lib/lazylibrarian
+g media         -
+m lazylibrarian media

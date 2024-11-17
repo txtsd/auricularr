@@ -1,24 +1,12 @@
+post_install() {
+  echo -e "\n  Read the .service file if you encounter any edge cases"
+  echo -e "\n  1. Do not store your media directory or download directory in /home"
+  echo -e "  2. LXC users override the service with PrivateUsers=false"
+  echo -e "  3. This package now comes with a shared group 'media'"
+  echo -e "     Override if necessary."
+  echo -e "\n  Overriding is done with \`systemctl edit lazylibrarian\`\n"
+}
+
 post_upgrade() {
-  if (( $(vercmp "r2866.61caa2d5-1" "$2") > 0 )); then
-    if [[ -f /opt/lazylibrarian/lazylibrarian.ini && ! -f /var/lib/lazylibrarian/lazylibrarian.ini ]]; then
-      cp /opt/lazylibrarian/lazylibrarian.ini /var/lib/lazylibrarian/lazylibrarian.ini
-      echo "Copied lazylibrarian.ini from /opt/lazylibrarian/ -> /var/lib/lazylibrarian/"
-    fi
-    if [[ -d /opt/lazylibrarian/.lazylibrarian && ! -f /var/lib/lazylibrarian/lazylibrarian.db ]]; then
-      cp -a /opt/lazylibrarian/.lazylibrarian/* /var/lib/lazylibrarian/
-      echo "Copied files from /opt/lazylibrarian/.lazylibrarian/ -> /var/lib/lazylibrarian/"
-    fi
-  fi
-
-  if [[ "$( getent passwd lazylibrarian | cut -d: -f6 )" != "/var/lib/lazylibrarian" ]]; then
-    usermod -d /var/lib/lazylibrarian lazylibrarian
-    if [[ $? -ne 0 ]]; then
-      echo "Could not change lazylibrarian users home directory."
-      echo "Run: sudo systemctl stop lazylibrarian ; sudo usermod -d /var/lib/lazylibrarian lazylibrarian ; sudo systemctl start lazylibrarian"
-    fi
-  fi
-
-  if [[ -d /opt/lazylibrarian ]]; then
-    echo "Remove /opt/lazylibrarian if everything is working correctly from /var/lib/lazylibrarian now."
-  fi
+  post_install "${1}"
 }
