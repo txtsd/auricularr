@@ -5,7 +5,7 @@
 pkgname=prowlarr
 _pkgname=Prowlarr
 pkgver=1.25.4.4818
-pkgrel=5
+pkgrel=6
 pkgdesc='Indexer manager/proxy for usenet and torrent users.'
 arch=(x86_64 aarch64 armv7h)
 url='https://prowlarr.com'
@@ -33,26 +33,27 @@ optdepends=(
   'transmission-qt: torrent downloader (Qt)'
   'jackett: torrent indexer proxy'
   'nzbhydra2: torznab and usenet indexer proxy'
+  'flaresolverr: A proxy server to bypass Cloudflare protection'
   'sonarr: automatically integrates with and syncs indexers'
   'radarr: automatically integrates with and syncs indexers'
   'lidarr: automatically integrates with and syncs indexers'
   'readarr: automatically integrates with and syncs indexers'
   'whisparr: automatically integrates with and syncs indexers'
+  'mylar3: automatically integrates with and syncs indexers'
+  'lazylibrarian: automatically integrates with and syncs indexers'
 )
 source=(
   "${pkgname}-${pkgver}.tar.gz::https://github.com/Prowlarr/Prowlarr/archive/refs/tags/v${pkgver}.tar.gz"
   package_info
-  prowlarr.install
   prowlarr.service
   prowlarr.sysusers
   prowlarr.tmpfiles
 )
 sha256sums=('6987634df7e668b09a6f7ca40d044adf42ab1eaac0cb63a73325fdfa225e2d98'
             '1f9f8018436bd1e29a36c203639083d614722b65a4db64e22bf0c3295fc03fb8'
-            '328fda2e2ed5f93440f3837a7d4f2c91e35fb4f6c51aeb33eacb80ecceb941a9'
             '8253f405c6dd1261ed321702867b08b413f8d69ef3d081949583d9106e3f812b'
             'ee61f5621eae6ab932fb093a4f75a0ab11bf9e3ca829f0d34c25014f68aeff7d'
-            '4c3f9b5fa71810697efbe60f20a2cba24fd1b997d5372c3726457b197d61ccb5')
+            '75591d19518bafc60862c60848ecad84f92c7f2b47b2b4eeafcbbbd650a43043')
 
 case ${CARCH} in
   x86_64) _CARCH='x64' ;;
