@@ -130,6 +130,7 @@ tasks:
 
             sudo systemctl stop "${service_name}"
             yay -R "${pkgname}" --noconfirm
+            (yay -R "${pkgname}-debug" --noconfirm) && true
 
           fi
         else
