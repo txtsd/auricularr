@@ -3,7 +3,7 @@
 # Helpful URL: https://readarr.servarr.com/v1/update/nightly?version=0.0.0.0&os=linux&runtime=netcore&arch=x64
 
 pkgname=readarr-nightly-bin
-pkgver=0.4.5.2688
+pkgver=0.4.5.2691
 pkgrel=1
 pkgdesc='Ebook and audiobook collection manager for newsgroup and torrent users (nightly builds)'
 arch=('x86_64' 'aarch64' 'armv7h')
@@ -53,9 +53,9 @@ sha256sums=('4696e52bc1cd8b7860eeb1ffaefc4153c3bf27defd7e7e91da03ad8aa28aa3df'
             '2a3a67ccd03d85396d7c08e8c5ef530b31c6d847102b35af705b43c0714a4a3a'
             '244ef89032a7af9fc22e9a9a600a3b9e407137c7d7d99ed227cafe2efb800a85'
             '9b505e7e93a71c9d2fdc4689cf4a3cd691e3927b419cf5bb6e1aed43b5a91edc')
-sha256sums_x86_64=('8e118b563f175847035483eb057fe1bf15b8ce558954273b89727a79f2111ddf')
-sha256sums_aarch64=('5afab2f81b097707400458180337b12740e8e21bf4a739c347dfafd013528701')
-sha256sums_armv7h=('9b85047e23ee74b699638d018ed72e3a8c78409f7fed4383d816cd67efe1f309')
+sha256sums_x86_64=('77191f1d2fbdb3edc52b992bcbd9763a1e3c1973b643bb6a19a10ab2e376db65')
+sha256sums_aarch64=('b453863fee74cb51c52cc346346724979b881fa6f2aea0c8d5a3f7581415b86f')
+sha256sums_armv7h=('1bd25bc7c7279e16a61cec1391e5626892ef5d007ed3329742e4ca7a786a4e6f')
 
 package() {
   install -dm755 "${pkgdir}/usr/lib/readarr/bin"
