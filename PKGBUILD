@@ -5,7 +5,7 @@
 pkgname=prowlarr
 _pkgname=Prowlarr
 pkgver=1.27.0.4852
-pkgrel=1
+pkgrel=2
 pkgdesc='Indexer manager/proxy for usenet and torrent users.'
 arch=(x86_64 aarch64 armv7h)
 url='https://prowlarr.com'
@@ -42,6 +42,7 @@ optdepends=(
   'mylar3: automatically integrates with and syncs indexers'
   'lazylibrarian: automatically integrates with and syncs indexers'
 )
+install=prowlarr.install
 source=(
   "${pkgname}-${pkgver}.tar.gz::https://github.com/Prowlarr/Prowlarr/archive/refs/tags/v${pkgver}.tar.gz"
   package_info
@@ -102,32 +103,34 @@ build() {
     -t:PublishAllRids \
     && dotnet build-server shutdown # Build servers do not terminate automatically
 
-  # Remove Service Helpers, Update, and Windows files
-  rm "${_artifacts}/ServiceInstall"*
-  rm "${_artifacts}/ServiceUninstall"*
-  rm "${_artifacts}/Prowlarr.Windows."*
-
   # Build frontend
   yarn run build --env production
 }
 
 package() {
   cd "${_pkgname}-${pkgver}"
+
   install -dm755 "${pkgdir}/usr/lib/prowlarr/bin/UI"
 
+  # Remove Service Helpers, Update, and Windows files
+  rm "${_artifacts}/ServiceInstall"*
+  rm "${_artifacts}/ServiceUninstall"*
+  rm "${_artifacts}/Prowlarr.Windows."*
+
   # Copy backend
-  cp -dpr --no-preserve=ownership "${_artifacts}/"* "${pkgdir}/usr/lib/prowlarr/bin"
+  cp -dr "${_artifacts}/"* "${pkgdir}/usr/lib/prowlarr/bin"
   # Copy frontend
-  cp -dpr --no-preserve=ownership "${_output}/UI/"* "${pkgdir}/usr/lib/prowlarr/bin/UI"
+  cp -dr "${_output}/UI/"* "${pkgdir}/usr/lib/prowlarr/bin/UI"
 
   # License
   install -Dm644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}"
 
-  cd "${srcdir}"
   # Disable built in updater.
+  cd "${srcdir}"
   install -Dm644 package_info "${pkgdir}/usr/lib/prowlarr"
   echo "PackageVersion=${pkgver}-${pkgrel}" >> "${pkgdir}/usr/lib/prowlarr/package_info"
 
+  # Systemd
   install -Dm644 prowlarr.service "${pkgdir}/usr/lib/systemd/system/prowlarr.service"
   install -Dm644 prowlarr.sysusers "${pkgdir}/usr/lib/sysusers.d/prowlarr.conf"
   install -Dm644 prowlarr.tmpfiles "${pkgdir}/usr/lib/tmpfiles.d/prowlarr.conf"
