@@ -6,7 +6,7 @@
 pkgname=lidarr
 _pkgname=Lidarr
 pkgver=2.7.1.4417
-pkgrel=5
+pkgrel=6
 pkgdesc='Music collection manager for newsgroup and torrent users.'
 arch=(x86_64 aarch64 armv7h)
 url='https://lidarr.audio'
@@ -14,7 +14,6 @@ license=('GPL-3.0-or-later')
 groups=(servarr)
 depends=(
   aspnet-runtime-6.0
-  chromaprint
   gcc-libs
   glibc
   sqlite
@@ -41,14 +40,12 @@ optdepends=(
 install=lidarr.install
 source=(
   "${pkgname}-${pkgver}.tar.gz::https://github.com/Lidarr/Lidarr/archive/refs/tags/v${pkgver}.tar.gz"
-  lidarr.install
   lidarr.service
   lidarr.sysusers
   lidarr.tmpfiles
   package_info
 )
 sha256sums=('cfcf55f49d6a012f1fa77559ebd1ba8892b404312430afdec684d0c924deeca3'
-            '2f3eeca41a77cec8e86a107365b34a29bf1fc2c5251173f7b200d81b318bca40'
             '1a542d493eafbd28ac268c5f9ef29688ffa6e9326436d2ef05eb66413c18a082'
             '85098d47734e8087480f8a29eafec50faa453487221ef01173888155d2b06e42'
             'd71e37213ac65722e42f6f2c5772d4515c2d28a77b9f7608dc05c787d86ebaa5'
@@ -101,30 +98,30 @@ build() {
     -t:PublishAllRids \
     && dotnet build-server shutdown # Build servers do not terminate automatically
 
-  # Remove fpcalc, Service Helpers, Update, and Windows files
-  rm "${_artifacts}/fpcalc"
-  rm "${_artifacts}/ServiceInstall"*
-  rm "${_artifacts}/ServiceUninstall"*
-  rm "${_artifacts}/Lidarr.Windows."*
-
   # Build frontend
   yarn run build --env production
 }
 
 package() {
   cd "${_pkgname}-${pkgver}"
+
   install -dm755 "${pkgdir}/usr/lib/lidarr/bin/UI"
 
+  # Remove Service Helpers, Update, and Windows files
+  rm "${_artifacts}/ServiceInstall"*
+  rm "${_artifacts}/ServiceUninstall"*
+  rm "${_artifacts}/Lidarr.Windows."*
+
   # Copy backend
-  cp -dpr --no-preserve=ownership "${_artifacts}/"* "${pkgdir}/usr/lib/lidarr/bin"
+  cp -dr "${_artifacts}/"* "${pkgdir}/usr/lib/lidarr/bin"
   # Copy frontend
-  cp -dpr --no-preserve=ownership "${_output}/UI/"* "${pkgdir}/usr/lib/lidarr/bin/UI"
+  cp -dr "${_output}/UI/"* "${pkgdir}/usr/lib/lidarr/bin/UI"
 
   # License
   install -Dm644 LICENSE.md "${pkgdir}/usr/share/licenses/${pkgname}"
 
-  cd "${srcdir}"
   # Disable built in updater.
+  cd "${srcdir}"
   install -Dm644 package_info "${pkgdir}/usr/lib/lidarr"
   echo "PackageVersion=${pkgver}-${pkgrel}" >> "${pkgdir}/usr/lib/lidarr/package_info"
 
