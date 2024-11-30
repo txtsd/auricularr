@@ -1,7 +1,7 @@
 pkgbase = readarr-develop
 	pkgdesc = Ebook and audiobook collection manager for newsgroup and torrent users (develop branch)
 	pkgver = 0.4.4.2686
-	pkgrel = 1
+	pkgrel = 2
 	url = https://readarr.com
 	install = readarr.install
 	arch = x86_64
@@ -39,12 +39,10 @@ pkgbase = readarr-develop
 	source = readarr.service
 	source = readarr.sysusers
 	source = readarr.tmpfiles
-	source = readarr.install
 	sha256sums = 619c62d08cadff327ea442c0e0a378837ff20c219fe2d9a32a6346e48e3b946f
 	sha256sums = 12235af27b47fe1a353bc79fdfdf8c0e03fca5c0eb08f9eb57c0b66532c37648
 	sha256sums = 4696e52bc1cd8b7860eeb1ffaefc4153c3bf27defd7e7e91da03ad8aa28aa3df
 	sha256sums = 2a3a67ccd03d85396d7c08e8c5ef530b31c6d847102b35af705b43c0714a4a3a
 	sha256sums = a4cfdf882ab62dea54d85dfae4a633cf21bce597a19c3287d90c024e3ff399ce
-	sha256sums = 244ef89032a7af9fc22e9a9a600a3b9e407137c7d7d99ed227cafe2efb800a85
 
 pkgname = readarr-develop
