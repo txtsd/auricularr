@@ -5,7 +5,7 @@
 pkgname=radarr-develop
 _pkgname=Radarr
 pkgver=5.15.1.9463
-pkgrel=1
+pkgrel=2
 pkgdesc='Movie organizer/manager for usenet and torrent users (develop branch)'
 arch=(x86_64 aarch64 armv7h)
 url='https://radarr.video'
@@ -13,7 +13,6 @@ license=('GPL-3.0-or-later')
 groups=(servarr-develop)
 depends=(
   aspnet-runtime-6.0
-  ffmpeg
   gcc-libs
   glibc
   sqlite
@@ -43,14 +42,12 @@ install=radarr.install
 source=(
   "${pkgname}-${pkgver}.tar.gz::https://github.com/Radarr/Radarr/archive/refs/tags/v${pkgver}.tar.gz"
   package_info
-  radarr.install
   radarr.service
   radarr.sysusers
   radarr.tmpfiles
 )
 sha256sums=('90bee8af58160ea0d0603f9b464857d1fba2984093d9bcfa3846c5a610623040'
             '4a41a56ab30f8b6001a666e867c7012bfe23760ec29eac957bf90e1dcb4ee36e'
-            '243ded7d0e9d59b9adf912bb4e35ba63247d85577b417b54dcd74f16f0cfbd26'
             '8ca13537e98380b91f1a950187d6b9f021f8a4d68871f709444742a4911bc5a6'
             'bb73e0c55711d7ddbf74140b3beb39cb8674ae92be8387c3dd8109bcd53faca8'
             'c68efcb3778cb497d7c256dc97df7413ce09f07ea341e4d2683e7fee321cbcbb')
@@ -102,34 +99,34 @@ build() {
     -t:PublishAllRids \
     && dotnet build-server shutdown # Build servers do not terminate automatically
 
-  # Remove ffprobe, Service Helpers, Update, and Windows files
-  rm "${_artifacts}/ffprobe"
-  rm "${_artifacts}/ServiceInstall"*
-  rm "${_artifacts}/ServiceUninstall"*
-  rm "${_artifacts}/Radarr.Windows."*
-  rm -rf "${_output}/Radarr.Update"
-
   # Build frontend
   yarn run build --env production
 }
 
 package() {
   cd "${_pkgname}-${pkgver}"
+
   install -dm755 "${pkgdir}/usr/lib/radarr/bin/UI"
 
-  # Copy backend
-  cp -dpr --no-preserve=ownership "${_artifacts}/"* "${pkgdir}/usr/lib/radarr/bin"
-  # Copy frontend
-  cp -dpr --no-preserve=ownership "${_output}/UI/"* "${pkgdir}/usr/lib/radarr/bin/UI"
+  # Remove Service Helpers, Update, and Windows files
+  rm "${_artifacts}/ServiceInstall"*
+  rm "${_artifacts}/ServiceUninstall"*
+  rm "${_artifacts}/Radarr.Windows."*
+  rm -rf "${_output}/Radarr.Update"
 
-  # Use system ffprobe
-  ln -s /usr/bin/ffprobe "${pkgdir}/usr/lib/radarr/bin/ffprobe"
+  # Copy backend
+  cp -dr "${_artifacts}/"* "${pkgdir}/usr/lib/radarr/bin"
+  # Copy frontend
+  cp -dr "${_output}/UI/"* "${pkgdir}/usr/lib/radarr/bin/UI"
+
+  # Set executable permissions
+  chmod 755 "${pkgdir}/usr/lib/radarr/bin/ffprobe"
 
   # License
   install -Dm644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}"
 
-  cd "${srcdir}"
   # Disable built in updater.
+  cd "${srcdir}"
   install -Dm644 package_info "${pkgdir}/usr/lib/radarr"
   echo "PackageVersion=${pkgver}-${pkgrel}" >> "${pkgdir}/usr/lib/radarr/package_info"
 
