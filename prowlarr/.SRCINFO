@@ -1,8 +1,9 @@
 pkgbase = prowlarr
 	pkgdesc = Indexer manager/proxy for usenet and torrent users.
 	pkgver = 1.27.0.4852
-	pkgrel = 1
+	pkgrel = 2
 	url = https://prowlarr.com
+	install = prowlarr.install
 	arch = x86_64
 	arch = aarch64
 	arch = armv7h
