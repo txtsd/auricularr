@@ -1,7 +1,7 @@
 pkgbase = prowlarr-nightly-bin
 	pkgdesc = Indexer manager/proxy for usenet and torrent users (nightly builds)
 	pkgver = 1.28.0.4854
-	pkgrel = 1
+	pkgrel = 2
 	url = https://prowlarr.com
 	install = prowlarr.install
 	arch = x86_64
