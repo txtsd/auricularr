@@ -4,7 +4,7 @@
 
 pkgname=prowlarr-bin
 pkgver=1.27.0.4852
-pkgrel=1
+pkgrel=2
 pkgdesc='Indexer manager/proxy for usenet and torrent users.'
 arch=(x86_64 aarch64 armv7h)
 url='https://prowlarr.com'
@@ -77,8 +77,10 @@ package() {
   install -Dm644 package_info "${pkgdir}/usr/lib/prowlarr"
   echo "PackageVersion=${pkgver}-${pkgrel}" >> "${pkgdir}/usr/lib/prowlarr/package_info"
 
-  cp -dpr --no-preserve=ownership Prowlarr/* "${pkgdir}/usr/lib/prowlarr/bin"
+  # Copy Prowlarr
+  cp -dr Prowlarr/* "${pkgdir}/usr/lib/prowlarr/bin"
 
+  # Systemd
   install -Dm644 prowlarr.service "${pkgdir}/usr/lib/systemd/system/prowlarr.service"
   install -Dm644 prowlarr.sysusers "${pkgdir}/usr/lib/sysusers.d/prowlarr.conf"
   install -Dm644 prowlarr.tmpfiles "${pkgdir}/usr/lib/tmpfiles.d/prowlarr.conf"
