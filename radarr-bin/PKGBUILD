@@ -5,14 +5,13 @@
 
 pkgname=radarr-bin
 pkgver=5.15.1.9463
-pkgrel=1
+pkgrel=2
 pkgdesc='Movie organizer/manager for usenet and torrent users'
 arch=(x86_64 aarch64 armv7h)
 url='https://radarr.video'
 license=('GPL-3.0-or-later')
 groups=(servarr-bin)
 depends=(
-  ffmpeg
   gcc-libs
   glibc
   sqlite
@@ -42,7 +41,6 @@ options=(!debug)
 install=radarr.install
 source=(
   package_info
-  radarr.install
   radarr.service
   radarr.sysusers
   radarr.tmpfiles
@@ -51,7 +49,6 @@ source_x86_64=("Radarr.master.${pkgver}.linux-core-x64.tar.gz::https://radarr.se
 source_aarch64=("Radarr.master.${pkgver}.linux-core-arm64.tar.gz::https://radarr.servarr.com/v1/update/master/updatefile?version=${pkgver}&os=linux&runtime=netcore&arch=arm64")
 source_armv7h=("Radarr.master.${pkgver}.linux-core-arm.tar.gz::https://radarr.servarr.com/v1/update/master/updatefile?version=${pkgver}&os=linux&runtime=netcore&arch=arm")
 sha256sums=('dd9a40cb2885bcc80d0057c50920707f003a64012df03ab6dad0bf67e651e591'
-            '243ded7d0e9d59b9adf912bb4e35ba63247d85577b417b54dcd74f16f0cfbd26'
             '8ca13537e98380b91f1a950187d6b9f021f8a4d68871f709444742a4911bc5a6'
             'bb73e0c55711d7ddbf74140b3beb39cb8674ae92be8387c3dd8109bcd53faca8'
             'c68efcb3778cb497d7c256dc97df7413ce09f07ea341e4d2683e7fee321cbcbb')
@@ -66,21 +63,19 @@ package() {
   install -Dm644 Radarr/LICENSE "${pkgdir}/usr/share/licenses/${pkgname}"
   rm Radarr/LICENSE
 
-  # Remove ffprobe, Service Helpers, and Update files
-  rm Radarr/ffprobe
+  # Remove Service Helpers, and Update files
   rm Radarr/ServiceInstall*
   rm Radarr/ServiceUninstall*
   rm -rf Radarr/Radarr.Update
-
-  # Use system ffprobe
-  ln -s /usr/bin/ffprobe "${pkgdir}/usr/lib/radarr/bin/ffprobe"
 
   # Disable built in updater.
   install -Dm644 package_info "${pkgdir}/usr/lib/radarr"
   echo "PackageVersion=${pkgver}-${pkgrel}" >> "${pkgdir}/usr/lib/radarr/package_info"
 
+  # Copy Radarr
   cp -dpr --no-preserve=ownership Radarr/* "${pkgdir}/usr/lib/radarr/bin"
 
+  # Systemd
   install -Dm644 radarr.service "${pkgdir}/usr/lib/systemd/system/radarr.service"
   install -Dm644 radarr.sysusers "${pkgdir}/usr/lib/sysusers.d/radarr.conf"
   install -Dm644 radarr.tmpfiles "${pkgdir}/usr/lib/tmpfiles.d/radarr.conf"
