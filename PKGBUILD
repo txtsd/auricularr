@@ -6,7 +6,7 @@
 
 pkgname=sonarr-develop-bin
 pkgver=4.0.11.2697
-pkgrel=1
+pkgrel=2
 pkgdesc='Smart PVR for newsgroup and torrent users (develop branch)'
 arch=(x86_64 aarch64 armv7h)
 url='https://sonarr.tv'
@@ -15,9 +15,8 @@ groups=(servarr-develop-bin)
 depends=(
   gcc-libs
   glibc
-  zlib
   sqlite
-  ffmpeg
+  zlib
 )
 optdepends=(
   'postgresql: postgresql database'
@@ -67,21 +66,17 @@ package() {
   install -Dm644 Sonarr/LICENSE.md "${pkgdir}/usr/share/licenses/${pkgname}"
   rm Sonarr/LICENSE.md
 
-  # Remove ffprobe, Service Helpers, and Update files
-  rm Sonarr/ffprobe
+  # Remove Service Helpers, and Update files
   rm Sonarr/ServiceInstall*
   rm Sonarr/ServiceUninstall*
   rm -rf Sonarr/Sonarr.Update
-
-  # Use system ffprobe
-  ln -s /usr/bin/ffprobe "${pkgdir}/usr/lib/sonarr/bin/ffprobe"
 
   # Disable built in updater.
   install -Dm644 package_info "${pkgdir}/usr/lib/sonarr"
   echo "PackageVersion=${pkgver}-${pkgrel}" >> "${pkgdir}/usr/lib/sonarr/package_info"
 
   # Copy Sonarr
-  cp -dpr --no-preserve=ownership Sonarr/* "${pkgdir}/usr/lib/sonarr/bin"
+  cp -dr Sonarr/* "${pkgdir}/usr/lib/sonarr/bin"
 
   # Systemd
   install -Dm644 sonarr.service "${pkgdir}/usr/lib/systemd/system/sonarr.service"
