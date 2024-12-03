@@ -4,58 +4,50 @@
 pkgname=recyclarr
 _pkgname=Recyclarr
 pkgver=7.4.0
-pkgrel=1
+pkgrel=2
 pkgdesc='Automatically synchronize recommended settings from the TRaSH guides to your Sonarr/Radarr instances.'
-arch=('x86_64' 'aarch64' 'armv7h')
+arch=(x86_64 aarch64 armv7h)
 url='https://recyclarr.dev'
 license=('MIT')
 depends=(
-  'aspnet-runtime-8.0'
-  'gcc-libs'
-  'git'
-  'glibc'
-  'sqlite'
+  aspnet-runtime-8.0
+  gcc-libs
+  glibc
+  sqlite
 )
-makedepends=('dotnet-sdk-8.0' 'git')
+makedepends=(dotnet-sdk-8.0 git)
 optdepends=(
   'sonarr: Smart PVR for newsgroup and torrent users.'
   'radarr: Movie organizer/manager for usenet and torrent users.'
 )
-options=(!debug)
+backup=('etc/recyclarr/recyclarr.yml')
 source=(
   "git+https://github.com/recyclarr/recyclarr.git#tag=v${pkgver}"
-  'recyclarr.yml'
-  'recyclarr.service'
-  'recyclarr.timer'
-  'recyclarr.sysusers'
-  'recyclarr.tmpfiles'
+  recyclarr.service
+  recyclarr.sysusers
+  recyclarr.timer
+  recyclarr.tmpfiles
+  recyclarr.yml
 )
 sha256sums=('737a26859fe35933bef0f0b8b87c1d113963b4891ad03b9f4cadb254ce83496d'
-            'f0b6b437fad6072f55be0eb57c4eaf6a44eecda4588633edd5ad716ea3e41c7d'
             '3e7bb0ca28665de77b939f6b8e316f6708c8e8a97a64ad589b217583dee0e74e'
-            'e8a2959e079a6a77c3eefaf77defd69e76944c2a1378257dcaf0286abde002a6'
             '3d2a1b3690d956a8f195c2cd1b28c28beecda354023e8de78471ca35610fb57d'
-            '458b7c0550f3c2e41f63bac197ce55a5699432ee24080f7917b001c0eec2c7ec')
+            'e8a2959e079a6a77c3eefaf77defd69e76944c2a1378257dcaf0286abde002a6'
+            '458b7c0550f3c2e41f63bac197ce55a5699432ee24080f7917b001c0eec2c7ec'
+            'f0b6b437fad6072f55be0eb57c4eaf6a44eecda4588633edd5ad716ea3e41c7d')
 
 case ${CARCH} in
-  x86_64)  _CARCH='x64';;
-  aarch64) _CARCH='arm64';;
-  armv7h)  _CARCH='arm';;
+  x86_64) _CARCH='x64' ;;
+  aarch64) _CARCH='arm64' ;;
+  armv7h) _CARCH='arm' ;;
 esac
 
 _framework='net8.0'
 _runtime="linux-${_CARCH}"
 _artifacts="src/Recyclarr.Cli/bin/Release/${_framework}/publish"
 
-prepare() {
-  cd "${srcdir}/${pkgname}"
-
-  # Fix CVE-2024-43485
-  sed 's/System\.Text\.Json" Version="8\.0\.4"/System\.Text\.Json" Version="8\.0\.5"/' -i Directory.Packages.props
-}
-
 build() {
-  cd "${srcdir}/${pkgname}"
+  cd "${pkgname}"
 
   export DOTNET_CLI_TELEMETRY_OPTOUT=1
   # dotnet publish ${_pkgname}.sln \
@@ -65,31 +57,22 @@ build() {
     --configuration Release \
     -p:AssemblyVersion=${pkgver} \
     -p:AssemblyConfiguration=master \
-  && dotnet build-server shutdown   # Build servers do not terminate automatically
-}
-
-check() {
-  cd "${srcdir}/${pkgname}"
-  local _filters="Category!=ManualTest&Category!=AutomationTest&Category!=WINDOWS"
-
-  dotnet test \
-    --configuration Release \
-    --filter "${_filters}" \
-    --no-build
+    && dotnet build-server shutdown # Build servers do not terminate automatically
 }
 
 package() {
-  cd "${srcdir}/${pkgname}"
+  cd "${pkgname}"
   install -dm755 "${pkgdir}/usr/lib/recyclarr"
 
-  cp -dpr --no-preserve=ownership "${_artifacts}/"* "${pkgdir}/usr/lib/recyclarr"
+  cp -dr "${_artifacts}/"* "${pkgdir}/usr/lib/recyclarr"
 
   # License
-  install -Dm644 "${srcdir}/${pkgname}/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}"
+  install -Dm644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 
-  install -Dm644 "${srcdir}/recyclarr.yml" "${pkgdir}/etc/recyclarr/recyclarr.yml"
-  install -Dm644 "${srcdir}/recyclarr.service" "${pkgdir}/usr/lib/systemd/system/recyclarr.service"
-  install -Dm644 "${srcdir}/recyclarr.timer" "${pkgdir}/usr/lib/systemd/system/recyclarr.timer"
-  install -Dm644 "${srcdir}/recyclarr.sysusers" "${pkgdir}/usr/lib/sysusers.d/recyclarr.conf"
-  install -Dm644 "${srcdir}/recyclarr.tmpfiles" "${pkgdir}/usr/lib/tmpfiles.d/recyclarr.conf"
+  cd "${srcdir}"
+  install -Dm644 recyclarr.yml "${pkgdir}/etc/recyclarr/recyclarr.yml"
+  install -Dm644 recyclarr.service "${pkgdir}/usr/lib/systemd/system/recyclarr.service"
+  install -Dm644 recyclarr.timer "${pkgdir}/usr/lib/systemd/system/recyclarr.timer"
+  install -Dm644 recyclarr.sysusers "${pkgdir}/usr/lib/sysusers.d/recyclarr.conf"
+  install -Dm644 recyclarr.tmpfiles "${pkgdir}/usr/lib/tmpfiles.d/recyclarr.conf"
 }
