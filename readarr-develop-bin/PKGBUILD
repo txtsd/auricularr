@@ -4,7 +4,7 @@
 
 pkgname=readarr-develop-bin
 pkgver=0.4.4.2686
-pkgrel=2
+pkgrel=3
 pkgdesc='Ebook and audiobook collection manager for newsgroup and torrent users (develop branch)'
 arch=(x86_64 aarch64 armv7h)
 url='https://readarr.com'
@@ -49,7 +49,7 @@ source_aarch64=("Readarr.develop.${pkgver}.linux-core-arm64.tar.gz::https://read
 source_armv7h=("Readarr.develop.${pkgver}.linux-core-arm.tar.gz::https://readarr.servarr.com/v1/update/develop/updatefile?version=${pkgver}&os=linux&runtime=netcore&arch=arm")
 sha256sums=('c53f8d84eea20eb57f4fa200d18ccfee7ddac57e087f3ef00efb8e22862c9dde'
             '4696e52bc1cd8b7860eeb1ffaefc4153c3bf27defd7e7e91da03ad8aa28aa3df'
-            '2a3a67ccd03d85396d7c08e8c5ef530b31c6d847102b35af705b43c0714a4a3a'
+            'fcfa28c1be4f67cfa641dc6076780ee07ab973e55bf676174315e417f73003ad'
             'a4cfdf882ab62dea54d85dfae4a633cf21bce597a19c3287d90c024e3ff399ce')
 sha256sums_x86_64=('e3c665053aff94ed4002c6089eee3c7c307bed15c7f9bda15e30cfc1675e656e')
 sha256sums_aarch64=('bf23682357dfa96c9809f1fedeb44db5a102924bb7a45de90fed9105c843fbaa')
