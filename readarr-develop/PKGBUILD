@@ -5,7 +5,7 @@
 pkgname=readarr-develop
 _pkgname=Readarr
 pkgver=0.4.4.2686
-pkgrel=2
+pkgrel=3
 pkgdesc='Ebook and audiobook collection manager for newsgroup and torrent users (develop branch)'
 arch=(x86_64 aarch64 armv7h)
 url='https://readarr.com'
@@ -38,7 +38,6 @@ optdepends=(
 )
 provides=(readarr)
 conflicts=(readarr)
-options=(!debug)
 install=readarr.install
 source=(
   "${pkgname}-${pkgver}.tar.gz::https://github.com/Readarr/Readarr/archive/refs/tags/v${pkgver}.tar.gz"
@@ -50,7 +49,7 @@ source=(
 sha256sums=('619c62d08cadff327ea442c0e0a378837ff20c219fe2d9a32a6346e48e3b946f'
             '12235af27b47fe1a353bc79fdfdf8c0e03fca5c0eb08f9eb57c0b66532c37648'
             '4696e52bc1cd8b7860eeb1ffaefc4153c3bf27defd7e7e91da03ad8aa28aa3df'
-            '2a3a67ccd03d85396d7c08e8c5ef530b31c6d847102b35af705b43c0714a4a3a'
+            'fcfa28c1be4f67cfa641dc6076780ee07ab973e55bf676174315e417f73003ad'
             'a4cfdf882ab62dea54d85dfae4a633cf21bce597a19c3287d90c024e3ff399ce')
 
 case ${CARCH} in

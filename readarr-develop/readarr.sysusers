@@ -1,3 +1,3 @@
 u readarr - "Readarr Daemon" /var/lib/readarr
-g readarr
+g media   -
 m readarr media
