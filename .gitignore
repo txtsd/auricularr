@@ -1,4 +1,10 @@
-pkg/
-src/
-
-*.tar.*
+*
+!PKGBUILD
+!.SRCINFO
+!.gitignore
+!.nvchecker.toml
+!whisparr.service
+!whisparr.sysusers
+!whisparr.tmpfiles
+!whisparr.install
+!package_info

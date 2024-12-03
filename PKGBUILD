@@ -4,7 +4,7 @@
 
 pkgname=whisparr-nightly-bin
 pkgver=2.0.0.548
-pkgrel=4
+pkgrel=5
 pkgdesc='Adult movie organizer/manager for usenet and torrent users (nightly builds)'
 arch=(x86_64 aarch64 armv7h)
 url='https://whisparr.com'
@@ -49,7 +49,7 @@ source_aarch64=("Whisparr.nightly.${pkgver}.linux-core-arm64.tar.gz::https://whi
 source_armv7h=("Whisparr.nightly.${pkgver}.linux-core-arm.tar.gz::https://whisparr.servarr.com/v1/update/nightly/updatefile?version=${pkgver}&os=linux&runtime=netcore&arch=arm")
 sha256sums=('50da66b86fb42b6457a84c61fe02af5845599fd67f538c79457713795d96d8ed'
             'bb39c900d2e3c46681635fa9be81b55a49b10e479060a729da8e4ab3fc0bf1cf'
-            'a2bb10852688071baafcc8956fc581961a0c4f6233c7d5ba2f8f9ec4d7863488'
+            'dfe5d421bc8c8bd9cfd46ee0183e61b572c28d31c8114dded887998bc432d22b'
             '0b235aed73eb0155d77c485ccff415e82e520d27013ba498ac70574e7106a762')
 sha256sums_x86_64=('9982c3431012e9657c096cc6d604a33e5dfb489695a0b576d4c7a1d5c464e39c')
 sha256sums_aarch64=('b348f7658a92d1fa7cc8bc4f5cfdb906f2f32eded48ac97673ef78b1a31610cc')
@@ -59,7 +59,7 @@ package() {
   install -dm755 "${pkgdir}/usr/lib/whisparr/bin"
 
   # License
-  install -Dm644 "Whisparr/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}"
+  install -Dm644 Whisparr/LICENSE "${pkgdir}/usr/share/licenses/${pkgname}"
   rm Whisparr/LICENSE
 
   # Remove Service Helpers, and Update files
