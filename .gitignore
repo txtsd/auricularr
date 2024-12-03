@@ -1,4 +1,10 @@
-pkg/
-src/
-
-*.tar.*
+*
+!PKGBUILD
+!.SRCINFO
+!.gitignore
+!.nvchecker.toml
+!readarr.service
+!readarr.sysusers
+!readarr.tmpfiles
+!readarr.install
+!package_info
