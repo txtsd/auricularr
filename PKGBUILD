@@ -4,7 +4,7 @@
 
 pkgname=radarr-develop
 _pkgname=Radarr
-pkgver=5.16.0.9485
+pkgver=5.16.1.9508
 pkgrel=1
 pkgdesc='Movie organizer/manager for usenet and torrent users (develop branch)'
 arch=(x86_64 aarch64 armv7h)
@@ -46,7 +46,7 @@ source=(
   radarr.sysusers
   radarr.tmpfiles
 )
-sha256sums=('ac1e187f55335bed991a50dfa9f15fdf5a10f6e9d732dee894a9e0e264e6445d'
+sha256sums=('8ea01149aec51db1c86d4e768bd5cd311bcdde8ecdd2b3457d6e34d222c2c05f'
             '4a41a56ab30f8b6001a666e867c7012bfe23760ec29eac957bf90e1dcb4ee36e'
             '8ca13537e98380b91f1a950187d6b9f021f8a4d68871f709444742a4911bc5a6'
             'bb73e0c55711d7ddbf74140b3beb39cb8674ae92be8387c3dd8109bcd53faca8'
