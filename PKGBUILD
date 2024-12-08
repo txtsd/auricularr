@@ -4,8 +4,8 @@
 
 pkgname=readarr-develop
 _pkgname=Readarr
-pkgver=0.4.4.2686
-pkgrel=3
+pkgver=0.4.5.2699
+pkgrel=1
 pkgdesc='Ebook and audiobook collection manager for newsgroup and torrent users (develop branch)'
 arch=(x86_64 aarch64 armv7h)
 url='https://readarr.com'
@@ -46,7 +46,7 @@ source=(
   readarr.sysusers
   readarr.tmpfiles
 )
-sha256sums=('619c62d08cadff327ea442c0e0a378837ff20c219fe2d9a32a6346e48e3b946f'
+sha256sums=('5328b169338ce962d2906e59a237239dce26fa58e0fd81c117c76f927896c908'
             '12235af27b47fe1a353bc79fdfdf8c0e03fca5c0eb08f9eb57c0b66532c37648'
             '4696e52bc1cd8b7860eeb1ffaefc4153c3bf27defd7e7e91da03ad8aa28aa3df'
             'fcfa28c1be4f67cfa641dc6076780ee07ab973e55bf676174315e417f73003ad'
