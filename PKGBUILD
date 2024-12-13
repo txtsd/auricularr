@@ -6,7 +6,7 @@
 pkgname=lidarr
 _pkgname=Lidarr
 pkgver=2.7.1.4417
-pkgrel=6
+pkgrel=7
 pkgdesc='Music collection manager for newsgroup and torrent users.'
 arch=(x86_64 aarch64 armv7h)
 url='https://lidarr.audio'
@@ -46,7 +46,7 @@ source=(
   package_info
 )
 sha256sums=('cfcf55f49d6a012f1fa77559ebd1ba8892b404312430afdec684d0c924deeca3'
-            '1a542d493eafbd28ac268c5f9ef29688ffa6e9326436d2ef05eb66413c18a082'
+            '48f4cc5040b1a51e624f5be4977078b77bf7f87b9c1fb7fa34e844da4c831401'
             '85098d47734e8087480f8a29eafec50faa453487221ef01173888155d2b06e42'
             'd71e37213ac65722e42f6f2c5772d4515c2d28a77b9f7608dc05c787d86ebaa5'
             '19435dff2251782714875af95a38d8491cee6c178e8f32e3c3b6e566b3edc931')
