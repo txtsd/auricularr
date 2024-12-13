@@ -5,7 +5,7 @@
 
 pkgname=lidarr-bin
 pkgver=2.7.1.4417
-pkgrel=5
+pkgrel=6
 pkgdesc='Music collection manager for newsgroup and torrent users.'
 arch=(x86_64 aarch64 armv7h)
 url='https://lidarr.audio'
@@ -48,7 +48,7 @@ source=(
 source_x86_64=("Lidarr.master.${pkgver}.linux-core-x64.tar.gz::https://lidarr.servarr.com/v1/update/master/updatefile?version=${pkgver}&os=linux&runtime=netcore&arch=x64")
 source_aarch64=("Lidarr.master.${pkgver}.linux-core-arm64.tar.gz::https://lidarr.servarr.com/v1/update/master/updatefile?version=${pkgver}&os=linux&runtime=netcore&arch=arm64")
 source_armv7h=("Lidarr.master.${pkgver}.linux-core-arm.tar.gz::https://lidarr.servarr.com/v1/update/master/updatefile?version=${pkgver}&os=linux&runtime=netcore&arch=arm")
-sha256sums=('1a542d493eafbd28ac268c5f9ef29688ffa6e9326436d2ef05eb66413c18a082'
+sha256sums=('48f4cc5040b1a51e624f5be4977078b77bf7f87b9c1fb7fa34e844da4c831401'
             '85098d47734e8087480f8a29eafec50faa453487221ef01173888155d2b06e42'
             'd71e37213ac65722e42f6f2c5772d4515c2d28a77b9f7608dc05c787d86ebaa5'
             'fa802821da0c2844b72fbe72d4b58c5b10f9c22a0805deb735d96f137029a5c4')
