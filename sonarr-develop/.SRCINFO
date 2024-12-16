@@ -1,6 +1,6 @@
 pkgbase = sonarr-develop
 	pkgdesc = Smart PVR for newsgroup and torrent users (develop branch)
-	pkgver = 4.0.11.2724
+	pkgver = 4.0.11.2762
 	pkgrel = 1
 	url = https://sonarr.tv
 	install = sonarr.install
@@ -33,14 +33,14 @@ pkgbase = sonarr-develop
 	optdepends = autobrr: irc, torrent and usenet indexer proxy
 	provides = sonarr
 	conflicts = sonarr
-	source = sonarr-develop-4.0.11.2724.tar.gz::https://github.com/Sonarr/Sonarr/archive/refs/tags/v4.0.11.2724.tar.gz
+	source = sonarr-develop-4.0.11.2762.tar.gz::https://github.com/Sonarr/Sonarr/archive/refs/tags/v4.0.11.2762.tar.gz
 	source = package_info
 	source = sonarr.service
 	source = sonarr.sysusers
 	source = sonarr.tmpfiles
-	sha256sums = be725ff214d36cc65a2d91481331ee4ee1d8f2420d2e0a34bf4e1b864982cce1
+	sha256sums = a71347b40d89191c0f76f00765f0d96288f4d882e322f8ddb524d7bd4390b26b
 	sha256sums = a6b37e75143a309b1d8c163c3f90f7f0275fd730015c3f74e3ad27c278b1ae90
-	sha256sums = 64d1e9bafeaa6f47329222d31fbcf2dbb575566d391334ea034a857e144dfe62
+	sha256sums = 04701303b54b2e0c913e5e0808759b77ed41a4dac8f091e6552cf0ef96cc8415
 	sha256sums = 00141d4cbf34daa6d91b26179d4847ec970e2767382e18fdf9af2ec84a0ff43e
 	sha256sums = d6b18a83dd9c213470d984f71ddcefcd64d12bb87f68225cc4ebf5fa4a831703
 
