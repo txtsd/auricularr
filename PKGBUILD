@@ -4,7 +4,7 @@
 
 pkgname=bazarr-beta
 _pkgname=${pkgname/-beta}
-pkgver=1.4.6_beta.31
+pkgver=1.4.6_beta.32
 pkgrel=1
 pkgdesc="Subtitle management and download automation for Sonarr and Radarr."
 arch=('any')
@@ -41,7 +41,7 @@ source=(
   'bazarr.tmpfiles'
 )
 noextract=("${pkgname}-${pkgver//_/-}.zip")
-sha256sums=('f8f1f05670562c9c2b2db10296b9b8d78d980d45748d9b3999cec73d9b65b849'
+sha256sums=('d056faec3669a0c31f5be8b2ba15443296989e49557adec0181d3e04f82eb78f'
             '2782e250117f7a85110d62472b834316fadcf32ca1874ad01541e7dd9a54215c'
             '73a60121fd2b7b8f5bad75ec4b0f92552fcae0e29a4b9e6aaf15f86a825a88a3'
             '573beeac951d427e980332ce4d8645ae2299082e6c9c04f96e2a41a98c3acc60'
