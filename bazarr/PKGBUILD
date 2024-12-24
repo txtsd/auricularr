@@ -3,8 +3,8 @@
 # Contributor: Pieter Goetschalckx <3.14.e.ter@gmail.com>
 
 pkgname=bazarr
-pkgver=1.4.5
-pkgrel=2
+pkgver=1.5.0
+pkgrel=1
 pkgdesc="Subtitle management and download automation for Sonarr and Radarr."
 arch=('any')
 url="https://www.bazarr.media"
@@ -42,7 +42,7 @@ source=(
   imghdr.py
 )
 noextract=("${pkgname}-${pkgver}.zip")
-sha256sums=('629c7d338885d40a52200200ace515ea3a6f1f4be051c49e6fb3945d919beda9'
+sha256sums=('0b85e92622b8bd53ad0478b872a36c181bda0b28ab1d01a7d2473ddbfebba748'
             '7503f4b7ffe73cd2714c8a5def72ef407fb0bdbbe333c4e449979df38a0a1cdc'
             '5921db5ff3d3501cc8ff4a137d161b525fb91cce02369d5cc39ef6eb7b3a79fc'
             '73a60121fd2b7b8f5bad75ec4b0f92552fcae0e29a4b9e6aaf15f86a825a88a3'
