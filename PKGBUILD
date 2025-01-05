@@ -3,7 +3,7 @@
 
 pkgname=ombi-develop
 _pkgname=Ombi
-pkgver=4.46.7
+pkgver=4.47.0
 pkgrel=1
 pkgdesc='A media request tool that automatically syncs with your media servers'
 arch=(x86_64 aarch64 armv7h)
@@ -32,7 +32,7 @@ source=(
   ombi.tmpfiles
   ombi.install
 )
-sha256sums=('d81b1c92033d217722827a533711105e97076e5cf603e914d27784803347e4bf'
+sha256sums=('7bfdbfb244d24e7e4f5fa6a76eb3ff94a9871f8a1b2b48f65584463a3c098427'
             '24f1dbe25589719e831d512624ceeb1289a7037002b74d9473719c8564a8950f'
             'd78dadc24ddb11e3ef07269a0a1c6dcf8ca8d32d39d152eaa9bffab6c32dba36'
             '71fe8ec1810d7ab91b30d8e07b9edc6f97827034935404124cc6e428bbc7c5bf'
