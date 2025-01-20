@@ -8,6 +8,4 @@
 !jellyseerr.tmpfiles
 !jellyserr.conf.d
 !jellyseerr.install
-!0001-Don-t-use-husky.patch
-!0002-Remove-need-for-npm-npx.patch
 
