@@ -1,6 +1,6 @@
 pkgbase = prowlarr-develop-bin
 	pkgdesc = Indexer manager/proxy for usenet and torrent users (develop branch)
-	pkgver = 1.30.1.4928
+	pkgver = 1.30.2.4939
 	pkgrel = 1
 	url = https://prowlarr.com
 	install = prowlarr.install
@@ -46,11 +46,11 @@ pkgbase = prowlarr-develop-bin
 	sha256sums = 5aa5a7800453d13948430744ca9f32584bf64f09daadf534e6eb2f6c5c452b4c
 	sha256sums = ee61f5621eae6ab932fb093a4f75a0ab11bf9e3ca829f0d34c25014f68aeff7d
 	sha256sums = 75591d19518bafc60862c60848ecad84f92c7f2b47b2b4eeafcbbbd650a43043
-	source_x86_64 = Prowlarr.develop.1.30.1.4928.linux-core-x64.tar.gz::https://prowlarr.servarr.com/v1/update/develop/updatefile?version=1.30.1.4928&os=linux&runtime=netcore&arch=x64
-	sha256sums_x86_64 = 4a92de723d0b08447b3267d3b4eb029b2744e14a39efeea23ede63886d2bdf3b
-	source_aarch64 = Prowlarr.develop.1.30.1.4928.linux-core-arm64.tar.gz::https://prowlarr.servarr.com/v1/update/develop/updatefile?version=1.30.1.4928&os=linux&runtime=netcore&arch=arm64
-	sha256sums_aarch64 = 5cc5effb0995ef0b30807627cf091ca702cde064ff31ab339f339eb9733051a0
-	source_armv7h = Prowlarr.develop.1.30.1.4928.linux-core-arm.tar.gz::https://prowlarr.servarr.com/v1/update/develop/updatefile?version=1.30.1.4928&os=linux&runtime=netcore&arch=arm
-	sha256sums_armv7h = 256989d6b293ea0d54235b6d139b8d81611704ca2e28f647db44a444b3a008ca
+	source_x86_64 = Prowlarr.develop.1.30.2.4939.linux-core-x64.tar.gz::https://prowlarr.servarr.com/v1/update/develop/updatefile?version=1.30.2.4939&os=linux&runtime=netcore&arch=x64
+	sha256sums_x86_64 = 6a21f86efe3b72707352d1707c97e6ad8fb62daaa06644574f6271f059125fb3
+	source_aarch64 = Prowlarr.develop.1.30.2.4939.linux-core-arm64.tar.gz::https://prowlarr.servarr.com/v1/update/develop/updatefile?version=1.30.2.4939&os=linux&runtime=netcore&arch=arm64
+	sha256sums_aarch64 = 8b38797abdee2d4285323502899601aad4bdb28b227120a8faabdabdc9d7ffab
+	source_armv7h = Prowlarr.develop.1.30.2.4939.linux-core-arm.tar.gz::https://prowlarr.servarr.com/v1/update/develop/updatefile?version=1.30.2.4939&os=linux&runtime=netcore&arch=arm
+	sha256sums_armv7h = 8e691c9e9026c4a2aec158340121ef6dab3572c498187b306ff939649b539c65
 
 pkgname = prowlarr-develop-bin
