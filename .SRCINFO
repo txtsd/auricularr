@@ -1,6 +1,6 @@
 pkgbase = radarr-develop-bin
 	pkgdesc = Movie organizer/manager for usenet and torrent users (develop branch)
-	pkgver = 5.18.1.9612
+	pkgver = 5.18.2.9651
 	pkgrel = 1
 	url = https://radarr.video
 	install = radarr.install
@@ -40,11 +40,11 @@ pkgbase = radarr-develop-bin
 	sha256sums = 66ed1fae2d09b09fa53cd740b14bbc8d536042aaa931e5e5fbbd1cbe40557054
 	sha256sums = bb73e0c55711d7ddbf74140b3beb39cb8674ae92be8387c3dd8109bcd53faca8
 	sha256sums = c68efcb3778cb497d7c256dc97df7413ce09f07ea341e4d2683e7fee321cbcbb
-	source_x86_64 = Radarr.develop.5.18.1.9612.linux-core-x64.tar.gz::https://radarr.servarr.com/v1/update/develop/updatefile?version=5.18.1.9612&os=linux&runtime=netcore&arch=x64
-	sha256sums_x86_64 = af907716115ab0b08206a5bb6e2e1f5c481c1c057137b970c3f6f0bdb69b966b
-	source_aarch64 = Radarr.develop.5.18.1.9612.linux-core-arm64.tar.gz::https://radarr.servarr.com/v1/update/develop/updatefile?version=5.18.1.9612&os=linux&runtime=netcore&arch=arm64
-	sha256sums_aarch64 = 34089d2805d2280333bb88f14e80a94fe287e62a982a78166e20b908232f3c3e
-	source_armv7h = Radarr.develop.5.18.1.9612.linux-core-arm.tar.gz::https://radarr.servarr.com/v1/update/develop/updatefile?version=5.18.1.9612&os=linux&runtime=netcore&arch=arm
-	sha256sums_armv7h = a00787bfc09ee30e118c73e01e6debae226af6c4cd83bad6ef19eed8d35c7612
+	source_x86_64 = Radarr.develop.5.18.2.9651.linux-core-x64.tar.gz::https://radarr.servarr.com/v1/update/develop/updatefile?version=5.18.2.9651&os=linux&runtime=netcore&arch=x64
+	sha256sums_x86_64 = d1cd83da49910dd85bd6333cd7cb1c92a48e024f4818ccf32a2351b231792b27
+	source_aarch64 = Radarr.develop.5.18.2.9651.linux-core-arm64.tar.gz::https://radarr.servarr.com/v1/update/develop/updatefile?version=5.18.2.9651&os=linux&runtime=netcore&arch=arm64
+	sha256sums_aarch64 = c5fef2a968fde6bb1e5ac52f1536ed6d85fea70784b1dcc0a6808de4a8c018f1
+	source_armv7h = Radarr.develop.5.18.2.9651.linux-core-arm.tar.gz::https://radarr.servarr.com/v1/update/develop/updatefile?version=5.18.2.9651&os=linux&runtime=netcore&arch=arm
+	sha256sums_armv7h = de1ed3aa61c083ba70afa128283812b17adba849dfb4c7195a2286ffb66ce3bd
 
 pkgname = radarr-develop-bin
