@@ -1,7 +1,7 @@
 pkgbase = radarr-bin
 	pkgdesc = Movie organizer/manager for usenet and torrent users
-	pkgver = 5.15.1.9463
-	pkgrel = 3
+	pkgver = 5.18.4.9674
+	pkgrel = 1
 	url = https://radarr.video
 	install = radarr.install
 	arch = x86_64
@@ -40,11 +40,11 @@ pkgbase = radarr-bin
 	sha256sums = 66ed1fae2d09b09fa53cd740b14bbc8d536042aaa931e5e5fbbd1cbe40557054
 	sha256sums = bb73e0c55711d7ddbf74140b3beb39cb8674ae92be8387c3dd8109bcd53faca8
 	sha256sums = c68efcb3778cb497d7c256dc97df7413ce09f07ea341e4d2683e7fee321cbcbb
-	source_x86_64 = Radarr.master.5.15.1.9463.linux-core-x64.tar.gz::https://radarr.servarr.com/v1/update/master/updatefile?version=5.15.1.9463&os=linux&runtime=netcore&arch=x64
-	sha256sums_x86_64 = 6b520bbf75969fc81f4e958dd7fd3614f632bc1020b2cdbc2fcc5904bd453d8b
-	source_aarch64 = Radarr.master.5.15.1.9463.linux-core-arm64.tar.gz::https://radarr.servarr.com/v1/update/master/updatefile?version=5.15.1.9463&os=linux&runtime=netcore&arch=arm64
-	sha256sums_aarch64 = 3267e3abf6459bdf02d736e9e9025fd40c1ec00ac85bff04bff6fbedb542d452
-	source_armv7h = Radarr.master.5.15.1.9463.linux-core-arm.tar.gz::https://radarr.servarr.com/v1/update/master/updatefile?version=5.15.1.9463&os=linux&runtime=netcore&arch=arm
-	sha256sums_armv7h = 423fad6a0682ed590bee792820372e6517574bdd2be83a2b23cb6cd87fce0544
+	source_x86_64 = Radarr.master.5.18.4.9674.linux-core-x64.tar.gz::https://radarr.servarr.com/v1/update/master/updatefile?version=5.18.4.9674&os=linux&runtime=netcore&arch=x64
+	sha256sums_x86_64 = 0f4369f49cfb138ff57675a415d1d0206b6192509573ac9abf600013da4572ed
+	source_aarch64 = Radarr.master.5.18.4.9674.linux-core-arm64.tar.gz::https://radarr.servarr.com/v1/update/master/updatefile?version=5.18.4.9674&os=linux&runtime=netcore&arch=arm64
+	sha256sums_aarch64 = 71640e75db4042a32fbd647cb853acff0d2256709283cfe736d62ea14704a807
+	source_armv7h = Radarr.master.5.18.4.9674.linux-core-arm.tar.gz::https://radarr.servarr.com/v1/update/master/updatefile?version=5.18.4.9674&os=linux&runtime=netcore&arch=arm
+	sha256sums_armv7h = d9e90af0fafd054ddc75025c5f329b64ba0253c017ac4d1f8747b7dd7f2d6287
 
 pkgname = radarr-bin
