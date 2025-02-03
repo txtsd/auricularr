@@ -1,6 +1,6 @@
 pkgbase = sonarr-develop-bin
 	pkgdesc = Smart PVR for newsgroup and torrent users (develop branch)
-	pkgver = 4.0.11.2762
+	pkgver = 4.0.12.2900
 	pkgrel = 1
 	url = https://sonarr.tv
 	install = sonarr.install
@@ -42,11 +42,11 @@ pkgbase = sonarr-develop-bin
 	sha256sums = 00141d4cbf34daa6d91b26179d4847ec970e2767382e18fdf9af2ec84a0ff43e
 	sha256sums = d6b18a83dd9c213470d984f71ddcefcd64d12bb87f68225cc4ebf5fa4a831703
 	sha256sums = 3d912d367eeb89ead06dc9dc45de093f48ddc601188731d54775c33e04e369aa
-	source_x86_64 = Sonarr.develop.4.0.11.2762.linux-x64.tar.gz::https://services.sonarr.tv/v1/update/develop/download?version=4.0.11.2762&os=linux&runtime=netcore&arch=x64
-	sha256sums_x86_64 = 30bdca020102416a85e6e0d6758cb836b0eff2209d67c390d5637fbd3734cc60
-	source_aarch64 = Sonarr.develop.4.0.11.2762.linux-arm64.tar.gz::https://services.sonarr.tv/v1/update/develop/download?version=4.0.11.2762&os=linux&runtime=netcore&arch=arm64
-	sha256sums_aarch64 = 20f1118a2e4a416ae7b8d961874aff88c070ff1fdb001a991883deed8ecd0996
-	source_armv7h = Sonarr.develop.4.0.11.2762.linux-arm.tar.gz::https://services.sonarr.tv/v1/update/develop/download?version=4.0.11.2762&os=linux&runtime=netcore&arch=arm
-	sha256sums_armv7h = bf743a41f960722a62ed02a030bc3f7daa1de34a051fcf76c36e3ab757777a45
+	source_x86_64 = Sonarr.develop.4.0.12.2900.linux-x64.tar.gz::https://services.sonarr.tv/v1/update/develop/download?version=4.0.12.2900&os=linux&runtime=netcore&arch=x64
+	sha256sums_x86_64 = 336aa9c95f1f74595e5a07b593511411e1858381bb71ac644a122b89a73c6d89
+	source_aarch64 = Sonarr.develop.4.0.12.2900.linux-arm64.tar.gz::https://services.sonarr.tv/v1/update/develop/download?version=4.0.12.2900&os=linux&runtime=netcore&arch=arm64
+	sha256sums_aarch64 = 1a537fdf9097c7a59d0331ab85f4a6c109a420d23269baed032aa49a83375fc6
+	source_armv7h = Sonarr.develop.4.0.12.2900.linux-arm.tar.gz::https://services.sonarr.tv/v1/update/develop/download?version=4.0.12.2900&os=linux&runtime=netcore&arch=arm
+	sha256sums_armv7h = 56318fbd2fc4aa539ede67a1abf68faadb8290ae53b7982173e120fea53e6cc9
 
 pkgname = sonarr-develop-bin
