@@ -3,7 +3,7 @@
 # Helpful URL: https://services.lidarr.audio/v1/update/nightly?version=0.0.0.0&os=linux&runtime=netcore&arch=x64
 
 pkgname=lidarr-nightly-bin
-pkgver=2.9.6.4551
+pkgver=2.10.0.4553
 pkgrel=1
 pkgdesc='Music collection manager for newsgroup and torrent users (nightly builds)'
 arch=(x86_64 aarch64 armv7h)
@@ -51,9 +51,9 @@ sha256sums=('48f4cc5040b1a51e624f5be4977078b77bf7f87b9c1fb7fa34e844da4c831401'
             '85098d47734e8087480f8a29eafec50faa453487221ef01173888155d2b06e42'
             'd71e37213ac65722e42f6f2c5772d4515c2d28a77b9f7608dc05c787d86ebaa5'
             '90a1960fef0d3833cd3635cedd16af3ee9ae6c7b95babc3021f6031d4e44c200')
-sha256sums_x86_64=('0a27e07614ae6865061bf83045fd3611c80f508c4582ea5268d23a38eb44ef8d')
-sha256sums_aarch64=('9752d9be5afe55c52b17ef7952642b6d1880a912441d81e0d311f0a661759f71')
-sha256sums_armv7h=('86e9be9e6a0d80c118b200a80f6b336ed17f30d0c6624bfa18fb0529d9e32e4a')
+sha256sums_x86_64=('0efb3b5082ee66e641fa84b9643ac93dc47368a157fa4df434e518064048eb74')
+sha256sums_aarch64=('83ea01dd3eb1187cd91a508c34e6aa8ca5de7fb910fa26f9395a1f982afb1146')
+sha256sums_armv7h=('eabfd3e64b0848bf0d8b491986118de7a7158ed07e0932fd35431b21bb73ab18')
 
 package() {
   install -dm755 "${pkgdir}/usr/lib/lidarr/bin"
