@@ -1,7 +1,7 @@
 pkgbase = lidarr-develop-bin
 	pkgdesc = Music collection manager for newsgroup and torrent users (develop branch)
-	pkgver = 2.8.1.4482
-	pkgrel = 2
+	pkgver = 2.9.6.4552
+	pkgrel = 1
 	url = https://lidarr.audio
 	install = lidarr.install
 	arch = x86_64
@@ -40,11 +40,11 @@ pkgbase = lidarr-develop-bin
 	sha256sums = 85098d47734e8087480f8a29eafec50faa453487221ef01173888155d2b06e42
 	sha256sums = d71e37213ac65722e42f6f2c5772d4515c2d28a77b9f7608dc05c787d86ebaa5
 	sha256sums = 1d246459491c9e2c9b21f61ec039f0ed4268ef467285cf806080e3f82c4c7077
-	source_x86_64 = Lidarr.develop.2.8.1.4482.linux-core-x64.tar.gz::https://lidarr.servarr.com/v1/update/develop/updatefile?version=2.8.1.4482&os=linux&runtime=netcore&arch=x64
-	sha256sums_x86_64 = 63c00ce06be463e5336851928f2d03499e3dc5a84ebb8d838ebf8718ead66287
-	source_aarch64 = Lidarr.develop.2.8.1.4482.linux-core-arm64.tar.gz::https://lidarr.servarr.com/v1/update/develop/updatefile?version=2.8.1.4482&os=linux&runtime=netcore&arch=arm64
-	sha256sums_aarch64 = ae927722cd5eab4d6383f7e5ef9d3643030bbe601b5197becc6a34095ec20ddf
-	source_armv7h = Lidarr.develop.2.8.1.4482.linux-core-arm.tar.gz::https://lidarr.servarr.com/v1/update/develop/updatefile?version=2.8.1.4482&os=linux&runtime=netcore&arch=arm
-	sha256sums_armv7h = 63dd741b8ad9288a35fe47b8000a3ec56a9e85c66415afef7bf92db41a9b7700
+	source_x86_64 = Lidarr.develop.2.9.6.4552.linux-core-x64.tar.gz::https://lidarr.servarr.com/v1/update/develop/updatefile?version=2.9.6.4552&os=linux&runtime=netcore&arch=x64
+	sha256sums_x86_64 = 7e039ed3164c7a979cf830e2ffa2aad63e4456ec38e4882faefb9c7679258f5c
+	source_aarch64 = Lidarr.develop.2.9.6.4552.linux-core-arm64.tar.gz::https://lidarr.servarr.com/v1/update/develop/updatefile?version=2.9.6.4552&os=linux&runtime=netcore&arch=arm64
+	sha256sums_aarch64 = 2618f0a70828d6f465b964f3a67d20775eee208debc3a38f57ff925bc4cca254
+	source_armv7h = Lidarr.develop.2.9.6.4552.linux-core-arm.tar.gz::https://lidarr.servarr.com/v1/update/develop/updatefile?version=2.9.6.4552&os=linux&runtime=netcore&arch=arm
+	sha256sums_armv7h = a4d9e721957f12bd8c4c5c5ea95dd4d98910d79be24ca9634f3103cd37d5e100
 
 pkgname = lidarr-develop-bin
