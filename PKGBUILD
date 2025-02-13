@@ -2,7 +2,7 @@
 
 pkgname=bitmagnet-beta
 _pkgname="${pkgname%-beta}"
-pkgver=0.10.0_beta.5
+pkgver=0.10.0_beta.7
 pkgrel=1
 pkgdesc='A self-hosted BitTorrent indexer, DHT crawler, content classifier and torrent search engine with web UI, GraphQL API and Servarr stack integration.'
 arch=(x86_64 aarch64 armv7h)
@@ -29,7 +29,7 @@ source=(
   bitmagnet.sysusers
   bitmagnet.tmpfiles
 )
-sha256sums=('2cf9ffd1e952f5f333b418102df4f8dc00a7df853ea3d153d514ae30182e48c9'
+sha256sums=('551d947d13584d24311c82ffe89abb811b63d60b91f6a3e80f894ac2314158cf'
             'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'
             'e9f8ee3b561297d673ca52c6e2dd98a061a4d5569542d3cd80703c25e854d404'
             '9eab02f76a22e3ff627bd6f7fe609480ced67c076f079e985a34d41d13fe8f08'
