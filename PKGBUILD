@@ -3,8 +3,8 @@
 
 pkgname=recyclarr
 _pkgname=Recyclarr
-pkgver=7.4.0
-pkgrel=2
+pkgver=7.4.1
+pkgrel=1
 pkgdesc='Automatically synchronize recommended settings from the TRaSH guides to your Sonarr/Radarr instances.'
 arch=(x86_64 aarch64 armv7h)
 url='https://recyclarr.dev'
@@ -29,7 +29,7 @@ source=(
   recyclarr.tmpfiles
   recyclarr.yml
 )
-sha256sums=('737a26859fe35933bef0f0b8b87c1d113963b4891ad03b9f4cadb254ce83496d'
+sha256sums=('ff3b0ea1b01297f85879bcf4e796eb92f9857180a8517cbe59c8c6bb9cf8a5c5'
             '3e7bb0ca28665de77b939f6b8e316f6708c8e8a97a64ad589b217583dee0e74e'
             '3d2a1b3690d956a8f195c2cd1b28c28beecda354023e8de78471ca35610fb57d'
             'e8a2959e079a6a77c3eefaf77defd69e76944c2a1378257dcaf0286abde002a6'
