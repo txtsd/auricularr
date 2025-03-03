@@ -3,17 +3,17 @@
 # Contributor: George Rawlinson <grawlinson@archlinux.org>
 
 pkgname=autobrr
-pkgver=1.58.0
+pkgver=1.59.0
 pkgrel=1
 pkgdesc='The modern download automation tool for torrents'
-arch=('x86_64')
+arch=(x86_64)
 url='https://autobrr.com'
 license=('GPL-2.0-or-later')
-depends=('glibc')
+depends=(glibc)
 makedepends=(
-  'git'
-  'go'
-  'pnpm'
+  git
+  go
+  pnpm
 )
 optdepends=(
   'postgresql: postgresql database'
@@ -34,11 +34,11 @@ optdepends=(
 options=()
 source=(
   "${pkgname}-${pkgver}::git+https://github.com/autobrr/autobrr#tag=v${pkgver}"
-  'autobrr.service'
-  'autobrr.sysusers'
-  'autobrr.tmpfiles'
+  autobrr.service
+  autobrr.sysusers
+  autobrr.tmpfiles
 )
-sha256sums=('7cef216f843217f59d2e94227851675f9843080e14f2ee9d1e3a012792ffc57f'
+sha256sums=('ae652d6f4b5f9b86fe632dd03bb76fd008e2d610d92f76adb26dfdf6a5f772c4'
             '90b920d9a1b0ad616e340556f826e8354ce75a331548370726de253ad5c302d6'
             '780adccd60ca1ca465668d163d19bb892df7c42e03e442bda0c095ca3ee6eed1'
             'c8d7972c67963aa3f720176e2fb351f3c0ea8be8f1ed84a46b7a13ea8d032bb3')
@@ -55,7 +55,7 @@ prepare() {
 
   # Download node dependencies
   cd web
-  pnpm install --frozen-lockfile
+  pnpm install # --frozen-lockfile
 }
 
 build() {
