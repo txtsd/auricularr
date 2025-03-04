@@ -1,8 +1,8 @@
 # Maintainer: txtsd <aur.archlinux@ihavea.quest>
 
 pkgname=bitmagnet
-pkgver=0.9.5
-pkgrel=2
+pkgver=0.10.0
+pkgrel=1
 pkgdesc='A self-hosted BitTorrent indexer, DHT crawler, content classifier and torrent search engine with web UI, GraphQL API and Servarr stack integration.'
 arch=(x86_64 aarch64 armv7h)
 url='https://bitmagnet.io'
@@ -25,7 +25,7 @@ source=(
   bitmagnet.sysusers
   bitmagnet.tmpfiles
 )
-sha256sums=('022ff59dc8066dbdbe8273fc1aff050391806994fbaf8ec0381dc10e950c7cfc'
+sha256sums=('9a5783f1560442be76f7cd81a8b4a053a8864c17d6e57a8b0890ed784a1c18b8'
             'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'
             'e9f8ee3b561297d673ca52c6e2dd98a061a4d5569542d3cd80703c25e854d404'
             '9eab02f76a22e3ff627bd6f7fe609480ced67c076f079e985a34d41d13fe8f08'
