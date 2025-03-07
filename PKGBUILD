@@ -3,7 +3,7 @@
 # Helpful URL: https://radarr.servarr.com/v1/update/nightly?version=0.0.0.0&os=linux&runtime=netcore&arch=x64
 
 pkgname=radarr-nightly-bin
-pkgver=5.20.0.9744
+pkgver=5.20.0.9746
 pkgrel=1
 pkgdesc='Movie organizer/manager for usenet and torrent users (nightly builds)'
 arch=(x86_64 aarch64 armv7h)
@@ -51,9 +51,9 @@ sha256sums=('e7d22110337234a9d5ce1ea0f65d0dcd7c76e339c61da77c33b80218638d5c3a'
             '25637c6496aa59673aada6acc6cf41025a5f12a844025ee41d8a6cc66b84b5c0'
             'bb73e0c55711d7ddbf74140b3beb39cb8674ae92be8387c3dd8109bcd53faca8'
             'c68efcb3778cb497d7c256dc97df7413ce09f07ea341e4d2683e7fee321cbcbb')
-sha256sums_x86_64=('2b79bc0f43ef59e0603026f89082252bd4974e18891bbeda6c8d82a4a30ecae0')
-sha256sums_aarch64=('6a30d2988a7b844a1511255f54ec6e44b99ee26712cf8be82bc6a425318dadb8')
-sha256sums_armv7h=('85b049a243e27c71c2f9a2772f1a5f0e2e2943c1d6154393066707edbe4adc88')
+sha256sums_x86_64=('981d56bdca4b2582280163f215ccfa43096b8d2dd614f2b8571955e738ad0aef')
+sha256sums_aarch64=('bcc4ba478f55959d85117842e8e4fe0d6e03488a43051e8f8ecabd8ed426c5a6')
+sha256sums_armv7h=('1abf5257f09e44b0d1f24c18a4275f52e06c053f593dbd5b864cd4078e99d820')
 
 package() {
   install -dm755 "${pkgdir}/usr/lib/radarr/bin"
