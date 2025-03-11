@@ -8,4 +8,4 @@
 !jellyseerr.tmpfiles
 !jellyserr.conf.d
 !jellyseerr.install
-
+!arch.patch
