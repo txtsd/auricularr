@@ -5,7 +5,7 @@
 
 pkgname=jellyseerr
 pkgver=2.5.2
-pkgrel=1
+pkgrel=2
 pkgdesc='Request management and media discovery tool for the Plex ecosystem'
 arch=(x86_64 aarch64)
 url='https://github.com/Fallenbagel/jellyseerr'
@@ -40,7 +40,7 @@ source=(
   jellyseerr.conf.d
 )
 sha256sums=('ba55160455f6442b98918000859390230804cf62ea8bfa0153e1ca04f8785a20'
-            'c7aa1a366c970e9963b3754cad576dddf5fa2598a51f871fd5718a8389077029'
+            '50743084a207537600ea81304eaca75f466713f40b24d7c5d26a6dc06446da34'
             '092221b83ded237f57003587533f623d9bc70455493dae9508bb0edac226f9cd'
             '202d6e4c1d4ee555c33fe7e8473c74aef795e145f3bbc885333c003a75e17f14'
             'ee4a4ed8b2ff41fe00582e11283526a08a2ed1154e8e278d898d98c8184c65eb'
