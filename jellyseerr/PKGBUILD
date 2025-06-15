@@ -4,8 +4,8 @@
 # Contributor: Martins Mozeiko <martins.mozeiko@gmail.com>
 
 pkgname=jellyseerr
-pkgver=2.5.2
-pkgrel=2
+pkgver=2.6.0
+pkgrel=1
 pkgdesc='Request management and media discovery tool for the Plex ecosystem'
 arch=(x86_64 aarch64)
 url='https://github.com/Fallenbagel/jellyseerr'
@@ -39,7 +39,7 @@ source=(
   jellyseerr.service
   jellyseerr.conf.d
 )
-sha256sums=('ba55160455f6442b98918000859390230804cf62ea8bfa0153e1ca04f8785a20'
+sha256sums=('39755c7a40b579d8ed58ee3c83672051e336e799bdd5b684dc005150f49f3e58'
             '50743084a207537600ea81304eaca75f466713f40b24d7c5d26a6dc06446da34'
             '092221b83ded237f57003587533f623d9bc70455493dae9508bb0edac226f9cd'
             '202d6e4c1d4ee555c33fe7e8473c74aef795e145f3bbc885333c003a75e17f14'
