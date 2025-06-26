@@ -2,7 +2,7 @@
 
 pkgname=lunasea-bin
 _pkgname="${pkgname%%-bin}"
-pkgver=10.2.6
+pkgver=11.0.0
 pkgrel=1
 pkgdesc='A fully-featured open-source self-hosted controller focused on giving you a seamless experience between all of your self-hosted media software remotely on your devices'
 arch=('x86_64')
@@ -35,7 +35,7 @@ conflicts=("${_pkgname}")
 options=(!debug)
 source=("${pkgname}-${pkgver}.tar.gz::https://github.com/JagandeepBrar/${_pkgname}/releases/download/v${pkgver}/${_pkgname}-linux-amd64.tar.gz")
 noextract=("${pkgname}-${pkgver}.tar.gz")
-sha256sums=('82bf905e884d18ff4a29aedc1c964fbf8dde400455fb06c313079a68ba848830')
+sha256sums=('d17d2bb1261ac3bdeb950fb1e9add9583e4f90e612933bb39d60bb90bebe1137')
 
 package() {
   cd "${srcdir}"
