@@ -1,6 +1,6 @@
 pkgbase = autobrr
 	pkgdesc = The modern download automation tool for torrents
-	pkgver = 1.64.0
+	pkgver = 1.65.0
 	pkgrel = 1
 	url = https://autobrr.com
 	arch = x86_64
@@ -23,11 +23,11 @@ pkgbase = autobrr
 	optdepends = lidarr: Music collection manager for newsgroup and torrent users
 	optdepends = readarr: Ebook and audiobook collection manager for newsgroup and torrent users
 	optdepends = whisparr: Adult movie organizer/manager for usenet and torrent users
-	source = autobrr-1.64.0::git+https://github.com/autobrr/autobrr#tag=v1.64.0
+	source = autobrr-1.65.0::git+https://github.com/autobrr/autobrr#tag=v1.65.0
 	source = autobrr.service
 	source = autobrr.sysusers
 	source = autobrr.tmpfiles
-	sha256sums = 7266f138f065a634bef9dfdef9c479490f357aceb1a24232ab833604f27f1a6e
+	sha256sums = 27dbbe9171671b06620539189b8f74d81dfb9f0f6c80d96413da1e62a68c73df
 	sha256sums = 90b920d9a1b0ad616e340556f826e8354ce75a331548370726de253ad5c302d6
 	sha256sums = 780adccd60ca1ca465668d163d19bb892df7c42e03e442bda0c095ca3ee6eed1
 	sha256sums = c8d7972c67963aa3f720176e2fb351f3c0ea8be8f1ed84a46b7a13ea8d032bb3
