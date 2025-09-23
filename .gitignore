@@ -1,7 +1,7 @@
 *
 !PKGBUILD
 !.SCINFO
-!.giignore
+!.gitignore
 !.nvchecker.toml
 !bazarr.service
 !bazarr.sysusers

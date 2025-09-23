@@ -4,7 +4,7 @@
 
 pkgname=bazarr-beta
 _pkgname=${pkgname/-beta/}
-pkgver=1.5.2_beta.35
+pkgver=1.5.4_beta.0
 pkgrel=1
 pkgdesc='Subtitle management and download automation for Sonarr and Radarr'
 arch=(any)
@@ -38,15 +38,13 @@ conflicts=(bazarr)
 options=('!debug')
 source=(
   "${pkgname}-${pkgver//_/-}.zip::https://github.com/morpheus65535/bazarr/releases/download/v${pkgver//_/-}/bazarr.zip"
-  0001-strtobool.patch
   bazarr.service
   bazarr.sysusers
   bazarr.tmpfiles
   imghdr.py
 )
 noextract=("${pkgname}-${pkgver//_/-}.zip")
-sha256sums=('3b477f075e20189c26f424945ee94790e321b9a706557ade547c2be421f652da'
-            '7503f4b7ffe73cd2714c8a5def72ef407fb0bdbbe333c4e449979df38a0a1cdc'
+sha256sums=('b210ff110090277b07ecfa0d907468d8a1b387c6799079098d43d2bef0f8cea0'
             '5921db5ff3d3501cc8ff4a137d161b525fb91cce02369d5cc39ef6eb7b3a79fc'
             '73a60121fd2b7b8f5bad75ec4b0f92552fcae0e29a4b9e6aaf15f86a825a88a3'
             'e7055260d0f3554e8b628d9560d8e12a40f720d76542048df0dfc838db88357b'
@@ -54,11 +52,6 @@ sha256sums=('3b477f075e20189c26f424945ee94790e321b9a706557ade547c2be421f652da'
 
 prepare() {
   unzip -qq -o -d "${pkgname}-${pkgver//_/-}" "${pkgname}-${pkgver//_/-}.zip"
-
-  cd "${pkgname}-${pkgver//_/-}"
-  patch -Np1 -i ../0001-strtobool.patch
-
-  sed -i 's/from pipes/from shlex/' custom_libs/libfilebot/main.py
 }
 
 package() {
@@ -72,9 +65,9 @@ package() {
   install -Dm644 "${srcdir}/imghdr.py" "${_pdir}/custom_libs/imghdr.py"
 
   rm -rf "${_pdir}/libs/sqlalchemy"
-  rm -rf "${_pdir}/libs/SQLAlchemy-2.0.27.dist-info"
+  rm -rf "${_pdir}/libs/SQLAlchemy-*.dist-info"
   rm -rf "${_pdir}/libs/typing_extensions.py"
-  rm -rf "${_pdir}/libs/typing_extensions-4.10.0.dist-info"
+  rm -rf "${_pdir}/libs/typing_extensions-*.dist-info"
 
   python -m compileall "${pkgdir}"
 
