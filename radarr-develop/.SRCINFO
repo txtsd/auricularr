@@ -1,6 +1,6 @@
 pkgbase = radarr-develop
 	pkgdesc = Movie organizer/manager for usenet and torrent users (develop branch)
-	pkgver = 5.20.1.9773
+	pkgver = 5.28.0.10205
 	pkgrel = 1
 	url = https://radarr.video
 	install = radarr.install
@@ -33,14 +33,14 @@ pkgbase = radarr-develop
 	optdepends = autobrr: irc, torrent and usenet indexer proxy
 	provides = radarr
 	conflicts = radarr
-	source = radarr-develop-5.20.1.9773.tar.gz::https://github.com/Radarr/Radarr/archive/refs/tags/v5.20.1.9773.tar.gz
+	source = radarr-develop-5.28.0.10205.tar.gz::https://github.com/Radarr/Radarr/archive/refs/tags/v5.28.0.10205.tar.gz
 	source = package_info
 	source = radarr.service
 	source = radarr.sysusers
 	source = radarr.tmpfiles
-	sha256sums = e893f322f603b9af2359d09da722bdfb1775b51ac9514d0a237e205b3094730c
+	sha256sums = c5fdeaba8732c0c5626f8070d4b5d9139ee04f4d2c5c66518644f5dd4a993a38
 	sha256sums = 4a41a56ab30f8b6001a666e867c7012bfe23760ec29eac957bf90e1dcb4ee36e
-	sha256sums = 66ed1fae2d09b09fa53cd740b14bbc8d536042aaa931e5e5fbbd1cbe40557054
+	sha256sums = 25637c6496aa59673aada6acc6cf41025a5f12a844025ee41d8a6cc66b84b5c0
 	sha256sums = bb73e0c55711d7ddbf74140b3beb39cb8674ae92be8387c3dd8109bcd53faca8
 	sha256sums = c68efcb3778cb497d7c256dc97df7413ce09f07ea341e4d2683e7fee321cbcbb
 
