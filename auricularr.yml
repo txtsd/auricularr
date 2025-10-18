@@ -46,7 +46,7 @@ environment:
   GPG_TTY: /dev/pts/0
 
 secrets:
-  - 5cd32654-71c1-4163-b612-92c4188537b7
+  - 5fdd0ae7-8513-4b94-aab3-34394a30229f
   - 3ace5c97-3ff2-4ba7-a734-6e54e3baf050
   - fcdf0051-d5ad-41a0-9337-1595a7fb8784
 
