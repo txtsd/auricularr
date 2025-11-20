@@ -57,6 +57,7 @@ prepare() {
   echo "{\"commitTag\": \"${pkgver}\"}" > committag.json
 
   export NEXT_TELEMETRY_DISABLED=1
+  pnpm update jwa
   pnpm install --frozen-lockfile
 }
 
