@@ -6,7 +6,7 @@
 pkgname=jellyseerr
 _pkgname=seerr
 pkgver=2.7.3
-pkgrel=1
+pkgrel=2
 pkgdesc='Request management and media discovery tool for the Plex ecosystem'
 arch=(x86_64 aarch64)
 url='https://github.com/seerr-team/seerr'
