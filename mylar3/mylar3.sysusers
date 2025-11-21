@@ -1,1 +1,3 @@
 u mylar3 - "mylar3 Server" /var/lib/mylar3
+g media  -
+m mylar3 media
