@@ -2,8 +2,8 @@
 # Maintainer: Donald Webster <fryfrog@gmail.com>
 
 pkgname=mylar3
-pkgver=0.8.0
-pkgrel=2
+pkgver=0.8.3
+pkgrel=1
 pkgdesc='Comic book download automation for usenet and torrent users'
 arch=(any)
 url='https://github.com/mylar3/mylar3'
@@ -48,6 +48,7 @@ optdepends=(
   'transmission-qt: torrent downloader (Qt)'
   'prowlarr: automatically integrates with and syncs indexers'
 )
+options=(!debug)
 source=(
   "${pkgname}-${pkgver}.tar.gz::${url}/archive/v${pkgver}.tar.gz"
   mylar3.service
@@ -55,7 +56,7 @@ source=(
   mylar3.sysusers
 )
 
-sha256sums=('14bc2b0578f58f26f3b63958637f889573f7b5eee13ed4eaf75375f2a0faf678'
+sha256sums=('ffb15cfc375590c872d0a6ce5fdc48323a94bdc623688c4598006aaf8edcdaa6'
             'bfe7c28f5c773b77e6bc0014bd4473de2f4650d049cfedb177aedef74187c932'
             'e39441d41acd5d66b63631872e06f8e5425bf0725044e5c3843626d4a090eba5'
             'e26cad50c8c8501fa12e2e2b2443f57aaf309e28f28d6dd4944958f9cb20f3cd')
@@ -64,6 +65,8 @@ prepare() {
   cd "${pkgname}-${pkgver}"
 
   sed -i 's/urllib2.HTTPError,e/\(urllib2.HTTPError,e\)/' lib/utorrent/client.py
+  sed -i 's/import imghdr//' mylar/opds.py
+  sed -i 's/import imghdr//' mylar/importer.py
 }
 
 package() {
