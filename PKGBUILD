@@ -3,7 +3,7 @@
 
 pkgname=mylar3
 pkgver=0.8.3
-pkgrel=2
+pkgrel=3
 pkgdesc='Comic book download automation for usenet and torrent users'
 arch=(any)
 url='https://github.com/mylar3/mylar3'
