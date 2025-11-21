@@ -3,7 +3,7 @@
 
 pkgname=mylar3
 pkgver=0.8.3
-pkgrel=1
+pkgrel=2
 pkgdesc='Comic book download automation for usenet and torrent users'
 arch=(any)
 url='https://github.com/mylar3/mylar3'
@@ -57,9 +57,9 @@ source=(
 )
 
 sha256sums=('ffb15cfc375590c872d0a6ce5fdc48323a94bdc623688c4598006aaf8edcdaa6'
-            'bfe7c28f5c773b77e6bc0014bd4473de2f4650d049cfedb177aedef74187c932'
-            'e39441d41acd5d66b63631872e06f8e5425bf0725044e5c3843626d4a090eba5'
-            'e26cad50c8c8501fa12e2e2b2443f57aaf309e28f28d6dd4944958f9cb20f3cd')
+            '5aaf0be4bf33ab8e7868c14d78603317550d8ec90298cf355116fd6f72a32886'
+            'fe53997e50e9c550b4fdd26fce44101633ea88e1007554b30dfa22a592fcfdc9'
+            '807d2e3acd46873645e6c47988402178fe2d0cd2005457eef1b0612d2646175d')
 
 prepare() {
   cd "${pkgname}-${pkgver}"
