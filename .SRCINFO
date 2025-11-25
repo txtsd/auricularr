@@ -1,7 +1,7 @@
 pkgbase = autobrr
 	pkgdesc = The modern download automation tool for torrents
 	pkgver = 1.69.0
-	pkgrel = 1
+	pkgrel = 2
 	url = https://autobrr.com
 	arch = x86_64
 	license = GPL-2.0-or-later

@@ -4,7 +4,7 @@
 
 pkgname=autobrr
 pkgver=1.69.0
-pkgrel=1
+pkgrel=2
 pkgdesc='The modern download automation tool for torrents'
 arch=(x86_64)
 url='https://autobrr.com'
@@ -74,25 +74,28 @@ build() {
   export CGO_CFLAGS="${CFLAGS}"
   export CGO_CXXFLAGS="${CXXFLAGS}"
   export CGO_LDFLAGS="${LDFLAGS}"
+  export _LDFLAGS="${_LDFLAGS} -compressdwarf=false"
+  export _LDFLAGS="${_LDFLAGS} -linkmode=external"
+  export _LDFLAGS="${_LDFLAGS} -X main.version=${pkgver}"
+  export _LDFLAGS="${_LDFLAGS} -X main.commit=$(git rev-parse --verify HEAD)"
+  export _LDFLAGS="${_LDFLAGS} -X main.date=${_build_date}"
+  export _LDFLAGS="${_LDFLAGS} -extldflags \"${LDFLAGS}\""
   export GOPATH="${srcdir}"
 
   # Build binaries
-  go build -v \
+  go build \
     -buildmode=pie \
     -mod=readonly \
     -modcacherw \
-    -ldflags "-compressdwarf=false \
-      -linkmode external \
-      -X main.version=${pkgver} \
-      -X main.commit=$(git rev-parse --verify HEAD) \
-      -X main.date=${_build_date}" \
+    -trimpath \
+    -ldflags "${_LDFLAGS}" \
     -o build \
     ./cmd/...
 }
 
 check() {
   cd "${pkgname}-${pkgver}"
-  go test -v ./test/...
+  go test ./test/...
 }
 
 package() {
