@@ -3,7 +3,7 @@
 
 pkgname=mylar3
 pkgver=0.8.3
-pkgrel=3
+pkgrel=4
 pkgdesc='Comic book download automation for usenet and torrent users'
 arch=(any)
 url='https://github.com/mylar3/mylar3'
@@ -74,6 +74,7 @@ package() {
 
   install -dm755 "${pkgdir}/usr/lib/mylar3"
   cp -dpr --no-preserve=ownership * "${pkgdir}/usr/lib/mylar3"
+  cp -dp --no-preserve=ownership .LAST_RELEASE "${pkgdir}/usr/lib/mylar3/.LAST_RELEASE"
   python -m compileall "${pkgdir}"
 
   cd "${srcdir}"

@@ -1,7 +1,7 @@
 pkgbase = mylar3
 	pkgdesc = Comic book download automation for usenet and torrent users
 	pkgver = 0.8.3
-	pkgrel = 3
+	pkgrel = 4
 	url = https://github.com/mylar3/mylar3
 	arch = any
 	license = GPL-3.0-or-later
