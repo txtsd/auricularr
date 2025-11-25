@@ -3,7 +3,7 @@
 
 pkgname=bitmagnet-git
 _pkgname="${pkgname%-git}"
-pkgver=0.10.0.beta.4.r0.36d989b
+pkgver=0.10.0.r10.2b9e8ea
 pkgrel=1
 pkgdesc='A self-hosted BitTorrent indexer, DHT crawler, content classifier and torrent search engine with web UI, GraphQL API and Servarr stack integration.'
 arch=(x86_64 aarch64 armv7h)
@@ -55,20 +55,18 @@ build() {
   export CGO_CFLAGS="${CFLAGS}"
   export CGO_CXXFLAGS="${CXXFLAGS}"
   export CGO_LDFLAGS="${LDFLAGS}"
+  export _LDFLAGS="${_LDFLAGS} -compressdwarf=false"
+  export _LDFLAGS="${_LDFLAGS} -linkmode=external"
+  export _LDFLAGS="${_LDFLAGS} -X github.com/bitmagnet-io/bitmagnet/internal/version.GitTag=v${pkgver}"
+  export _LDFLAGS="${_LDFLAGS} -extldflags \"${LDFLAGS}\""
   export GOPATH="${srcdir}"
-  export GOFLAGS="\
+
+  go build \
     -buildmode=pie \
     -mod=readonly \
     -modcacherw \
     -trimpath \
-  "
-  local _ld_flags=" \
-    -compressdwarf=false \
-    -linkmode=external \
-    -X github.com/bitmagnet-io/bitmagnet/internal/version.GitTag=v${pkgver} \
-  "
-  go build \
-    -ldflags "${_ldflags}" \
+    -ldflags "${_LDFLAGS}" \
     -o "${_pkgname}"
 }
 
