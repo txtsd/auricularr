@@ -7,8 +7,7 @@ packages:
   - nvchecker
 
 environment:
-  packages:
-    [
+  packages: [
       autobrr,
       bazarr,
       bazarr-beta,
@@ -21,7 +20,7 @@ environment:
       ombi,
       ombi-bin,
       ombi-develop,
-      ombi-develop-bin,
+      # ombi-develop-bin,
       prowlarr,
       prowlarr-bin,
       prowlarr-develop,
