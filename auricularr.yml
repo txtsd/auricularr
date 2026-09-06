@@ -11,16 +11,21 @@ environment:
       autobrr,
       bazarr,
       bazarr-beta,
-      jellyseerr,
+      # bitmagnet,
+      # bitmagnet-beta,
+      # bitmagnet-bin,
+      # jellyseerr,
+      kapowarr,
       lidarr,
       lidarr-bin,
       lidarr-develop,
       lidarr-develop-bin,
       lidarr-nightly-bin,
+      mylar3,
       ombi,
       ombi-bin,
       ombi-develop,
-      # ombi-develop-bin,
+      ombi-develop-bin,
       prowlarr,
       prowlarr-bin,
       prowlarr-develop,
@@ -36,10 +41,14 @@ environment:
       readarr-nightly-bin,
       recyclarr,
       recyclarr-bin,
+      seer,
       sonarr,
       sonarr-bin,
       sonarr-develop,
       sonarr-develop-bin,
+      stump,
+      whisparr-eros,
+      whisparr-eros-develop,
       whisparr-nightly-bin,
     ]
   GPG_TTY: /dev/pts/0
@@ -139,12 +148,32 @@ tasks:
                 grep -Gm1 '\[info\]\[Server\]: Server ready on port' <(sudo journalctl -xeu "${service_name}" --follow)
                 ;;
 
+              kapowarr)
+                grep -Gm1 'Kapowarr running on' <(sudo journalctl -xeu "${service_name}" --follow)
+                ;;
+
+              mylar3)
+                grep -Gm1 'Firing up the Background Schedulers now' <(sudo journalctl -xeu "${service_name}" --follow)
+                ;;
+
               ombi)
                 grep -Gm1 'We are running on ' <(sudo journalctl -xeu ombi --follow)
                 ;;
 
               recyclarr)
                 grep -Gm1 'recyclarr\.service: Deactivated successfully\.' <(sudo journalctl -xeu "${service_name}" --follow)
+                ;;
+
+              seer)
+                grep -Gm1 '\[info\]\[Server\]: Server ready on port' <(sudo journalctl -xeu "${service_name}" --follow)
+                ;;
+
+              stump)
+                grep -Gm1 'Stump HTTP server starting on' <(sudo journalctl -xeu "$(service_name)" --follow)
+                ;;
+
+              whisparr-eros)
+                grep -Gm1 'Bootstrap: Starting Whisparr' <(sudo jouurnalctl -xeu "$(service_name)" --follow)
                 ;;
 
               *)
