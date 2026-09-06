@@ -41,7 +41,7 @@ environment:
       readarr-nightly-bin,
       recyclarr,
       recyclarr-bin,
-      seer,
+      seerr,
       sonarr,
       sonarr-bin,
       sonarr-develop,
@@ -164,7 +164,7 @@ tasks:
                 grep -Gm1 'recyclarr\.service: Deactivated successfully\.' <(sudo journalctl -xeu "${service_name}" --follow)
                 ;;
 
-              seer)
+              seerr)
                 grep -Gm1 '\[info\]\[Server\]: Server ready on port' <(sudo journalctl -xeu "${service_name}" --follow)
                 ;;
 
