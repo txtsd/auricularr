@@ -173,6 +173,7 @@ tasks:
                 ;;
 
               whisparr-eros)
+                sudo journalctl -xeu "${service_name}" --follow
                 grep -Gm1 'Bootstrap: Starting Whisparr' <(sudo journalctl -xeu "${service_name}" --follow)
                 ;;
 
