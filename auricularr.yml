@@ -173,7 +173,7 @@ tasks:
                 ;;
 
               whisparr-eros)
-                grep -Gm1 '\[Info\] AppFolderInfo: Data directory is being overridden to' <(sudo journalctl -xeu "${service_name}" --follow)
+                grep -Gm1 'Bootstrap: Starting Whisparr' <(sudo journalctl -xeu "${service_name}" --follow)
                 ;;
 
               *)
