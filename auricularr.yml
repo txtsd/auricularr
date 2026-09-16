@@ -114,6 +114,11 @@ tasks:
 
           env TERM=xterm pkgctl version upgrade
 
+          service_name=${repo%-bin}
+          service_name=${service_name%-beta}
+          service_name=${service_name%-develop}
+          service_name=${service_name%-nightly}
+
           exit_code_2=666
           case ${service_name} in
             kapowarr)
@@ -128,11 +133,6 @@ tasks:
 
           if [ ${exit_code_2} == 0 ]; then
             yay -U "${repo}"-*.pkg.tar.zst --noconfirm
-
-            service_name=${repo%-bin}
-            service_name=${service_name%-beta}
-            service_name=${service_name%-develop}
-            service_name=${service_name%-nightly}
 
             sudo systemctl start "${service_name}"
             sleep 30
