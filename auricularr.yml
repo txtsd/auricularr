@@ -114,8 +114,17 @@ tasks:
 
           env TERM=xterm pkgctl version upgrade
 
-          (pkgctl build) && true
-          exit_code_2=$?
+          exit_code_2=666
+          case ${service_name} in
+            kapowarr)
+            yay -S --noconfirm python-bencoding
+            (pkgctl build -I ~/.cache/yay/python-bencoding/python-bencoding-*.tar.zst) && true
+            ;;
+
+            *)
+            (pkgctl build) && true
+            exit_code_2=$?
+          esac
 
           if [ ${exit_code_2} == 0 ]; then
             yay -U "${repo}"-*.pkg.tar.zst --noconfirm
