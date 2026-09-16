@@ -124,6 +124,7 @@ tasks:
             kapowarr)
             yay -S --noconfirm python-bencoding
             (pkgctl build -I ~/.cache/yay/python-bencoding/python-bencoding-*.tar.zst) && true
+            exit_code_2=$?
             ;;
 
             *)
