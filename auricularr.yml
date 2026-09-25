@@ -140,7 +140,7 @@ tasks:
 
             case ${service_name} in
               autobrr)
-                grep -Gm1 'Starting API tcp server\. Listening on' <(sudo journalctl -xeu "${service_name}" --follow)
+                grep -Gm1 '"message":"starting api server"}' <(sudo journalctl -xeu "${service_name}" --follow)
                 ;;
 
               bazarr)
