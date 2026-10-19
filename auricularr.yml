@@ -76,7 +76,7 @@ tasks:
       git config --global protocol.version 2
       git config --global http.version 'HTTP/2'
       git config --global init.defaultBranch master
-      git config --global user.signingkey 97C8848C2E4063CB
+      git config --global user.signingkey 365E0DD1AA51368122501BFE97C8848C2E4063CB
       git config --global commit.gpgsign true
       git config --global push.default 'simple'
       git config --global push.gpgsign 'if-asked'
