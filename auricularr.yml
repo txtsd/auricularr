@@ -46,7 +46,7 @@ environment:
       sonarr-bin,
       sonarr-develop,
       sonarr-develop-bin,
-      stump,
+      # stump,
       whisparr-eros,
       whisparr-eros-develop,
       whisparr-nightly-bin,
